@@ -13,7 +13,11 @@
 #include <pthread.h>
 #include <signal.h>
 
+#include "./sql.c"
+#include "./provaserver.h"
+
 #define MAX 80
+#define MAX_GET_BUFFER 1000
 #define PORT 8080
 #define SA struct sockaddr
 
@@ -96,8 +100,120 @@ void signalHandler(int signal) {
 
 void *manageRequest(void *SocketDescriptorClient) {
   printf("thread avviato\n");
+  int status;
+  sqlite3 *database;
 
-  int socket_descriptor = *((int *) SocketDescriptorClient);
   char buffer[50];
+  int socket_descriptor = *((int *) SocketDescriptorClient);
 
+  printf("gestisco la richiesta del client\n");
+
+  status = sqlite3_open_v2("potholes.db", &database, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE | SQLITE_OPEN_NOMUTEX, NULL);
+
+  if(status != SQLITE_OK)
+    perror("Errore durante l'apertura del database\n");
+  else{
+
+    recv(socket_descriptor, buffer, 50, 0);
+
+    if(strcmp(buffer, "getAll") == 0)
+        getAllPotholesRequest(socket_descriptor, database);
+    else if(strcmp(buffer, "getNear") == 0)
+              getNearPotholesRequest(socket_descriptor, database);
+          else if(strcmp(buffer, "post") == 0)
+                    postRequest(socket_descriptor, database);
+
+
+    printf("Richiesta del client servita, chiudo la connessione col client\n");
+
+  }
+  sqlite3_close(database);
+  close(socket_descriptor);
+}
+
+void  getAllPotholesRequest(int socket, sqlite3 *database){
+  int status;
+
+  status = getAllPotholes(database, socket);
+  if(status != SQLITE_OK)
+      perror("Errore durante la query al database\n");
+  else
+      printf("Query avvenuta con successo\n");
+
+}
+
+void getNearPotholesRequest(int socket, sqlite3 *database){
+  int status;
+  char buffer[MAX_GET_BUFFER];
+  char tmp[50];
+  double lat, lon;
+
+  //NO USERNAME HERE
+
+  recv(socket, buffer, 1000, 0);
+
+  char *actualParam = strtok(buffer, ";");
+
+  if(actualParam == NULL)
+    perror("Errore durante la ricezione dei dati da parte del client\n");
+  else{
+    strcpy(tmp, actualParam);
+    lat = atof(tmp);
+    bzero((char*) &tmp, sizeof(tmp));
+
+    actualParam = strtok(NULL, ";");
+
+    strcpy(tmp, actualParam);
+    lon = atof(tmp);
+    bzero((char*) &tmp, sizeof(tmp));
+  }
+
+  printf("Dati recuperati dal client: latitudine %f longitudine %f \n", lat, lon);
+
+  status = getNearPotholes(database, socket, lat, lon);
+
+  if(status != SQLITE_OK)
+    perror("Errore durante la query al database\n");
+  else
+    printf("Query avvenuta con successo\n");
+
+}
+
+void postRequest(int socket, sqlite3 *database){
+  int status;
+  char buffer[MAX_GET_BUFFER];
+  char tmp[50];
+  char username[50];
+  double lat, lon;
+
+  recv(socket, buffer, 1000, 0);
+
+  char *actualParam = strtok(buffer, ";");
+
+  if(actualParam == NULL)
+    perror("Errore durante la ricezione dei dati da parte del client\n");
+  else{
+    strcpy(username, actualParam);
+
+    actualParam = strtok(NULL, ";");
+
+    strcpy(tmp, actualParam);
+    lat = atof(tmp);
+    bzero((char *) &tmp, sizeof(tmp));
+
+    actualParam = strtok(NULL, ";");
+
+    strcpy(tmp, actualParam);
+    lon = atof(tmp);
+    bzero((char *) &tmp, sizeof(tmp));
+  }
+
+  printf("Dati recuperati dal client: username %s latitudine %f longitudine %f\n", username, lat, lon);
+
+  status = insertNewPothole(database, username, lat, lon);
+
+  if(status != SQLITE_OK)
+    perror("Errore durante l'inserimento dei dati della nuova buca rilevata\n");
+  else
+    printf("Successo nell'inserimento dei dati della nuova buca rilevata\n");
 }

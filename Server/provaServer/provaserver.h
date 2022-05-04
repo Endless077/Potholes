@@ -1,7 +1,7 @@
 //provaserver.h
 
-void* threadFunction(void* socketDescriptor);
-void getRequest(int socketDescriptor);
-void postRequest(int socketDescriptor);
-
+void* manageRequest(void* socketDescriptor);
+void getAllPotholesRequest(int socketDescriptor, sqlite3 *);
+void getNearPotholesRequest(int socketDescriptor, sqlite3 *);
+void postRequest(int socketDescriptor, sqlite3 *);
 void signUSRHandlet(int signal);
