@@ -7,6 +7,8 @@
 #include <string.h>
 #include <sqlite3.h>
 
+#include "./sql.c"
+
 #include "./provastartserver.h"
 //#include dbpath
 
@@ -15,7 +17,7 @@ sqlite3* database;
 
 int main(void) {
 
-  char* dbname = "prova.db";
+  char* dbname = "potholes.db";
   int status;
 
   status = sqlite3_open_v2(dbname, &database, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE| SQLITE_OPEN_NOMUTEX, NULL);
@@ -32,9 +34,6 @@ int main(void) {
     insertInitialValues();
 
     printf("Inserimento avvenuto con successo\n");
-
-
-
 
     printf("FINE CREAZIONE DATABASE\n");
     return 0;
@@ -57,11 +56,20 @@ void createInitialTable(){
 
 
 void insertInitialValues(){
-  char* insertQuery = "INSERT INTO Potholes VALUES('Valentino','40.000000', '14.000000')";
+  char* insertQuery = "INSERT INTO Potholes VALUES('Valentino','40.835884', '14.248767')";
   int status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
 
   if(status_query != SQLITE_OK){
     perror("Errore durante l'inserimento dei primi valore nel database\n");
     exit(EXIT_FAILURE);
   }
+
+  insertQuery = "INSERT INTO Potholes VALUES('Lucia', '40.835888', '14248769')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK){
+    perror("Errore durante l'inserimento dei primi valori nel database\n");
+    exit(EXIT_FAILURE);
+  }
+
 }

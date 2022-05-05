@@ -17,14 +17,14 @@ int insertNewPothole(sqlite3* database, char *username, double latitudine, doubl
     char *put_query;
     int status_query;
 
-    put_query = sqlite3_mprintf("INSERT INTO Potholes VALUES (%q, %f, %f);", username, latitudine, longitudine); // %q permette di visualizzare anche gli apici
+    put_query = sqlite3_mprintf("INSERT INTO Potholes VALUES ('%q', %f, %f);", username, latitudine, longitudine); // %q permette di visualizzare anche gli apici
 
     status_query = sqlite3_exec(database, put_query, NULL, NULL, NULL);
 
     return status_query;
 }
 
-int getNearPotholes(sqlite3 *database, int socket, double latitudine, double longitudine){
+int getNearPotholes(sqlite3 *database, int socket, double latitudine, double longitudine, double distanza){
   char *get_query;
   const char *username;
   double lat, lon;
@@ -32,7 +32,7 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
   sqlite3_stmt *res;
   char dataRetrieved[MAX_DATA_RETRIEVED]; /*buffer*/
 
-  get_query = sqlite3_mprintf("SELECT * FROM Potholes WHERE latitude >= %f AND latitudine <= %f AND longitude >= %f AND longitude <= %f;", latitudine-0.000010, latitudine+0.000010, longitudine-0.000010, longitudine+0.000010);
+  get_query = sqlite3_mprintf("SELECT * FROM Potholes WHERE latitude >= %f AND latitudine <= %f AND longitude >= %f AND longitude <= %f;", latitudine-distanza, latitudine+distanza, longitudine-distanza, longitudine+distanza);
   /*PROVARE A RIFARE I PARAMETRI CON sqlite3_bind*/
 
   status_query = sqlite3_prepare_v2(database, get_query, strlen(get_query), &res, NULL);

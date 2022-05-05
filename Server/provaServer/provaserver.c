@@ -122,6 +122,8 @@ void *manageRequest(void *SocketDescriptorClient) {
               getNearPotholesRequest(socket_descriptor, database);
           else if(strcmp(buffer, "post") == 0)
                     postRequest(socket_descriptor, database);
+                else if(strcmp(buffer, "threshold") == 0)
+                          send(socket_descriptor, "0.000003;", 10, 0);
 
 
     printf("Richiesta del client servita, chiudo la connessione col client\n");
@@ -146,7 +148,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database){
   int status;
   char buffer[MAX_GET_BUFFER];
   char tmp[50];
-  double lat, lon;
+  double lat, lon, distanza;
 
   //NO USERNAME HERE
 
@@ -166,11 +168,17 @@ void getNearPotholesRequest(int socket, sqlite3 *database){
     strcpy(tmp, actualParam);
     lon = atof(tmp);
     bzero((char*) &tmp, sizeof(tmp));
+
+    actualParam = strtok(NULL, ";");
+
+    strcpy(tmp, actualParam);
+    distanza = atof(tmp);
+    bzero((char*) &tmp, sizeof(tmp));
   }
 
   printf("Dati recuperati dal client: latitudine %f longitudine %f \n", lat, lon);
 
-  status = getNearPotholes(database, socket, lat, lon);
+  status = getNearPotholes(database, socket, lat, lon, distanza);
 
   if(status != SQLITE_OK)
     perror("Errore durante la query al database\n");
