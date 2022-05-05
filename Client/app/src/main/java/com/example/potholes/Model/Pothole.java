@@ -16,6 +16,15 @@ public class Pothole {
         this.longitudine = longitudine;
     }
 
+    @Override
+    public String toString() {
+        return "Pothole{" +
+                "Username='" + username + '\'' +
+                ", latitudine=" + latitudine +
+                ", longitudine=" + longitudine +
+                '}';
+    }
+
     //Getter and Setter
     public String getUsername() {
         return username;

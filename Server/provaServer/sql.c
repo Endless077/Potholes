@@ -33,7 +33,6 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
   char dataRetrieved[MAX_DATA_RETRIEVED]; /*buffer*/
 
   get_query = sqlite3_mprintf("SELECT * FROM Potholes WHERE latitude >= %f AND latitudine <= %f AND longitude >= %f AND longitude <= %f;", latitudine-distanza, latitudine+distanza, longitudine-distanza, longitudine+distanza);
-  /*PROVARE A RIFARE I PARAMETRI CON sqlite3_bind*/
 
   status_query = sqlite3_prepare_v2(database, get_query, strlen(get_query), &res, NULL);
 
@@ -87,7 +86,7 @@ int getAllPotholes(sqlite3 *database, int socket){
 }
 
 int callback(void *socketPtr, int argc, char **argv, char **colName){
-  int socket = *((int *) socketPtr);  /*socket to send data to client*/
+  int socket = *((int *) socketPtr);  		/*socket to send data to client*/
   char dataRetrieved[MAX_DATA_RETRIEVED];
   char *tmp;
 

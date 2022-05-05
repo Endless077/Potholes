@@ -1,4 +1,4 @@
-/*Server*/
+/*Main Server*/
 #include<sys/socket.h>
 #include<stdio.h>
 #include<sys/un.h>
@@ -15,6 +15,5 @@ int main() {
   /* TODO generale:
   set server_addr.sun_family and sun_path, socket(), bind(), listen(), while cicle*/
   
-
  return 0;
 }

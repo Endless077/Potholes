@@ -1,4 +1,4 @@
-//provaserver.h
+//H server.h
 
 void* manageRequest(void* socketDescriptor);
 void getAllPotholesRequest(int socketDescriptor, sqlite3 *);

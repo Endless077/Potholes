@@ -38,7 +38,6 @@ int main(void) {
   signal(SIGUSR2, signalHandler);
 
   /*create socket*/
-
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
   if(sockfd == -1){
     perror("error socket server");
@@ -46,14 +45,12 @@ int main(void) {
   }else
     printf("socket created\n");
 
-  /*Assigning IP, Port and sin_family */
-
+  /*assigning IP, Port and sin_family */
   serveraddr.sin_family = AF_INET;
   serveraddr.sin_addr.s_addr = inet_addr(hostname);
   serveraddr.sin_port = htons(PORT);
 
   /*binding*/
-
   if(bind(sockfd, (struct sockaddr *) &serveraddr, sizeof(serveraddr)) != 0){
     perror("error binding");
     exit(1);
@@ -65,7 +62,7 @@ int main(void) {
     exit(1);
   }
 
-  /*Accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
+  /*accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
   while(connfd = accept(sockfd, (struct sockaddr *) &clientaddr, &len) > 0) {
     printf("Connection estabilished");
 
@@ -88,7 +85,6 @@ int main(void) {
   return 0;
 
 }
-
 
 /*Handler of signal usr*/
 void signalHandler(int signal) {
@@ -119,11 +115,11 @@ void *manageRequest(void *SocketDescriptorClient) {
     if(strcmp(buffer, "getAll") == 0)
         getAllPotholesRequest(socket_descriptor, database);
     else if(strcmp(buffer, "getNear") == 0)
-              getNearPotholesRequest(socket_descriptor, database);
-          else if(strcmp(buffer, "post") == 0)
-                    postRequest(socket_descriptor, database);
-                else if(strcmp(buffer, "threshold") == 0)
-                          send(socket_descriptor, "0.000003;", 10, 0);
+        getNearPotholesRequest(socket_descriptor, database);
+    else if(strcmp(buffer, "post") == 0)
+        postRequest(socket_descriptor, database);
+    else if(strcmp(buffer, "threshold") == 0)
+        send(socket_descriptor, "0.000003:", 10, 0);
 
 
     printf("Richiesta del client servita, chiudo la connessione col client\n");
@@ -154,7 +150,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database){
 
   recv(socket, buffer, 1000, 0);
 
-  char *actualParam = strtok(buffer, ";");
+  char *actualParam = strtok(buffer, ":");
 
   if(actualParam == NULL)
     perror("Errore durante la ricezione dei dati da parte del client\n");
@@ -163,13 +159,13 @@ void getNearPotholesRequest(int socket, sqlite3 *database){
     lat = atof(tmp);
     bzero((char*) &tmp, sizeof(tmp));
 
-    actualParam = strtok(NULL, ";");
+    actualParam = strtok(NULL, ":");
 
     strcpy(tmp, actualParam);
     lon = atof(tmp);
     bzero((char*) &tmp, sizeof(tmp));
 
-    actualParam = strtok(NULL, ";");
+    actualParam = strtok(NULL, ":");
 
     strcpy(tmp, actualParam);
     distanza = atof(tmp);
@@ -196,20 +192,20 @@ void postRequest(int socket, sqlite3 *database){
 
   recv(socket, buffer, 1000, 0);
 
-  char *actualParam = strtok(buffer, ";");
+  char *actualParam = strtok(buffer, ":");
 
   if(actualParam == NULL)
     perror("Errore durante la ricezione dei dati da parte del client\n");
   else{
     strcpy(username, actualParam);
 
-    actualParam = strtok(NULL, ";");
+    actualParam = strtok(NULL, ":");
 
     strcpy(tmp, actualParam);
     lat = atof(tmp);
     bzero((char *) &tmp, sizeof(tmp));
 
-    actualParam = strtok(NULL, ";");
+    actualParam = strtok(NULL, ":");
 
     strcpy(tmp, actualParam);
     lon = atof(tmp);

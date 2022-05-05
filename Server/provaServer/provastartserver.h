@@ -1,4 +1,4 @@
-//.h provastartserver
+//H startserver
 
 void createInitialTable();
 void insertInitialValues();

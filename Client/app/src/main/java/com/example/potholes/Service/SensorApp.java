@@ -1,34 +1,38 @@
-package com.example.potholes.Model;
+package com.example.potholes.Service;
 
+import android.Manifest;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.LocationManager;
 import android.os.Build;
 
 import androidx.annotation.RequiresApi;
 
-import com.example.potholes.Service.Comunication;
+public class SensorApp {
 
-public class Sensore {
-
+    private final LocationManager lManager;
+    private final SensorManager sMan;
     private Context mContext;
-    private double thrashold;
     private Sensor accellerometer;
-    private SensorManager sMan;
 
     //private String s_name = Context.SENSOR_SERVICE;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public Sensore(Context context) {
+    public SensorApp(Context context) {
         this.mContext = context;
-        this.thrashold = Comunication.getThreshold();
-        this.sMan = (SensorManager) mContext.getSystemService(mContext.SENSOR_SERVICE);
+        this.lManager= (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+        this.sMan = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
         this.accellerometer = sMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
-    public void AccelerometerManager() {
+    public void gpsManager() {
+
+    }
+
+    public void accellerometerManager() {
 
         SensorEventListener sel = new SensorEventListener() {
 
@@ -52,9 +56,7 @@ public class Sensore {
             }
 
             @Override
-            public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
-            }
+            public void onAccuracyChanged(Sensor sensor, int accuracy) {}
 
         };
 

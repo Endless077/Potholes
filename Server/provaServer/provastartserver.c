@@ -10,8 +10,6 @@
 #include "./sql.c"
 
 #include "./provastartserver.h"
-//#include dbpath
-
 
 sqlite3* database;
 
@@ -64,7 +62,15 @@ void insertInitialValues(){
     exit(EXIT_FAILURE);
   }
 
-  insertQuery = "INSERT INTO Potholes VALUES('Lucia', '40.835888', '14248769')";
+  insertQuery = "INSERT INTO Potholes VALUES('Lucia', '40.835888', '14.248769')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK){
+    perror("Errore durante l'inserimento dei primi valori nel database\n");
+    exit(EXIT_FAILURE);
+  }
+  
+  insertQuery = "INSERT INTO Potholes VALUES('Giulia', '40.123456', '14.654321')";
   status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
 
   if(status_query != SQLITE_OK){
