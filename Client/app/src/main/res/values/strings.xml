@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">Potholes</string>
+
+    //Fragment Login
+    <string name="welcome">Benvenuto</string>
+    <string name="nickname">Nickname</string>
+    <string name="accedi">Accedi</string>
+
+    //Fragment HomePage
+    <string name="ciaoUtente">Ciao</string>
+    <string name="nextPotholes">Cerca buche vicino a te</string>
+    <string name="allPotholes">Visuallizza tutte le buche</string>
+    <string name="startRecord">Inizia registrazione</string>
+    <string name="endRecord">Termina registrazione</string>
+
 </resources>
