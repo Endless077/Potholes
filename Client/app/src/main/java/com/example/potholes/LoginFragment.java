@@ -14,9 +14,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toolbar;
 
+import com.google.android.material.textfield.TextInputLayout;
+
 public class LoginFragment extends Fragment {
 
-    private TextView benvenutoTW;
+    private TextInputLayout layoutNickname;
     private EditText nicknameEditText;
     private Button loginButton;
     private Toolbar toolbar;
@@ -36,18 +38,26 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        benvenutoTW = (TextView) getView().findViewById(R.id.titleLoginTW);
         nicknameEditText = (EditText) getView().findViewById(R.id.editTextNickname);
         loginButton = (Button) getView().findViewById(R.id.accediButton);
-        toolbar = (Toolbar) getView().findViewById(R.id.toolbarLogin);
+        layoutNickname = (TextInputLayout) getView().findViewById(R.id.editTextNicknameLayout);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String nickname = nicknameEditText.getText().toString();
-                ((MainActivity)getActivity()).setNickname(nickname);
-                ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
+                if(nickname.isEmpty()){
+                    layoutNickname.setError("Nickname vuoto");
+                }else{
+                    ((MainActivity)getActivity()).setNickname(nickname);
+                    ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
+                }
             }
+        });
+
+        nicknameEditText.setOnTouchListener((v, event)->{
+            layoutNickname.setErrorEnabled(false);
+            return false;
         });
     }
 

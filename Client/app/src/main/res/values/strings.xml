@@ -13,8 +13,11 @@
     <string name="allPotholes">Visuallizza \buche</string>
     <string name="startRecord">Inizia registrazione</string>
     <string name="endRecord">Termina registrazione</string>
-    <string name="cento">100 metri</string>             //PROVARE CON STRING ARRAY
-    <string name="trecento">300 metri</string>
-    <string name="cinquecento">500 metri</string>
+    <string-array name="distanze">
+        <item>150 metri</item>
+        <item>300 metri</item>
+        <item>500 metri</item>
+        <item>Qualsiasi</item>
+    </string-array>
 
 </resources>

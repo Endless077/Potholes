@@ -24,7 +24,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ciaoUtente"
-        android:textSize="40sp"
+        android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarHomePage"
         app:layout_constraintEnd_toEndOf="@+id/toolbarHomePage"
         app:layout_constraintStart_toStartOf="parent"
@@ -47,38 +47,37 @@
         <org.osmdroid.views.MapView
             android:id="@+id/mapView"
             android:layout_width="match_parent"
-            android:layout_height="260dp"
-            tools:ignore="SpeakableTextPresentCheck" />
+            android:layout_height="260dp"/>
 
     </androidx.cardview.widget.CardView>
 
 
     <Button
-        android:id="@+id/nextPotholesButton"
+        android:id="@+id/visualizzaBucheButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="@string/allPotholes"
+        app:cornerRadius="100sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/menu"
-        style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox.ExposedDropdownMenu"
+    <Spinner
+        android:id="@+id/distanzeSpinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="prova"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="40dp"
+        android:minHeight="48dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/nextPotholesButton">
-
-        <AutoCompleteTextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="none" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.699"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
         android:id="@+id/recordButton"
@@ -88,6 +87,7 @@
         android:layout_marginEnd="36dp"
         android:layout_marginBottom="40dp"
         android:text="@string/startRecord"
+        app:cornerRadius="100sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.577"
