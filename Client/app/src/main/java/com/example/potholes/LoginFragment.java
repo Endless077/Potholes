@@ -12,12 +12,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 public class LoginFragment extends Fragment {
 
     private TextView benvenutoTW;
     private EditText nicknameEditText;
     private Button loginButton;
+    private Toolbar toolbar;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -34,9 +36,10 @@ public class LoginFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        benvenutoTW = (TextView) getView().findViewById(R.id.WelcomeTW);
+        benvenutoTW = (TextView) getView().findViewById(R.id.titleLoginTW);
         nicknameEditText = (EditText) getView().findViewById(R.id.editTextNickname);
         loginButton = (Button) getView().findViewById(R.id.accediButton);
+        toolbar = (Toolbar) getView().findViewById(R.id.toolbarLogin);
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -5,12 +5,16 @@
     <string name="welcome">Benvenuto</string>
     <string name="nickname">Nickname</string>
     <string name="accedi">Accedi</string>
+    <string name="Potholes">Potholes</string>
 
     //Fragment HomePage
-    <string name="ciaoUtente">Ciao</string>
+    <string name="ciaoUtente">Ciao %1$s!</string>
     <string name="nextPotholes">Cerca buche vicino a te</string>
-    <string name="allPotholes">Visuallizza tutte le buche</string>
+    <string name="allPotholes">Visuallizza \buche</string>
     <string name="startRecord">Inizia registrazione</string>
     <string name="endRecord">Termina registrazione</string>
+    <string name="cento">100 metri</string>             //PROVARE CON STRING ARRAY
+    <string name="trecento">300 metri</string>
+    <string name="cinquecento">500 metri</string>
 
 </resources>

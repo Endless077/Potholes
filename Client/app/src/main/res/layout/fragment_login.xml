@@ -8,19 +8,6 @@
         android:background="@color/primaryLightColor"
         tools:context=".LoginFragment">
 
-    <TextView
-        android:id="@+id/WelcomeTW"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/welcome"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.042" />
-
 
     <Button
         android:id="@+id/accediButton"
@@ -56,12 +43,36 @@
         android:id="@+id/imageViewLogo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="352dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/WelcomeTW"
-        app:layout_constraintVertical_bias="0.058"
+        app:layout_constraintTop_toBottomOf="@+id/toolbarLogin"
         app:srcCompat="@drawable/pothole_sessantaquattro" />
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarLogin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        android:theme="?attr/actionBarTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/titleLoginTW"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/Potholes"
+        android:textSize="40sp"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarLogin"
+        app:layout_constraintEnd_toEndOf="@+id/toolbarLogin"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

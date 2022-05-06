@@ -9,10 +9,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 public class HomePageFragment extends Fragment {
 
-    String nickname;
+    private String nickname;
+    private TextView benvenutoTextView;
 
     public HomePageFragment() {
         // Required empty public constructor
@@ -35,6 +37,9 @@ public class HomePageFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        benvenutoTextView = (TextView) getView().findViewById(R.id.ciaoUtenteTW);
+        benvenutoTextView.setText(getResources().getString(R.string.ciaoUtente, nickname));
 
     }
 
