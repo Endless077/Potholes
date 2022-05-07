@@ -1,4 +1,4 @@
-package com.example.potholes;
+package com.example.potholes.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+
+import com.example.potholes.R;
 
 import es.dmoral.toasty.Toasty;
 

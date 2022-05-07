@@ -3,12 +3,12 @@
 
     //Fragment Login
     <string name="welcome">Benvenuto</string>
-    <string name="nickname">Nickname</string>
+    <string name="nickname">Inserisci nickname qui...</string>
     <string name="accedi">Accedi</string>
     <string name="Potholes">Potholes</string>
 
     //Fragment HomePage
-    <string name="ciaoUtente">Ciao %1$s!</string>
+    <string name="ciaoUtente">Ciao, %1$s!</string>
     <string name="nextPotholes">Cerca buche vicino a te</string>
     <string name="allPotholes">Visuallizza \buche</string>
     <string name="startRecord">Inizia registrazione</string>

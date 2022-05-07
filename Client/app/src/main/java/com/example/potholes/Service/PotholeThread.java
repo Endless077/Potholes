@@ -1,6 +1,6 @@
 package com.example.potholes.Service;
 
-import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -8,31 +8,51 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.LocationManager;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-public class SensorApp {
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationServices;
 
-    private final LocationManager lManager;
-    private final SensorManager sMan;
+public class PotholeThread implements Runnable {
+
     private Context mContext;
+    private final String LOG = "PotholeThread";
+
+    private LocationManager lManager;
+    private FusedLocationProviderClient fusedLocationClient;
+
+    private SensorManager sMan;
     private Sensor accellerometer;
 
-    //private String s_name = Context.SENSOR_SERVICE;
-
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public SensorApp(Context context) {
+    public PotholeThread(Context context) {
         this.mContext = context;
-        this.lManager= (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
-        this.sMan = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
-        this.accellerometer = sMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        gpsManager();
+        accelerometerManager();
+    }
+
+    @Override
+    public void run() {
+        Log.i(LOG,"Thread Start");
+        //running thread
     }
 
     public void gpsManager() {
-
+        Log.i(LOG,"GPS service loading...");
+        if(CheckService.isGpsOnline(mContext)) {
+            this.lManager= (LocationManager) mContext.getSystemService(Context.LOCATION_SERVICE);
+            this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext);
+        }else{
+            CheckService.checkGpsEnabled((Activity) mContext,333);
+        }
     }
 
-    public void accellerometerManager() {
+    public void accelerometerManager() {
+        Log.i(LOG,"Accelerometer service loading...");
+        this.sMan = (SensorManager) mContext.getSystemService(Context.SENSOR_SERVICE);
+        this.accellerometer = sMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
 
         SensorEventListener sel = new SensorEventListener() {
 
@@ -64,5 +84,4 @@ public class SensorApp {
                 sMan.getDefaultSensor(Sensor.TYPE_ACCELEROMETER),
                 SensorManager.SENSOR_DELAY_NORMAL);
     }
-
 }

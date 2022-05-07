@@ -5,12 +5,12 @@
     <color name="red">#ff0000</color>
 
     <!-- App Color -->
-    <color name="primaryColor">#ffc107</color>
-    <color name="primaryLightColor">#fff350</color>
-    <color name="primaryDarkColor">#c79100</color>
-    <color name="secondaryColor">#9e9e9e</color>
-    <color name="secondaryLightColor">#cfcfcf</color>
-    <color name="secondaryDarkColor">#707070</color>
+    <color name="primaryColor">#ff9800</color>
+    <color name="primaryLightColor">#ffc947</color>
+    <color name="primaryDarkColor">#c66900</color>
+    <color name="secondaryColor">#eeeeee</color>
+    <color name="secondaryLightColor">#ffffff</color>
+    <color name="secondaryDarkColor">#bcbcbc</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
 </resources>

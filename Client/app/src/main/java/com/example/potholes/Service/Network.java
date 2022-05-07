@@ -12,22 +12,23 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Communication implements ICommunication {
+public class Network implements ICommunication {
 
     private final String LOG = "Communication";
 
-    static String USERNAME = "";
-    static double THRASHOLD = 1;
+    public static String NICKNAME = "";
+    public static double THRASHOLD = 1;
+
     static final String ADDRESS = "localhost";
     static final int PORT = 8080;
 
-    public Communication() {}
+    public Network() {}
 
     //Methods GET
     @Override
     public List<Pothole> getNearPotholes(double latitudine, double longitudine, double range) {
         Log.i(LOG, "Get Near Potholes by "
-                + USERNAME + " at lat "
+                + NICKNAME + " at lat "
                 + latitudine + " and long "
                 + longitudine + " with range "
                 + range);
@@ -52,7 +53,7 @@ public class Communication implements ICommunication {
 
             //Invio informazioni al server
             Log.i(LOG,"Sending information...");
-            String tracking = USERNAME +":"+latitudine+":"+longitudine;
+            String tracking = NICKNAME +":"+latitudine+":"+longitudine;
             socket.getOutputStream().write(tracking.getBytes());
 
             //Attesa informationi
@@ -89,7 +90,7 @@ public class Communication implements ICommunication {
 
     @Override
     public List<Pothole> getAllPotoles() {
-        Log.i(LOG, "Get All Potholes by " + USERNAME);
+        Log.i(LOG, "Get All Potholes by " + NICKNAME);
 
         String operation = "getAll";
         ArrayList<Pothole> potholes = new ArrayList<>();
@@ -148,7 +149,7 @@ public class Communication implements ICommunication {
 
     @Override
     public double getThreshold() {
-        Log.i(LOG, "Get Thrashold by " + USERNAME);
+        Log.i(LOG, "Get Thrashold by " + NICKNAME);
 
         String operation = "threshold";
         String result = "1";
@@ -198,7 +199,7 @@ public class Communication implements ICommunication {
     @Override
     public void insertNewPothole(double latitudine, double longitudine) {
         Log.i(LOG, "Post new Pothole by "
-                + USERNAME + " at lat "
+                + NICKNAME + " at lat "
                 + latitudine + " and long "
                 + longitudine);
 
@@ -216,7 +217,7 @@ public class Communication implements ICommunication {
 
             //Invio nuovi dati
             Log.i(LOG,"Sending data...");
-            String newData = USERNAME+":"+latitudine+":"+longitudine;
+            String newData = NICKNAME +":"+latitudine+":"+longitudine;
             socket.getOutputStream().write(newData.getBytes());
 
             //Connessione chiusa
