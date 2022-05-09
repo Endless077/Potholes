@@ -14,10 +14,10 @@ import java.util.List;
 
 public class Network implements ICommunication {
 
-    private final String LOG = "Communication";
+    private final String LOG = "Network";
 
     public static String NICKNAME = "";
-    public static double THRASHOLD = 1;
+    public static double THRESHOLD = 1;
 
     static final String ADDRESS = "localhost";
     static final int PORT = 8080;
@@ -56,7 +56,7 @@ public class Network implements ICommunication {
             String tracking = NICKNAME +":"+latitudine+":"+longitudine;
             socket.getOutputStream().write(tracking.getBytes());
 
-            //Attesa informationi
+            //Attesa informazioni
             Log.i(LOG,"Waiting information...");
             Thread.sleep(1000);
 
@@ -110,12 +110,7 @@ public class Network implements ICommunication {
                     new BufferedReader(
                             new InputStreamReader(socket.getInputStream()));
 
-//            //Invio informazioni al server
-//            Log.i(LOG,"Sending information...");
-//            String informazioni = NICKNAME+":"+latitudine+":"+longitudine;
-//            socket.getOutputStream().write(informazioni.getBytes());
-
-            //Attesa informationi
+            //Attesa informazioni
             Log.i(LOG,"Waiting information...");
             Thread.sleep(1000);
 
@@ -170,7 +165,7 @@ public class Network implements ICommunication {
             Log.i(LOG,"Request output stream...");
             socket.getOutputStream().write(operation.getBytes());
 
-            //Attesa informationi
+            //Attesa informazioni
             Log.i(LOG,"Waiting information...");
             Thread.sleep(1000);
 
@@ -191,8 +186,8 @@ public class Network implements ICommunication {
             Handler.handleException(e);
         }
 
-        THRASHOLD = Double.parseDouble(result);
-        return THRASHOLD;
+        THRESHOLD = Double.parseDouble(result);
+        return THRESHOLD;
     }
 
     //Methods POST

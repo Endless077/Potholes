@@ -56,9 +56,11 @@ public class LoginFragment extends Fragment {
 
         loginButton.setOnClickListener(view1 -> {
             String nickname = nicknameEditText.getText().toString();
-            if(!nickname.isEmpty())
-                layoutNickname.setError("Nickname non valido.");
-            else{
+            if(!nickname.matches("^[A-Za-z0-9_-]{3,10}$")) {
+                Toasty.error(LoginFragment.this.getActivity(),"Nickname non conforme.",
+                        Toasty.LENGTH_SHORT,true).show();
+                layoutNickname.setError("Richeste solo lettere e/o numeri [3,10].");
+            }else{
                 Network.NICKNAME = nickname;
                 ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
             }
