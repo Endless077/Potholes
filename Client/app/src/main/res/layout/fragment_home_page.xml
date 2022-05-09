@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/ciaoUtente"
-        android:textColor="#FF0000"
+        android:textColor="@color/secondaryColor"
         android:textSize="30sp"
         app:layout_constraintBottom_toBottomOf="@+id/toolbarHomePage"
         app:layout_constraintEnd_toEndOf="@+id/toolbarHomePage"
@@ -35,10 +35,9 @@
         android:id="@+id/cardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="292dp"
+        android:layout_marginTop="40dp"
         app:cardCornerRadius="12sp"
         app:cardUseCompatPadding="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -49,6 +48,11 @@
             android:layout_width="match_parent"
             android:layout_height="260dp" />
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewPotholes"
+            android:layout_width="match_parent"
+            android:layout_height="260sp"/>
+
     </androidx.cardview.widget.CardView>
 
 
@@ -56,10 +60,10 @@
         android:id="@+id/visualizzaBucheButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="24dp"
         android:text="@string/allPotholes"
         app:cornerRadius="100sp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
@@ -68,16 +72,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="4dp"
         android:layout_marginEnd="40dp"
         android:background="@color/primaryColor"
         android:minHeight="48dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/recordButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.699"
+        app:layout_constraintTop_toBottomOf="@+id/CambiaVisualizzazioneButton"
+        app:layout_constraintVertical_bias="0.529"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <Button
@@ -93,5 +96,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.577"
         app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/CambiaVisualizzazioneButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="10dp"
+        android:text="@string/changeView"
+        app:cornerRadius="100sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
+
+    <ImageButton
+        android:id="@+id/LogoutImageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/primaryColor"
+        android:src="@drawable/ic_baseline_exit_to_app_24"
+        app:layout_constraintBottom_toBottomOf="@+id/toolbarHomePage"
+        app:layout_constraintStart_toStartOf="@+id/toolbarHomePage"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

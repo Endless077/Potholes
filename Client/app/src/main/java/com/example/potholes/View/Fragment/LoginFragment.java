@@ -56,11 +56,12 @@ public class LoginFragment extends Fragment {
 
         loginButton.setOnClickListener(view1 -> {
             String nickname = nicknameEditText.getText().toString();
-            if(!nickname.isEmpty())
+            if(nickname.isEmpty())
                 layoutNickname.setError("Nickname non valido.");
             else{
                 Network.NICKNAME = nickname;
                 ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
+                nicknameEditText.setText("");
             }
         });
 

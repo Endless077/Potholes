@@ -6,6 +6,7 @@ public class Pothole {
     private String username;
     private double latitudine;
     private double longitudine;
+    private String indirizzo;
 
     //Constructor
     public Pothole() {}
@@ -14,6 +15,14 @@ public class Pothole {
         this.username = username;
         this.latitudine = latitudine;
         this.longitudine = longitudine;
+    }
+
+
+    public Pothole(String username, double latitudine, double longitudine, String indirizzo) {
+        this.username = username;
+        this.latitudine = latitudine;
+        this.longitudine = longitudine;
+        this.indirizzo = indirizzo;
     }
 
     @Override
@@ -49,4 +58,15 @@ public class Pothole {
     public void setLongitudine(double longitudine) {
         this.longitudine = longitudine;
     }
+
+    public String getIndirizzo() {
+        return indirizzo;
+    }
+
+    public void setIndirizzo(String indirizzo) {
+        this.indirizzo = indirizzo;
+    }
+
+    public String getLatLong(){ return latitudine + ";" + longitudine;}
+
 }
