@@ -62,6 +62,7 @@ public class LoginFragment extends Fragment {
                 layoutNickname.setError("Richeste solo lettere e/o numeri [3,10].");
             }else{
                 Network.NICKNAME = nickname;
+                nicknameEditText.setText("");
                 ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
             }
         });

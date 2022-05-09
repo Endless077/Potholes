@@ -10,14 +10,18 @@
     //Fragment HomePage
     <string name="ciaoUtente">Ciao, %1$s!</string>
     <string name="nextPotholes">Cerca buche vicino a te</string>
-    <string name="allPotholes">Visuallizza \buche</string>
+    <string name="allPotholes">Visuallizza\nbuche</string>
     <string name="startRecord">Inizia registrazione</string>
     <string name="endRecord">Termina registrazione</string>
+    <string name="username">Username: </string>
+    <string name="coordinate">Coordinate: </string>
+    <string name="indirizzo">Indirizzo: </string>
+    <string name="changeView">Cambia\n visualizzazione</string>
     <string-array name="distanze">
         <item>150 metri</item>
         <item>300 metri</item>
         <item>500 metri</item>
-        <item>Qualsiasi</item>
+        <item>Tutti</item>
     </string-array>
 
 </resources>
