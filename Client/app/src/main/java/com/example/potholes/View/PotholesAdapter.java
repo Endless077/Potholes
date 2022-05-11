@@ -15,18 +15,39 @@ import com.example.potholes.Model.Pothole;
 import com.example.potholes.Presenter.HomePagePresenter;
 import com.example.potholes.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PotholesAdapter extends RecyclerView.Adapter<PotholesAdapter.PotholesViewHolder>{
 
-    Context context;
     List<Pothole> potholesList;
+    Context context;
     HomePagePresenter mHomePagePresenter;
 
     public PotholesAdapter(Context ctx, List<Pothole> lst, HomePagePresenter mHomePagePresenter){
         this.context = ctx;
         this.potholesList = lst;
         this.mHomePagePresenter = mHomePagePresenter;
+    }
+
+    public void clearList() {
+        potholesList.clear();
+    }
+
+    public void add(Pothole p) {
+        potholesList.add(p);
+    }
+
+    public void remove(int i) {
+        potholesList.remove(i);
+    }
+
+    public List<Pothole> getListPothole() {
+        return potholesList;
+    }
+
+    public void setListCompilation(List<Pothole> listPothole) {
+        this.potholesList = listPothole;
     }
 
     @NonNull

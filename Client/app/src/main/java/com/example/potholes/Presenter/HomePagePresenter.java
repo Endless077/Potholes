@@ -87,13 +87,16 @@ public class HomePagePresenter {
 
                 //Hole Spotter
                 if (Math.abs(linear_acceleration[1]) > Network.THRESHOLD) {
+                    Log.i(LOG,"Spotting hole...");
                     Map<String,Double> loc = getLocation();
                     mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
                             "Hole Spotted.",
                             Toasty.LENGTH_SHORT).show());
-                    if(!loc.isEmpty())
+                    if(!loc.isEmpty()) {
+                        Log.i(LOG,"Spotted here: " + loc.get("Longitude") + " - " + loc.get("Latitude"));
                         sendData(loc);
-                    else{
+                    }else{
+                        Log.e(LOG,"Location not found.");
                         mContext.getActivity().runOnUiThread(() -> Toasty.error(mContext.getActivity(),
                                 "Location not found.",
                                 Toasty.LENGTH_SHORT,true));
@@ -149,18 +152,20 @@ public class HomePagePresenter {
         }
     }
 
-    public List<GeoPoint> getPotHoles(String range) {
+    public List<Pothole> getPotHoles(String range) {
         Map<String,Double> location = getLocation();
         Network network = new Network();
 
         if(range.equals("Tutti"))
-            return convertPotholes(network.getAllPotoles());
+            return network.getAllPotoles();
         else{
-            double latitude, longitude, raggio;
+            double latitude, longitude, raggio, degree;
             latitude = location.get("Latitude");
             longitude = location.get("Longitude");
-            raggio = Double.parseDouble(range.substring(0, 3));
-            return convertPotholes(network.getNearPotholes(latitude,longitude,raggio));
+
+            raggio = Double.parseDouble(range.substring(0,range.indexOf(" ")));
+            degree = convertMetersToDegree(raggio);
+            return network.getNearPotholes(latitude,longitude,degree);
         }
     }
 
@@ -170,12 +175,16 @@ public class HomePagePresenter {
         network.insertNewPothole(loc.get("Latitude"), loc.get("Longitude"));
     }
 
-    private List<GeoPoint> convertPotholes(List<Pothole> listPothole) {
-        List<GeoPoint> geopoints = new ArrayList<>();
-        for (Pothole pothole : listPothole)
-            geopoints.add(new GeoPoint(pothole.getLatitudine(),pothole.getLongitudine()));
+    private double convertMetersToDegree(double raggio) {
+        double degreeBase = 0.0002777778;
+        double convertedDegree = 0;
 
-        return  geopoints;
+        if((raggio/30)>=0)
+            convertedDegree = (raggio/30)*degreeBase;
+        else
+            Handler.handleException(new IllegalArgumentException());
+
+        return convertedDegree;
     }
 
     private void unregisterListener() {

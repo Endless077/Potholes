@@ -50,9 +50,9 @@ public class LoginFragment extends Fragment {
 
         mLoginPresenter = new LoginPresenter(this);
 
-        nicknameEditText = (EditText) getView().findViewById(R.id.editTextNickname);
-        loginButton = (Button) getView().findViewById(R.id.accediButton);
-        layoutNickname = (TextInputLayout) getView().findViewById(R.id.editTextNicknameLayout);
+        nicknameEditText = getView().findViewById(R.id.editTextNickname);
+        loginButton = getView().findViewById(R.id.accediButton);
+        layoutNickname = getView().findViewById(R.id.editTextNicknameLayout);
 
         loginButton.setOnClickListener(view1 -> {
             String nickname = nicknameEditText.getText().toString();
