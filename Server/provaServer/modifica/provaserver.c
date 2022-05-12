@@ -225,22 +225,24 @@ void postRequest(int socket, sqlite3 *database){
   char username[50];
   double lat, lon;
 
-  recv(socket, buffer, 1000, 0);
+  send(socket, "ok", 2, 0);
 
-  char *actualParam = strtok(buffer, ";");
+  recv(socket, buffer, MAX_GET_BUFFER, 0);
+
+  char *actualParam = strtok(buffer, ":");
 
   if(actualParam == NULL)
     perror("Errore durante la ricezione dei dati da parte del client\n");
   else{
     strcpy(username, actualParam);
 
-    actualParam = strtok(NULL, ";");
+    actualParam = strtok(NULL, ":");
 
     strcpy(tmp, actualParam);
     lat = atof(tmp);
     bzero((char *) &tmp, sizeof(tmp));
 
-    actualParam = strtok(NULL, ";");
+    actualParam = strtok(NULL, ":");
 
     strcpy(tmp, actualParam);
     lon = atof(tmp);
@@ -251,8 +253,12 @@ void postRequest(int socket, sqlite3 *database){
 
   status = insertNewPothole(database, username, lat, lon);
 
-  if(status != SQLITE_OK)
+  if(status != SQLITE_OK){
     perror("Errore durante l'inserimento dei dati della nuova buca rilevata\n");
-  else
+    send(socket, "error", 5, 0);
+  }
+  else{
     printf("Successo nell'inserimento dei dati della nuova buca rilevata\n");
+    send(socket, "success", 7, 0);    
+  }
 }

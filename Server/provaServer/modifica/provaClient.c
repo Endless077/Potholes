@@ -18,28 +18,49 @@
 static int client();
 
 void func(int sockfd){
-	char buff[] = "getNear";
+	char buff[] = "post";
 	char buffRead[50];
 
-	 int n;
-			 sleep(1);
-			 write(sockfd, buff, sizeof(buff));
-			 bzero(buff, sizeof(buff));
+	/*getNear*/
+	 // int n;
+		// 	 sleep(1);
+		// 	 write(sockfd, buff, sizeof(buff));
+		// 	 bzero(buff, sizeof(buff));
+	 //
+		// 	 bzero(buffRead, sizeof(buffRead));
+	 //
+		// 	 read(sockfd, buffRead, 2);
+		// 	 printf("buffRead %s\n", buffRead);
+	 //
+		// 	 if(strcmp(buffRead, "ok") == 0)
+		// 	 		write(sockfd, "vale:40.835884:14.248767:0", 27);
+	 //
+		// 	 bzero(buffRead, sizeof(buffRead));
+		// 	 do{
+		// 		 bzero(buffRead, sizeof(buffRead));
+		// 	 	read(sockfd, buffRead, 50);
+		// 	 	printf("From Server : %s\n", buffRead);
+		//  }while(strcmp(buffRead, "end")!=0);
 
-			 bzero(buffRead, sizeof(buffRead));
 
-			 read(sockfd, buffRead, 2);
-			 printf("buffRead %s\n", buffRead);
+		/*put*/
+		 int n;
+		sleep(1);
+		write(sockfd, buff, sizeof(buff));
+		bzero(buff, sizeof(buff));
 
-			 if(strcmp(buffRead, "ok") == 0)
-			 		write(sockfd, "vale:40.835884:14.248767:0", 27);
+		bzero(buffRead, sizeof(buffRead));
 
-			 bzero(buffRead, sizeof(buffRead));
-			 do{
-				 bzero(buffRead, sizeof(buffRead));
-			 	read(sockfd, buffRead, 50);
-			 	printf("From Server : %s\n", buffRead);
-		 }while(strcmp(buffRead, "end")!=0);
+		read(sockfd, buffRead, 2);
+		printf("buffRead %s\n", buffRead);
+
+		if(strcmp(buffRead, "ok") == 0)
+			write(sockfd, "Mariano:39.835884:13.248767:", 28);
+
+		bzero(buffRead, sizeof(buffRead));
+		read(sockfd, buffRead, sizeof(buffRead));
+		printf("buffRead %s\n", buffRead);
+		bzero(buffRead, sizeof(buffRead));
 
 }
 
