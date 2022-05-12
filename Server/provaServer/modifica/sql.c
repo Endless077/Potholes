@@ -9,7 +9,6 @@
 
 #include "./sql.h"
 
-#define MAX_POTHOLES 100
 #define MAX_DATA_RETRIEVED 100
 
 
@@ -26,8 +25,6 @@ int insertNewPothole(sqlite3* database, char *username, double latitudine, doubl
 
 int getNearPotholes(sqlite3 *database, int socket, double latitudine, double longitudine, double distanza){
   char *get_query;
-  // char *username;
-  // double lat, lon;
   int status_query;
   sqlite3_stmt *res;
   char dataRetrieved[MAX_DATA_RETRIEVED]; /*buffer*/
@@ -40,8 +37,6 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
     exit(EXIT_FAILURE);
   }
 
-    printf("la query e' %s", get_query);
-
   status_query = sqlite3_prepare_v2(database, get_query, strlen(get_query), &res, NULL);
 
   if(status_query != SQLITE_OK){
@@ -51,45 +46,22 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
 
 
   while(sqlite3_step(res) == SQLITE_ROW){
+    /*cleaning the buffer*/
+    bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
 
+    strcat(dataRetrieved, (char *)sqlite3_column_text(res, 0));
+    strcat(dataRetrieved, ":");
 
-        /*cleaning the buffer*/
-        bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
+    strcat(dataRetrieved, (char *)sqlite3_column_text(res, 1));
+    strcat(dataRetrieved, ":");
 
-        strcat(dataRetrieved, (char *)sqlite3_column_text(res, 0));
-        strcat(dataRetrieved, ":");
+    strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
+    strcat(dataRetrieved, ":");
 
-        strcat(dataRetrieved, (char *)sqlite3_column_text(res, 1));
-        strcat(dataRetrieved, ":");
+    send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
 
-        strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
-        strcat(dataRetrieved, ":");
+    printf("Inviati i dati al client \n");
 
-        send(socket, dataRetrieved, 50, 0);
-
-        printf("Inviati i dati al client \n");
-
-    // /*get results and set them in to variables*/
-    // username = (char*) sqlite3_column_text(res, 0);
-    // lat = sqlite3_column_double(res, 1);
-    // lon =  sqlite3_column_double(res, 2);
-    //
-    // /*cleaning the buffer*/
-    // bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
-    //
-    // /*sending data to client*/
-    // /*strcat*/
-    // sprintf(dataRetrieved, "%s;", username);
-    // send(socket, dataRetrieved, 50, 0);
-    //
-    // sprintf(dataRetrieved, "%f;", lat);
-    // send(socket, dataRetrieved, 50, 0);
-    //
-    // sprintf(dataRetrieved, "%f\n", lon);
-    // send(socket, dataRetrieved, 50, 0);
-    //
-    // printf("Inviati i dati al client \n");
-    // /*controllare se si può fare tutto in un'unica sprintf e send*/
   }
 
   send(socket, "end", 3, 0);
@@ -97,7 +69,6 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
   sqlite3_finalize(res);
 
   return 0;
-
 }
 
 int getAllPotholes(sqlite3 *database, int socket){
@@ -114,7 +85,6 @@ int getAllPotholes(sqlite3 *database, int socket){
   }
 
   while(sqlite3_step(res) == SQLITE_ROW){
-
     /*cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
 
@@ -127,7 +97,7 @@ int getAllPotholes(sqlite3 *database, int socket){
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
     strcat(dataRetrieved, ":");
 
-    send(socket, dataRetrieved, 50, 0);
+    send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
 
     printf("Inviati i dati al client \n");
     /*controllare se si può fare tutto in un'unica sprintf e send*/

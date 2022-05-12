@@ -42,6 +42,26 @@ void func(int sockfd){
 		// 	 	printf("From Server : %s\n", buffRead);
 		//  }while(strcmp(buffRead, "end")!=0);
 
+		/*getAll*/
+			// 	 sleep(1);
+			// 	 write(sockfd, buff, sizeof(buff));
+			// 	 bzero(buff, sizeof(buff));
+		 //
+			// 	 do{
+			// 		 bzero(buffRead, sizeof(buffRead));
+			// 	 	read(sockfd, buffRead, 50);
+			// 	 	printf("From Server : %s\n", buffRead);
+			//  }while(strcmp(buffRead, "end")!=0);
+
+
+			/*threshold*/
+				// 	 sleep(1);
+				// 	 write(sockfd, buff, sizeof(buff));
+				// 	 bzero(buff, sizeof(buff));
+				// 	bzero(buffRead, sizeof(buffRead));
+				// 	read(sockfd, buffRead, 50);
+				// 	printf("From Server : %s\n", buffRead);
+
 
 		/*put*/
 		 int n;
@@ -70,7 +90,6 @@ return client();
 
 int client(){
   int sockfd, connfd;
-	// struct sockaddr_un servaddr, cli;
 	struct sockaddr_in servaddr, cli;
 
 	// socket create and verification
@@ -87,8 +106,6 @@ int client(){
 	servaddr.sin_family = AF_INET;
 	servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
 	servaddr.sin_port = htons(PORT);
-  // servaddr.sun_family = AF_LOCAL;
-  // strcpy(servaddr.sun_path, SOCKET_NAME);
 
 	// connect the client socket to server socket
 	if (connect(sockfd, (SA*)&servaddr, sizeof(servaddr)) != 0) {
@@ -98,7 +115,6 @@ int client(){
 	else
 		printf("connected to the server.. socket %d\n", sockfd);
 
-	// function for chat
 	func(sockfd);
 
 	// close the socket
