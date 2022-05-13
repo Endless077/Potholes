@@ -1,3 +1,12 @@
+/*
+  ______   _________     _       _______   _________  ________  _______     
+.' ____ \ |  _   _  |   / \     |_   __ \ |  _   _  ||_   __  ||_   __ \    
+| (___ \_||_/ | | \_|  / _ \      | |__) ||_/ | | \_|  | |_ \_|  | |__) |   
+ _.____`.     | |     / ___ \     |  __ /     | |      |  _| _   |  __ /    
+| \____) |   _| |_  _/ /   \ \_  _| |  \ \_  _| |_    _| |__/ | _| |  \ \_  
+ \______.'  |_____||____| |____||____| |___||_____|  |________||____| |___| 
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -17,21 +26,21 @@ int main(void) {
 
   int status;
   char* dbname = "potholes.db";
-  char* tag = "Initialize";
+  char* tag = "Load Database";
 
   status = sqlite3_open_v2(dbname, &database, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE| SQLITE_OPEN_NOMUTEX, NULL);
 
   if(status != SQLITE_OK)
     logging(tag, "Error starting Database", false);
   else
-    logging(tag, "Loading database", true);
+    logging(tag, "Success starting database", true);
 
-    createInitialTable();
+  createInitialTable();
 
-    insertInitialValues();
+  insertInitialValues();
 
-    logging(tag, "Success starting Database", true);
-    return 0;
+  logging(tag, "Database complete", true);
+  return 0;
 }
 
 /*Create database*/

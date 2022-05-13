@@ -1,3 +1,12 @@
+/*
+_____  _____  _________  _____  _____      ______   
+|_   _||_   _||  _   _  ||_   _||_   _|   .' ____ \  
+  | |    | |  |_/ | | \_|  | |    | |     | (___ \_| 
+  | '    ' |      | |      | |    | |   _  _.____`.  
+   \ \__/ /      _| |_    _| |_  _| |__/ || \____) | 
+    `.__.'      |_____|  |_____||________| \______.' 
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -57,6 +66,7 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
 
   //Row Cursor
   while(sqlite3_step(res) == SQLITE_ROW) {
+
     /*Cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
 
@@ -73,11 +83,13 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
     //Sending data
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
 
-    logging(tag, strcat("Sending row: ", dataRetrieved), true);
+    char msg[250];
+    sprintf(msg, "Sending row: %s", dataRetrieved);
+    logging(tag, msg, true);
   }
 
   //End char* flagging
-  send(socket, "end", 3, 0);
+  send(socket, "END", 3, 0);
   sqlite3_finalize(res);
 
   return 0;
@@ -99,7 +111,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
     logging(tag, "Errore durante la query", false);
 
   //Row Cursor
-  while(sqlite3_step(res) == SQLITE_ROW){
+  while(sqlite3_step(res) == SQLITE_ROW) {
     
     /*Cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
@@ -117,11 +129,13 @@ int getAllPotholes(sqlite3 *database, int socket) {
     //Sending data
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
 
-    logging(tag, strcat("Sending row: ", dataRetrieved), true);
+    char msg[250];
+    sprintf(msg, "Sending row: %s", dataRetrieved);
+    logging(tag, msg, true);
   }
 
   //End char* flagging
-  send(socket, "end", 3, 0);
+  send(socket, "END", 3, 0);
   sqlite3_close(database);
 
   return 0;
@@ -129,13 +143,18 @@ int getAllPotholes(sqlite3 *database, int socket) {
 
 //Support logging function
 void logging(char* tag, char* messaggio, bool status) {
+  char format[250];
+  bzero((char*) &format, sizeof(format));
+
   time_t now;
   time(&now);
 
+  sprintf(format, "[%.24s] %s: %s\n", ctime(&now), tag, messaggio);
+
   if(status)
-    printf("[%.24s] %s: %s\n", ctime(&now), tag, messaggio);
+    printf("%s", format);
   else{
-    fprintf(stderr, "[%.24s] %s: %s\n", ctime(&now), tag, messaggio);
+    perror(format);
     exit(EXIT_FAILURE);
   }
 }

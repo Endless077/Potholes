@@ -1,3 +1,12 @@
+/*
+  ______   ________  _______  ____   ____  ________  _______     
+.' ____ \ |_   __  ||_   __ \|_  _| |_  _||_   __  ||_   __ \    
+| (___ \_|  | |_ \_|  | |__) | \ \   / /    | |_ \_|  | |__) |   
+ _.____`.   |  _| _   |  __ /   \ \ / /     |  _| _   |  __ /    
+| \____) | _| |__/ | _| |  \ \_  \ ' /     _| |__/ | _| |  \ \_  
+ \______.'|________||____| |___|  \_/     |________||____| |___| 
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -18,7 +27,8 @@
 #include "./Other/utils.h"
 #include "./server.h"
 
-#define MAX_GET_BUFFER 1000
+#define MAX_MSG_SIZE 250
+#define MAX_BUFFER_SIZE 100
 #define PORT 5678
 
 static int sockfd;
@@ -72,13 +82,23 @@ int main(void) {
     pthread_t thread;
 
     int status_create_thread;
+
+    char ip[25];
+    if(inet_ntop(AF_INET, &clientaddr.sin_addr, ip, sizeof(ip))) {
+      char msg[100];
+      sprintf(msg, "Client connect from: %s", ip);
+      logging(tag, msg, true);
+    }else
+      logging(tag, "Invalid Client IP", false);
+    
     status_create_thread = pthread_create(&thread, NULL, manageRequest, (void *) personal_socket);
 
     if(status_create_thread < 0)
       logging(tag, "Pthread creation error", false);
 
   }
-
+  
+  free(personal_socket);
   logging(tag, "Accept error", false);
   close(sockfd);
   return 0;
@@ -102,12 +122,15 @@ void signalHandler(int signal) {
 }
 
 /*Manage Request Thread Function*/
-void *manageRequest(void *SocketDescriptorClient) {
+void *manageRequest(void *clientSocket) {
   int status;
   sqlite3 *database;
-  char buffer[50];
+  
+  char msg[MAX_MSG_SIZE];
+  char buffer[MAX_BUFFER_SIZE];
   char *tag = "Request manager";
-  int socket_descriptor = *(int *) SocketDescriptorClient;
+
+  int socket_descriptor = *(int *) clientSocket;
 
   logging(tag, "Thread request started", true);
 
@@ -124,7 +147,9 @@ void *manageRequest(void *SocketDescriptorClient) {
     /*Reading request*/
     read(socket_descriptor, buffer, sizeof(buffer));
 
-    logging(tag, strcat("Request from client: ", buffer), true);
+    sprintf(msg, "Request from client: %s", buffer);
+    logging(tag, msg, true);
+    bzero((char*) &msg, sizeof(msg));
 
     /*Service selector*/
     if(strcmp(buffer, "getAll") == 0)
@@ -145,13 +170,14 @@ void *manageRequest(void *SocketDescriptorClient) {
 
   /*Close socket and database*/
   sqlite3_close(database);
+  free(clientSocket);
   close(socket_descriptor);
 
   return NULL;
 }
 
 /*Get All Potholes Request*/
-void  getAllPotholesRequest(int socket, sqlite3 *database){
+void  getAllPotholesRequest(int socket, sqlite3 *database) {
   int status;
   char *tag = "Get All Request";
   status = getAllPotholes(database, socket);
@@ -163,12 +189,13 @@ void  getAllPotholesRequest(int socket, sqlite3 *database){
 }
 
 /*Get Near Potholes Request*/
-void getNearPotholesRequest(int socket, sqlite3 *database){
+void getNearPotholesRequest(int socket, sqlite3 *database) {
   int status;
-  char buffer[MAX_GET_BUFFER];
   char *tag = "Get Near request";
   
-  char tmp[50];
+  char utils[MAX_MSG_SIZE];
+  char buffer[MAX_BUFFER_SIZE];
+
   char username[50];
   double lat, lon, distanza;
 
@@ -183,31 +210,34 @@ void getNearPotholesRequest(int socket, sqlite3 *database){
   else{
 
     /*Getting data from client*/
-    logging(tag, strcat("Recive data: ", buffer), true);
+    sprintf(utils, "Request from client: %s", buffer);
+    logging(tag, utils, true);
+    bzero((char*) &utils, sizeof(utils));
+
     strcpy(username, actualParam);
     
     actualParam = strtok(NULL, ":");
     
-    strcpy(tmp, actualParam);
-    lat = atof(tmp);
-    bzero((char*) &tmp, sizeof(tmp));
+    strcpy(utils, actualParam);
+    lat = atof(utils);
+    bzero((char*) &utils, sizeof(utils));
     
     actualParam = strtok(NULL, ":");
     
-    strcpy(tmp, actualParam);
-    lon = atof(tmp);
-    bzero((char*) &tmp, sizeof(tmp));
+    strcpy(utils, actualParam);
+    lon = atof(utils);
+    bzero((char*) &utils, sizeof(utils));
 
     actualParam = strtok(NULL, ":");
 
-    strcpy(tmp, actualParam);
-    distanza = atof(tmp);
-    bzero((char*) &tmp, sizeof(tmp));
+    strcpy(utils, actualParam);
+    distanza = atof(utils);
+    bzero((char*) &utils, sizeof(utils));
   }
 
-  char *msg = "";
-  sprintf(msg,"Data from %s at %f - %f with max range %f", username, lat, lon, distanza);
-  logging(tag, msg, true);
+  sprintf(utils,"Data from %s at %f - %f with max range %f", username, lat, lon, distanza);
+  logging(tag, utils, true);
+  bzero((char*) &utils, sizeof(utils));
 
   status = getNearPotholes(database, socket, lat, lon, distanza);
 
@@ -221,16 +251,17 @@ void getNearPotholesRequest(int socket, sqlite3 *database){
 /*Post New Potholes Request*/
 void postRequest(int socket, sqlite3 *database){
   int status;
-  char buffer[MAX_GET_BUFFER];
   char *tag = "Post request";
+
+  char utils[MAX_MSG_SIZE];
+  char buffer[MAX_BUFFER_SIZE];
   
-  char tmp[50];
   char username[50];
   double lat, lon;
 
   /*Init conversation*/
   send(socket, "Start", 7, 0);
-  recv(socket, buffer, MAX_GET_BUFFER, 0);
+  recv(socket, buffer, MAX_BUFFER_SIZE, 0);
 
   char *actualParam = strtok(buffer, ":");
 
@@ -239,27 +270,29 @@ void postRequest(int socket, sqlite3 *database){
   else{
 
     /*Getting data from client*/
-    logging(tag, strcat("Recive data: ", buffer), true);
+    sprintf(utils, "Request from client: %s", buffer);
+    logging(tag, utils, true);
+    bzero((char*) &utils, sizeof(utils));
+    
     strcpy(username, actualParam);
 
     actualParam = strtok(NULL, ":");
 
-    strcpy(tmp, actualParam);
-    lat = atof(tmp);
-    bzero((char *) &tmp, sizeof(tmp));
+    strcpy(utils, actualParam);
+    lat = atof(utils);
+    bzero((char *) &utils, sizeof(utils));
 
     actualParam = strtok(NULL, ":");
 
-    strcpy(tmp, actualParam);
-    lon = atof(tmp);
-    bzero((char *) &tmp, sizeof(tmp));
+    strcpy(utils, actualParam);
+    lon = atof(utils);
+    bzero((char *) &utils, sizeof(utils));
   }
 
-  char *msg = "";
-  sprintf(msg,"Data from %s at %f - %f", username, lat, lon);
-  logging(tag, msg, true);
-
-  logging(tag, msg, true);
+  /*Operation logging*/
+  sprintf(utils,"Data from %s at %f - %f", username, lat, lon);
+  logging(tag, utils, true);
+  bzero((char *) &utils, sizeof(utils));
 
   /*Call insert function*/
   status = insertNewPothole(database, username, lat, lon);
