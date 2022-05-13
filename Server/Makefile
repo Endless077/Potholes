@@ -1,19 +1,19 @@
 CC = gcc
 CFLAGS = -O2 -Wall
+PTHREAD_FLAG = -pthread
 SQL_FLAG = -lsqlite3
-LDLIBS = -lm #=flag da usare per il linker
+LDLIBS = -lm
 OBJECTFILES = 
-TARGET = serverapp
-SRC = provaserver.c
+TARGET = server_pothole
+SRC = server.c Other/utils.c
 
 all: $(TARGET)
 	@printf "\e[32m%b\e[0m" "\n\tCreazione del file completata\n"
 
 $(TARGET): $(OBJECTFILES)
-	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTFILES) $(LDLIBS) $(SRC) $(SQL_FLAG)
+	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTFILES) $(LDLIBS) $(SRC) $(PTHREAD_FLAG) $(SQL_FLAG)
 
-.PHONY: depend clean # Controlliamo che non sia presente realmente un file chiamato clean
-
+.PHONY: depend clean
 
 clean: 
 	rm -f $(OBJECTFILES) $(TARGET)
