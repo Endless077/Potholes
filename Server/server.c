@@ -83,6 +83,7 @@ int main(void) {
 
     int status_create_thread;
 
+    /*IP logging*/
     char ip[25];
     if(inet_ntop(AF_INET, &clientaddr.sin_addr, ip, sizeof(ip))) {
       char msg[100];
@@ -91,6 +92,7 @@ int main(void) {
     }else
       logging(tag, "Invalid Client IP", false);
 
+    /*Start a new manage request*/
     status_create_thread = pthread_create(&thread, NULL, manageRequest, (void *) personal_socket);
 
     if(status_create_thread < 0)
@@ -235,6 +237,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
     bzero((char*) &utils, sizeof(utils));
   }
 
+  /*Operation logging*/
   sprintf(utils,"Data from %s at %f - %f with max range %f", username, lat, lon, distanza);
   logging(tag, utils, true);
   bzero((char*) &utils, sizeof(utils));

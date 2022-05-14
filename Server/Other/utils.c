@@ -22,19 +22,19 @@ _____  _____  _________  _____  _____      ______
 
 #define MAX_DATA_RETRIEVED 100
 
-//Insert new Potholes
+/*Insert new Potholes*/
 int insertNewPothole(sqlite3* database, char *username, double latitudine, double longitudine) {
     int status_query;
     char *put_query;
     char *tag = "SQL_Insert";
 
-    //Setting query string (%q for using ')
+    /*Setting query string (%q for using ')*/
     put_query = sqlite3_mprintf("INSERT INTO Potholes VALUES ('%q', %f, %f);", username, latitudine, longitudine);
 
     if(put_query == NULL)
       logging(tag, "Costruzione della query fallita", false);
 
-    //Execute query string
+    /*Execute query string*/
     status_query = sqlite3_exec(database, put_query, NULL, NULL, NULL);
 
     if(status_query != SQLITE_OK)
@@ -43,7 +43,7 @@ int insertNewPothole(sqlite3* database, char *username, double latitudine, doubl
     return status_query;
 }
 
-//Getting Near Potholes
+/*Getting Near Potholes*/
 int getNearPotholes(sqlite3 *database, int socket, double latitudine, double longitudine, double distanza) {
   int status_query;
   char *get_query;
@@ -52,25 +52,25 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
   sqlite3_stmt *res;
   char dataRetrieved[MAX_DATA_RETRIEVED]; /*buffer*/
 
-  //Setting query string
+  /*Setting query string*/
   get_query = sqlite3_mprintf("SELECT * FROM Potholes WHERE latitude >= %f AND latitude <= %f AND longitude >= %f AND longitude <= %f;", latitudine-distanza, latitudine+distanza, longitudine-distanza, longitudine+distanza);
 
    if(get_query == NULL)
       logging(tag, "Costruzione della query fallita", false);
 
-  //Prepare query (return status)
+  /*Prepare query (return status)*/
   status_query = sqlite3_prepare_v2(database, get_query, strlen(get_query), &res, NULL);
 
   if(status_query != SQLITE_OK)
       logging(tag, "Errore durante la query", false);
 
-  //Row Cursor
+  /*Row Cursor*/
   while(sqlite3_step(res) == SQLITE_ROW) {
 
     /*Cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
 
-    //Setting format string username:latitude:longitude:
+    /*Setting format string username:latitude:longitude:*/
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 0));
     strcat(dataRetrieved, ":");
 
@@ -80,7 +80,7 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
     strcat(dataRetrieved, ":");
 
-    //Sending data
+    /*Sending data*/
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
 
     char msg[250];
@@ -88,14 +88,14 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
     logging(tag, msg, true);
   }
 
-  //End char* flagging
+  /*End char* flagging*/
   send(socket, "END", 3, 0);
   sqlite3_finalize(res);
 
   return 0;
 }
 
-//Getting All Potholes
+/*Getting All Potholes*/
 int getAllPotholes(sqlite3 *database, int socket) {
   int status_query;
   char *get_query = "SELECT * FROM Potholes";
@@ -104,19 +104,19 @@ int getAllPotholes(sqlite3 *database, int socket) {
 
   sqlite3_stmt *res;
 
-  //Prepare query (return status)
+  /*Prepare query (return status)*/
   status_query = sqlite3_prepare_v2(database, get_query, strlen(get_query), &res, NULL);
 
   if(status_query != SQLITE_OK)
     logging(tag, "Errore durante la query", false);
 
-  //Row Cursor
+  /*Row Cursor*/
   while(sqlite3_step(res) == SQLITE_ROW) {
 
     /*Cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
 
-    //Setting format string username:latitude:longitude:
+    /*Setting format string username:latitude:longitude:*/
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 0));
     strcat(dataRetrieved, ":");
 
@@ -126,7 +126,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
     strcat(dataRetrieved, ":");
 
-    //Sending data
+    /*Sending data*/
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
 
     char msg[250];
@@ -134,14 +134,14 @@ int getAllPotholes(sqlite3 *database, int socket) {
     logging(tag, msg, true);
   }
 
-  //End char* flagging
+  /*End char* flagging*/
   send(socket, "END", 3, 0);
   sqlite3_close(database);
 
   return 0;
 }
 
-//Support logging function
+/*Support logging function*/
 void logging(char* tag, char* messaggio, bool status) {
   char format[250];
   bzero((char*) &format, sizeof(format));

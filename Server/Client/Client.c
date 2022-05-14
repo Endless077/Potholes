@@ -51,7 +51,7 @@ void func(int sockfd){
 
 	/*********************************************************************************/
 
-	// /*getNear*/
+	/*getNear*/
 	printf("Testing getNear\n");
 	sprintf(buffWrite, "getNear");
 	sleep(3);
@@ -69,11 +69,11 @@ void func(int sockfd){
 
 	bzero(buffRead, sizeof(buffRead));
 
-	//do{
+	do{
 		bzero(buffRead, sizeof(buffRead));
 		read(sockfd, buffRead, 50);
 		printf("From Server : %s\n", buffRead);
-	//}while(strcmp(buffRead, "END")!=0);
+	}while(strcmp(buffRead, "END")!=0);
 
 	/*Resetting*/
 	bzero(buffWrite, sizeof(buffWrite));
