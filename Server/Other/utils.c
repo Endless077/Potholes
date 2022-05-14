@@ -1,10 +1,10 @@
 /*
-_____  _____  _________  _____  _____      ______   
-|_   _||_   _||  _   _  ||_   _||_   _|   .' ____ \  
-  | |    | |  |_/ | | \_|  | |    | |     | (___ \_| 
-  | '    ' |      | |      | |    | |   _  _.____`.  
-   \ \__/ /      _| |_    _| |_  _| |__/ || \____) | 
-    `.__.'      |_____|  |_____||________| \______.' 
+_____  _____  _________  _____  _____      ______
+|_   _||_   _||  _   _  ||_   _||_   _|   .' ____ \
+  | |    | |  |_/ | | \_|  | |    | |     | (___ \_|
+  | '    ' |      | |      | |    | |   _  _.____`.
+   \ \__/ /      _| |_    _| |_  _| |__/ || \____) |
+    `.__.'      |_____|  |_____||________| \______.'
 */
 
 #include <stdio.h>
@@ -48,7 +48,7 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
   int status_query;
   char *get_query;
   char *tag = "SQL_NearPotholes";
-  
+
   sqlite3_stmt *res;
   char dataRetrieved[MAX_DATA_RETRIEVED]; /*buffer*/
 
@@ -101,7 +101,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
   char *get_query = "SELECT * FROM Potholes";
   char *tag = "SQL_GetAll";
   char dataRetrieved[MAX_DATA_RETRIEVED];
-  
+
   sqlite3_stmt *res;
 
   //Prepare query (return status)
@@ -112,7 +112,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
 
   //Row Cursor
   while(sqlite3_step(res) == SQLITE_ROW) {
-    
+
     /*Cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
 

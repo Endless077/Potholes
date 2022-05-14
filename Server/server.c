@@ -1,10 +1,10 @@
 /*
-  ______   ________  _______  ____   ____  ________  _______     
-.' ____ \ |_   __  ||_   __ \|_  _| |_  _||_   __  ||_   __ \    
-| (___ \_|  | |_ \_|  | |__) | \ \   / /    | |_ \_|  | |__) |   
- _.____`.   |  _| _   |  __ /   \ \ / /     |  _| _   |  __ /    
-| \____) | _| |__/ | _| |  \ \_  \ ' /     _| |__/ | _| |  \ \_  
- \______.'|________||____| |___|  \_/     |________||____| |___| 
+  ______   ________  _______  ____   ____  ________  _______
+.' ____ \ |_   __  ||_   __ \|_  _| |_  _||_   __  ||_   __ \
+| (___ \_|  | |_ \_|  | |__) | \ \   / /    | |_ \_|  | |__) |
+ _.____`.   |  _| _   |  __ /   \ \ / /     |  _| _   |  __ /
+| \____) | _| |__/ | _| |  \ \_  \ ' /     _| |__/ | _| |  \ \_
+ \______.'|________||____| |___|  \_/     |________||____| |___|
 */
 
 #include <stdio.h>
@@ -73,7 +73,7 @@ int main(void) {
   len = sizeof(clientaddr);
 
   while((connfd = accept(sockfd, (struct sockaddr *) &clientaddr, (socklen_t*)&len)) != -1) {
-    
+
     /*Accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
     logging(tag, "Accept success", true);
 
@@ -90,14 +90,14 @@ int main(void) {
       logging(tag, msg, true);
     }else
       logging(tag, "Invalid Client IP", false);
-    
+
     status_create_thread = pthread_create(&thread, NULL, manageRequest, (void *) personal_socket);
 
     if(status_create_thread < 0)
       logging(tag, "Pthread creation error", false);
 
   }
-  
+
   free(personal_socket);
   logging(tag, "Accept error", false);
   close(sockfd);
@@ -116,7 +116,7 @@ void signalHandler(int signal) {
   logging(tag, msg, true);
 
   close(sockfd);
-  
+
   logging(tag, "Server spento", true);
   exit(EXIT_SUCCESS);
 }
@@ -125,7 +125,7 @@ void signalHandler(int signal) {
 void *manageRequest(void *clientSocket) {
   int status;
   sqlite3 *database;
-  
+
   char msg[MAX_MSG_SIZE];
   char buffer[MAX_BUFFER_SIZE];
   char *tag = "Request manager";
@@ -156,7 +156,7 @@ void *manageRequest(void *clientSocket) {
       getAllPotholesRequest(socket_descriptor, database);
     else if(strcmp(buffer, "getNear") == 0)
       getNearPotholesRequest(socket_descriptor, database);
-    else if(strcmp(buffer, "post") == 0)
+    else if(strcmp(buffer, "put") == 0)
       postRequest(socket_descriptor, database);
     else if(strcmp(buffer, "threshold") == 0)
       send(socket_descriptor, "0.000003:", 10, 0);
@@ -181,7 +181,7 @@ void  getAllPotholesRequest(int socket, sqlite3 *database) {
   int status;
   char *tag = "Get All Request";
   status = getAllPotholes(database, socket);
-  
+
   if(status != SQLITE_OK)
     logging(tag, "Query not complete", false);
   else
@@ -192,7 +192,7 @@ void  getAllPotholesRequest(int socket, sqlite3 *database) {
 void getNearPotholesRequest(int socket, sqlite3 *database) {
   int status;
   char *tag = "Get Near request";
-  
+
   char utils[MAX_MSG_SIZE];
   char buffer[MAX_BUFFER_SIZE];
 
@@ -215,15 +215,15 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
     bzero((char*) &utils, sizeof(utils));
 
     strcpy(username, actualParam);
-    
+
     actualParam = strtok(NULL, ":");
-    
+
     strcpy(utils, actualParam);
     lat = atof(utils);
     bzero((char*) &utils, sizeof(utils));
-    
+
     actualParam = strtok(NULL, ":");
-    
+
     strcpy(utils, actualParam);
     lon = atof(utils);
     bzero((char*) &utils, sizeof(utils));
@@ -255,7 +255,7 @@ void postRequest(int socket, sqlite3 *database){
 
   char utils[MAX_MSG_SIZE];
   char buffer[MAX_BUFFER_SIZE];
-  
+
   char username[50];
   double lat, lon;
 
@@ -273,7 +273,7 @@ void postRequest(int socket, sqlite3 *database){
     sprintf(utils, "Request from client: %s", buffer);
     logging(tag, utils, true);
     bzero((char*) &utils, sizeof(utils));
-    
+
     strcpy(username, actualParam);
 
     actualParam = strtok(NULL, ":");

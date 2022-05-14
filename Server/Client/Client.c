@@ -1,8 +1,8 @@
-/*  ______  _____     _____  ________  ____  _____  _________  
- .' ___  ||_   _|   |_   _||_   __  ||_   \|_   _||  _   _  | 
-/ .'   \_|  | |       | |    | |_ \_|  |   \ | |  |_/ | | \_| 
-| |         | |   _   | |    |  _| _   | |\ \| |      | |     
-\ `.___.'\ _| |__/ | _| |_  _| |__/ | _| |_\   |_    _| |_    
+/*  ______  _____     _____  ________  ____  _____  _________
+ .' ___  ||_   _|   |_   _||_   __  ||_   \|_   _||  _   _  |
+/ .'   \_|  | |       | |    | |_ \_|  |   \ | |  |_/ | | \_|
+| |         | |   _   | |    |  _| _   | |\ \| |      | |
+\ `.___.'\ _| |__/ | _| |_  _| |__/ | _| |_\   |_    _| |_
  `.____ .'|________||_____||________||_____|\____|  |_____|
  */
 
@@ -30,7 +30,7 @@ void func(int sockfd){
 	char buffRead[100];
 
 	/*********************************************************************************/
-	
+
 	/*getAll*/
 	printf("Testing getAll\n");
 	sprintf(buffWrite, "getAll");
@@ -38,20 +38,20 @@ void func(int sockfd){
 
 	write(sockfd, buffWrite, sizeof(buffWrite));
 	bzero(buffWrite, sizeof(buffWrite));
-		 
-	//do{
+
+	do{
 		bzero(buffRead, sizeof(buffRead));
 	 	read(sockfd, buffRead, 50);
 	 	printf("From Server : %s\n", buffRead);
-	//}while(strcmp(buffRead, "END")!=0);
+	}while(strcmp(buffRead, "END")!=0);
 
 	/*Resetting*/
 	bzero(buffWrite, sizeof(buffWrite));
 	bzero(buffRead, sizeof(buffRead));
-	
+
 	/*********************************************************************************/
 
-	/*getNear*/
+	// /*getNear*/
 	printf("Testing getNear\n");
 	sprintf(buffWrite, "getNear");
 	sleep(3);
@@ -60,13 +60,13 @@ void func(int sockfd){
 
 	bzero(buffWrite, sizeof(buffWrite));
 	bzero(buffRead, sizeof(buffRead));
-	 
+
 	read(sockfd, buffRead, 7);
 	printf("BuffRead: %s\n", buffRead);
-	 
+
 	if(strcmp(buffRead, "Start") == 0)
 		write(sockfd, "vale:40.835884:14.248767:0", 27);
-	 
+
 	bzero(buffRead, sizeof(buffRead));
 
 	//do{
@@ -90,7 +90,7 @@ void func(int sockfd){
 
 	bzero(buffWrite, sizeof(buffWrite));
 	bzero(buffRead, sizeof(buffRead));
-	
+
 	read(sockfd, buffRead, 50);
 	printf("From Server : %s\n", buffRead);
 
@@ -104,9 +104,9 @@ void func(int sockfd){
 	printf("Testing put\n");
 	sprintf(buffWrite, "put");
 	sleep(3);
-	
+
 	write(sockfd, buffWrite, sizeof(buffWrite));
-	
+
 	bzero(buffWrite, sizeof(buffWrite));
 	bzero(buffRead, sizeof(buffRead));
 
@@ -141,7 +141,7 @@ int client(){
 		exit(EXIT_FAILURE);
 	}else
 		printf("Socket successfully created..\n");
-	
+
 	bzero(&servaddr, sizeof(servaddr));
 
 	// assign IP, PORT
