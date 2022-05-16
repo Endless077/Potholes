@@ -97,10 +97,7 @@ public class HomePagePresenter {
                         sendData(loc);
                     }else{
                         Log.e(LOG,"Location not found.");
-                        mContext.getActivity().runOnUiThread(() -> Toasty.error(mContext.getActivity(),
-                                "Location not found.",
-                                Toasty.LENGTH_SHORT,true));
-                        Handler.handleException(new LocationNotFoundException());
+                        Handler.handleException(new LocationNotFoundException(), mContext.getActivity());
                     }
                 }
 
@@ -182,7 +179,7 @@ public class HomePagePresenter {
         if((raggio/30)>=0)
             convertedDegree = (raggio/30)*degreeBase;
         else
-            Handler.handleException(new IllegalArgumentException());
+            Handler.handleException(new IllegalArgumentException(), mContext.getActivity());
 
         return convertedDegree;
     }
@@ -214,4 +211,11 @@ public class HomePagePresenter {
     }
 
     /*********************************************************************************************/
+
+    public HomePageFragment getmContext() {
+        return mContext;
+    }
+
+    /*********************************************************************************************/
+
 }

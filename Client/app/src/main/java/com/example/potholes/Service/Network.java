@@ -1,5 +1,6 @@
 package com.example.potholes.Service;
 
+import android.app.Activity;
 import android.util.Log;
 
 import com.example.potholes.Model.Pothole;
@@ -19,10 +20,16 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "localhost";
-    static final int PORT = 8080;
+    static final String ADDRESS = "192.168.110.89";
+    static final int PORT = 5678;
+
+    private Activity guiRef;
 
     public Network() {}
+
+    public Network(Activity a) {
+        this.guiRef = a;
+    }
 
     //Methods GET
     @Override
@@ -83,7 +90,7 @@ public class Network implements ICommunication {
 
         }catch (Exception e) {
             Log.e(LOG,"Errore in getNearPotholes");
-            Handler.handleException(e);
+            Handler.handleException(e,guiRef);
         }
         return potholes;
     }
@@ -137,7 +144,7 @@ public class Network implements ICommunication {
 
         }catch (Exception e) {
             Log.e(LOG,"Errore in getAllPotholes");
-            Handler.handleException(e);
+            Handler.handleException(e,guiRef);
         }
         return potholes;
     }
@@ -181,12 +188,14 @@ public class Network implements ICommunication {
             Log.i(LOG,"Closing connection...");
             closeConnection(socket);
 
+            THRESHOLD = Double.parseDouble(result);
+
         }catch (Exception e) {
             Log.e(LOG,"Errore in getThrashold");
-            Handler.handleException(e);
+            Handler.handleException(e,guiRef);
+
         }
 
-        THRESHOLD = Double.parseDouble(result);
         return THRESHOLD;
     }
 
@@ -221,7 +230,7 @@ public class Network implements ICommunication {
 
         }catch(Exception e) {
             Log.e(LOG,"Errore in insertNewPothole");
-            Handler.handleException(e);
+            Handler.handleException(e,guiRef);
         }
     }
 

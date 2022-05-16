@@ -8,7 +8,7 @@ import androidx.annotation.RequiresApi;
 
 import com.example.potholes.Presenter.HomePagePresenter;
 
-public class ThreadSpotter implements Runnable {
+public class ThreadSpotter extends Thread {
 
     private Context mContext;
     private HomePagePresenter homePagePresenter;

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -61,9 +62,7 @@ public class LoginFragment extends Fragment {
                         Toasty.LENGTH_SHORT,true).show();
                 layoutNickname.setError("Richeste solo lettere e/o numeri [3,10].");
             }else{
-                Network.NICKNAME = nickname;
-                nicknameEditText.setText("");
-                ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
+                mLoginPresenter.login(nickname);
             }
         });
 
@@ -103,7 +102,16 @@ public class LoginFragment extends Fragment {
         Log.i(LOG, "onDestroy Called.");
     }
 
+    public void goHomePage() {
+        ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
+    }
+
+    public void reset() {
+        nicknameEditText.setText("");
+    }
+
     public String toString(){
         return "LoginFragment";
     }
+
 }
