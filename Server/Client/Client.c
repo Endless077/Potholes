@@ -18,6 +18,8 @@
 
 #define SOCKET_NAME "my_server"
 
+#define MAX_BUFFER_READ 100
+
 #define PORT 5678
 #define SA struct sockaddr
 
@@ -41,7 +43,7 @@ void func(int sockfd){
 
 	do{
 		bzero(buffRead, sizeof(buffRead));
-	 	read(sockfd, buffRead, 50);
+	 	read(sockfd, buffRead, sizeof(buffRead));
 	 	printf("From Server : %s\n", buffRead);
 	}while(strcmp(buffRead, "END")!=0);
 
@@ -52,81 +54,81 @@ void func(int sockfd){
 	/*********************************************************************************/
 
 	/*getNear*/
-	printf("Testing getNear\n");
-	sprintf(buffWrite, "getNear");
-	sleep(3);
-
-	write(sockfd, buffWrite, sizeof(buffWrite));
-
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
-
-	read(sockfd, buffRead, 7);
-	printf("BuffRead: %s\n", buffRead);
-
-	if(strcmp(buffRead, "Start") == 0)
-		write(sockfd, "vale:40.835884:14.248767:0", 27);
-
-	bzero(buffRead, sizeof(buffRead));
-
-	do{
-		bzero(buffRead, sizeof(buffRead));
-		read(sockfd, buffRead, 50);
-		printf("From Server : %s\n", buffRead);
-	}while(strcmp(buffRead, "END")!=0);
-
-	/*Resetting*/
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
+	// printf("Testing getNear\n");
+	// sprintf(buffWrite, "getNear");
+	// sleep(3);
+	//
+	// write(sockfd, buffWrite, sizeof(buffWrite));
+	//
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
+	//
+	// read(sockfd, buffRead, 6);
+	// printf("BuffRead: %s\n", buffRead);
+	//
+	// if(strcmp(buffRead, "Start") == 0)
+	// 	write(sockfd, "vale:40.835884:14.248767:0", 27);
+	//
+	// bzero(buffRead, sizeof(buffRead));
+	//
+	// do{
+	// 	bzero(buffRead, sizeof(buffRead));
+	// 	read(sockfd, buffRead, sizeof(buffRead));
+	// 	printf("From Server : %s\n", buffRead);
+	// }while(strcmp(buffRead, "END")!=0);
+	//
+	// /*Resetting*/
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
 
 	/*********************************************************************************/
 
 	/*threshold*/
-	printf("Testing threshold\n");
-	sprintf(buffWrite, "threshold");
-	sleep(3);
-
-	write(sockfd, buffWrite, sizeof(buffWrite));
-
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
-
-	read(sockfd, buffRead, 50);
-	printf("From Server : %s\n", buffRead);
-
-	/*Resetting*/
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
+	// printf("Testing threshold\n");
+	// sprintf(buffWrite, "threshold");
+	// sleep(3);
+	//
+	// write(sockfd, buffWrite, sizeof(buffWrite));
+	//
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
+	//
+	// read(sockfd, buffRead, sizeof(buffRead));
+	// printf("From Server : %s\n", buffRead);
+	//
+	// /*Resetting*/
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
 
 	/*********************************************************************************/
 
 	/*put*/
-	printf("Testing put\n");
-	sprintf(buffWrite, "put");
-	sleep(3);
-
-	write(sockfd, buffWrite, sizeof(buffWrite));
-
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
-
-	read(sockfd, buffRead, 7);
-	printf("BuffRead: %s\n", buffRead);
-
-	if(strcmp(buffRead, "Start") == 0)
-		write(sockfd, "User:41.134679:14.172839:", 33);
-
-	bzero(buffRead, sizeof(buffRead));
-	read(sockfd, buffRead, sizeof(buffRead));
-	printf("buffRead %s\n", buffRead);
-	bzero(buffRead, sizeof(buffRead));
-
-	/*Resetting*/
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
+	// printf("Testing put\n");
+	// sprintf(buffWrite, "put");
+	// sleep(3);
+	//
+	// write(sockfd, buffWrite, sizeof(buffWrite));
+	//
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
+	//
+	// read(sockfd, buffRead, 6);
+	// printf("BuffRead: %s\n", buffRead);
+	//
+	// if(strcmp(buffRead, "Start") == 0)
+	// 	write(sockfd, "User:41.134679:14.172839:", 33);
+	//
+	// bzero(buffRead, sizeof(buffRead));
+	// read(sockfd, buffRead, sizeof(buffRead));
+	// printf("buffRead %s\n", buffRead);
+	// bzero(buffRead, sizeof(buffRead));
+	//
+	// /*Resetting*/
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
 
 	/*********************************************************************************/
-	
+
 }
 
 int main(void) {

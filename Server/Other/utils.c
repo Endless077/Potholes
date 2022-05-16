@@ -110,8 +110,11 @@ int getAllPotholes(sqlite3 *database, int socket) {
   if(status_query != SQLITE_OK)
     logging(tag, "Errore durante la query", false);
 
+int i = 0;
   /*Row Cursor*/
   while(sqlite3_step(res) == SQLITE_ROW) {
+
+    printf("i %d \n", i++);
 
     /*Cleaning the buffer*/
     bzero((char*) &dataRetrieved, sizeof(dataRetrieved));
@@ -124,7 +127,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
     strcat(dataRetrieved, ":");
 
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
-    strcat(dataRetrieved, ":");
+    strcat(dataRetrieved, "\n");
 
     /*Sending data*/
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
