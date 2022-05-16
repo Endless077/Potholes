@@ -49,6 +49,7 @@
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:hint="@string/nickname"
+        app:hintTextColor="@color/primaryColor"
         app:circularflow_radiusInDP="100dp"
         app:errorEnabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
