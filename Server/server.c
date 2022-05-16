@@ -113,8 +113,8 @@ void signalHandler(int signal) {
   char sig[10];
   sprintf(sig,"%d",signal);
 
-  char *msg = strcat("Ricevuto il segnale SIGUSR (codice: ", sig);
-  msg = strcat(msg, "). Close della socket ed il server sara' offline\n"")");
+  char msg[MAX_MSG_SIZE];
+  sprintf(msg,"Ricevuto il segnale SIGUSR (codice: %s", sig);
   logging(tag, msg, true);
 
   close(sockfd);
