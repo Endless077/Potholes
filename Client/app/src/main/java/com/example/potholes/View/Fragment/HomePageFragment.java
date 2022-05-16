@@ -23,6 +23,7 @@ import com.example.potholes.Model.Pothole;
 import com.example.potholes.Presenter.HomePagePresenter;
 import com.example.potholes.R;
 import com.example.potholes.Service.Network;
+import com.example.potholes.Thread.ThreadPotholes;
 import com.example.potholes.View.MainActivity;
 import com.example.potholes.View.PotholesAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -34,6 +35,8 @@ import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class HomePageFragment extends Fragment {
@@ -147,19 +150,20 @@ public class HomePageFragment extends Fragment {
         visualizzaBucheButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ArrayList<Pothole> potholesList;
-                String range = spinner.getSelectedItem().toString();
-                potholesList = (ArrayList<Pothole>) mHomePagePresenter.getPotHoles(range);
-                uploadMap(potholesList);
-                uploadRecyclerView(potholesList);
-                userMarker(mHomePagePresenter.getLocation());
+                Map<String,Double> loc = new HashMap<>();
+                mHomePagePresenter.getLocation(loc);
             }
-
         });
 
     }
 
-    public void initMap(){
+    public void upload(List<Pothole> potholes, Map<String, Double> location) {
+        uploadMap(potholes);
+        uploadRecyclerView(potholes);
+        userMarker(location);
+    }
+
+    public void initMap() {
         recyclerView.setVisibility(View.INVISIBLE);
 
         //Map configuration
@@ -187,7 +191,7 @@ public class HomePageFragment extends Fragment {
 //        mapView.invalidate();
     }
 
-    private void uploadMap(ArrayList<Pothole> list) {
+    private void uploadMap(List<Pothole> list) {
         for (Pothole p : list) {
             Marker pothole = new Marker(mapView);
             GeoPoint potholeGeoPoint = new GeoPoint(p.getLatitudine(), p.getLongitudine());
@@ -209,7 +213,7 @@ public class HomePageFragment extends Fragment {
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));
     }
 
-    private void uploadRecyclerView(ArrayList<Pothole> list) {
+    private void uploadRecyclerView(List<Pothole> list) {
         PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
         adapter.clearList();
         adapter.setListCompilation(list);
@@ -252,6 +256,9 @@ public class HomePageFragment extends Fragment {
     }
 
     private void userMarker(Map<String, Double> location) {
+        if(location==null)
+            return;
+
         Marker startMarker = new Marker(mapView);
         GeoPoint userGeopoint = new GeoPoint(location.get("Latitude"), location.get("Longitude"));
         startMarker.setPosition(userGeopoint);
@@ -260,4 +267,11 @@ public class HomePageFragment extends Fragment {
         mapView.getOverlays().add(startMarker);
         mapView.invalidate();
     }
+
+    public void getPothole(Map<String,Double> location) {
+        String range = spinner.getSelectedItem().toString();
+        ThreadPotholes thread = new ThreadPotholes(location, mHomePagePresenter, range);
+        thread.start();
+    }
+
 }

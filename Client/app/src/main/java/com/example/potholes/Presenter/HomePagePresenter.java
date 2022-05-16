@@ -18,6 +18,7 @@ import com.example.potholes.R;
 import com.example.potholes.Service.CheckService;
 import com.example.potholes.Service.Handler;
 import com.example.potholes.Service.Network;
+import com.example.potholes.Thread.ThreadPotholes;
 import com.example.potholes.View.Fragment.HomePageFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -47,6 +48,7 @@ public class HomePagePresenter {
 
     public HomePagePresenter(HomePageFragment homePageFragment) {
         this.mContext = homePageFragment;
+        gpsManager();
     }
 
     /*********************************************************************************************/
@@ -88,7 +90,8 @@ public class HomePagePresenter {
                 //Hole Spotter
                 if (Math.abs(linear_acceleration[1]) > Network.THRESHOLD) {
                     Log.i(LOG,"Spotting hole...");
-                    Map<String,Double> loc = getLocation();
+                    Map<String,Double> loc = new HashMap<>();
+                    getLocation(loc);
                     mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
                             "Hole Spotted.",
                             Toasty.LENGTH_SHORT).show());
@@ -116,16 +119,14 @@ public class HomePagePresenter {
 
     /*********************************************************************************************/
 
-    public Map<String, Double> getLocation() {
+    public void getLocation(Map<String, Double> loc) {
         Log.i(LOG,"Getting GPS Position");
-        Map<String, Double> loc = new HashMap<>();
         if (ActivityCompat.checkSelfPermission(mContext.getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 &&
                 ActivityCompat.checkSelfPermission(mContext.getActivity(),
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            mContext.getActivity().runOnUiThread(() -> CheckService.checkGpsEnabled(mContext.getActivity(), 333));
-            return null;
+            CheckService.checkGpsEnabled(mContext.getActivity(), 333);
         }else {
             fusedLocationClient.getLastLocation().addOnSuccessListener(mContext.getActivity(), location -> {
                 if (location != null) {
@@ -133,25 +134,25 @@ public class HomePagePresenter {
                     Log.i(LOG, "Longitudine: " + location.getLongitude());
                     loc.put("Latitude",location.getLatitude());
                     loc.put("Longitude",location.getLongitude());
+                    mContext.getPothole(loc);
                 } else {
                     Log.i("GPS", "Nessuna location.");
                     new MaterialAlertDialogBuilder(mContext.getActivity(), R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
                             .setTitle("Errore GPS")
                             .setMessage("Il GPS è stato disattivato, verrai reindirizzato alla homepage.")
                             .setPositiveButton("Riprova", (dialogInterface, i) -> {
-                                getLocation();
+                                getLocation(loc);
                             })
                             .setNegativeButton("Chiudi", (dialog, i) -> {})
                             .show();
                 }
             });
-            return loc;
         }
     }
 
-    public List<Pothole> getPotHoles(String range) {
-        Map<String,Double> location = getLocation();
-        Network network = new Network();
+    public List<Pothole> getPotHoles(Map<String,Double> location, String range) {
+
+        Network network = new Network(mContext.getActivity());
 
         if(range.equals("Tutti"))
             return network.getAllPotoles();
@@ -194,7 +195,6 @@ public class HomePagePresenter {
         Log.i(LOG,"Starting recording...");
         mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),"Starting recording...",
                 Toasty.LENGTH_SHORT,true).show());
-        gpsManager();
         accelerometerManager();
     }
 
@@ -214,6 +214,10 @@ public class HomePagePresenter {
 
     public HomePageFragment getmContext() {
         return mContext;
+    }
+
+    public void viewUpload(List<Pothole> potholes, Map<String,Double> location) {
+        mContext.upload(potholes, location);
     }
 
     /*********************************************************************************************/

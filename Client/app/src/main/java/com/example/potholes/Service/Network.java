@@ -193,7 +193,6 @@ public class Network implements ICommunication {
         }catch (Exception e) {
             Log.e(LOG,"Errore in getThrashold");
             Handler.handleException(e,guiRef);
-
         }
 
         return THRESHOLD;

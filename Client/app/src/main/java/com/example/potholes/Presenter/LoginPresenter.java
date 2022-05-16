@@ -14,7 +14,7 @@ public class LoginPresenter {
     }
 
     public void login(String nickname) {
-        ThreadPotholes thread = new ThreadPotholes(mContex.getContext(), this);
+        ThreadPotholes thread = new ThreadPotholes(this);
         thread.start();
         Network.NICKNAME = nickname;
     }

@@ -115,22 +115,12 @@ public class CheckService {
     private static void requestGPS(Activity context, int requestCode) {
         Log.i(LOG, "requestGPS: started.");
         Log.i(LOG, "requestStorage: started.");
-        new MaterialAlertDialogBuilder(context, R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
-                .setTitle("Utilizzo accesso posizionale necessario.")
-                .setMessage("Impostazioni->App->NaTour21->Permessi e Autorizzazioni.")
-                .setPositiveButton("Va bene", (dialog, which) -> {
-                    ActivityCompat.requestPermissions(context,
-                            new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);
-                    ActivityCompat.requestPermissions(context,
-                            new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, requestCode);
-                })
-//                    .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    })
-                .create().show();
+        context.runOnUiThread(() -> {
+            ActivityCompat.requestPermissions(context,
+                    new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);
+            ActivityCompat.requestPermissions(context,
+                    new String[] {Manifest.permission.ACCESS_COARSE_LOCATION}, requestCode);
+        });
     }
 
     private static void requestNetwork(Activity context, int requestCode) {
