@@ -43,15 +43,16 @@
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/editTextNicknameLayout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        style="@style/LoginTextInputLayoutStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginEnd="40dp"
         android:hint="@string/nickname"
-        app:hintTextColor="@color/primaryColor"
+        android:textColorHint="#565656"
         app:circularflow_radiusInDP="100dp"
         app:errorEnabled="false"
+        app:boxStrokeColor="@color/primaryColor"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
