@@ -6,6 +6,7 @@ import android.util.Log;
 import com.example.potholes.Exception.LocationNotFoundException;
 import com.example.potholes.Exception.NoGpsConnectionException;
 import com.example.potholes.Exception.NoInternetConnectionException;
+import com.example.potholes.Exception.PotholesNotFoundException;
 
 import java.io.IOException;
 import java.net.Socket;
@@ -58,9 +59,17 @@ public class Handler {
             a.runOnUiThread(() -> {
                 Toasty.error(a,
                         "Server Not Available.",
-                        Toasty.LENGTH_SHORT,true).show();
+                        Toasty.LENGTH_SHORT, true).show();
             });
-        }else{
+        }else if(e instanceof PotholesNotFoundException) {
+                Log.e(Handler, "PotholesNotFoundException " + e.getMessage());
+                e.printStackTrace();
+                a.runOnUiThread(() -> {
+                    Toasty.error(a,
+                            "Pothole not found.",
+                            Toasty.LENGTH_SHORT,true).show();
+                });
+            }else{
             Log.e(Handler, e.getClass() + ": " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {

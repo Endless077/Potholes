@@ -78,7 +78,7 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
     strcat(dataRetrieved, ":");
 
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
-    strcat(dataRetrieved, "\r");
+    strcat(dataRetrieved, ":\r");
 
     /*Sending data*/
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);
@@ -124,7 +124,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
     strcat(dataRetrieved, ":");
 
     strcat(dataRetrieved, (char *)sqlite3_column_text(res, 2));
-    strcat(dataRetrieved, "\r");
+    strcat(dataRetrieved, ":\r");
 
     /*Sending data*/
     send(socket, dataRetrieved, sizeof(dataRetrieved), 0);

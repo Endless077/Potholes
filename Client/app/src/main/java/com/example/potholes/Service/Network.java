@@ -20,7 +20,7 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "192.168.110.89";
+    static final String ADDRESS = "192.168.1.10";
     static final int PORT = 5678;
 
     private Activity guiRef;
@@ -60,7 +60,7 @@ public class Network implements ICommunication {
 
             //Invio informazioni al server
             Log.i(LOG,"Sending information...");
-            String tracking = NICKNAME +":"+latitudine+":"+longitudine;
+            String tracking = NICKNAME +":"+latitudine+":"+longitudine+":"+range;
             socket.getOutputStream().write(tracking.getBytes());
 
             //Attesa informazioni
@@ -73,7 +73,9 @@ public class Network implements ICommunication {
             while(reader.ready()){
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
-                if(responseBuffer.isEmpty()){
+                if(responseBuffer.equals("Start"))
+                    continue;
+                if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
                     break;
                 }
                 String[] fields = responseBuffer.split(":");
@@ -127,14 +129,13 @@ public class Network implements ICommunication {
             while(reader.ready()){
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
-                if(responseBuffer.isEmpty()){
+                if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
                     break;
                 }
                 String[] fields = responseBuffer.split(":");
                 String nickname = fields[0];
                 double latitude = Double.parseDouble(fields[1]);
                 double longitude = Double.parseDouble(fields[2]);
-
                 potholes.add(new Pothole(nickname, latitude, longitude));
             }
 

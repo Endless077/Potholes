@@ -83,21 +83,21 @@ int main(void) {
 
   /*Accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
   while((connfd = accept(sockfd, (struct sockaddr *) &clientaddr, (socklen_t*)&len)) != -1) {
-    
+
     /*Initi attribute*/
     err = pthread_attr_init(&attr);
-    
+
     if(err!=0)
       logging(tag, "Attribute init error", false);
-  
+
     /*Set detach state*/
     err = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-  
+
     if(err!=0)
       logging(tag, "Setting detach state error", false);
 
     logging(tag, "Accept success", true);
-    
+
     personal_socket = malloc(sizeof(int));
     *(personal_socket) = connfd;
 
@@ -117,7 +117,7 @@ int main(void) {
       logging(tag, "Pthread creation error", false);
 
     pthread_attr_destroy(&attr);
-  
+
 
   }
 
@@ -221,7 +221,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
   double lat, lon, distanza;
 
  /*Init conversation*/
-  send(socket, "Start", 7, 0);
+  send(socket, "Start\r", 6, 0);
   recv(socket, buffer, sizeof(buffer), 0);
 
   char *actualParam = strtok(buffer, ":");

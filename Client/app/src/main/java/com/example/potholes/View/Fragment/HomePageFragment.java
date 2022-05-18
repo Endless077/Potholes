@@ -1,5 +1,7 @@
 package com.example.potholes.View.Fragment;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -19,9 +21,11 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.potholes.Exception.PotholesNotFoundException;
 import com.example.potholes.Model.Pothole;
 import com.example.potholes.Presenter.HomePagePresenter;
 import com.example.potholes.R;
+import com.example.potholes.Service.Handler;
 import com.example.potholes.Service.Network;
 import com.example.potholes.Thread.ThreadPotholes;
 import com.example.potholes.View.MainActivity;
@@ -33,10 +37,12 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
+import org.osmdroid.views.overlay.Overlay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 public class HomePageFragment extends Fragment {
@@ -158,9 +164,21 @@ public class HomePageFragment extends Fragment {
     }
 
     public void upload(List<Pothole> potholes, Map<String, Double> location) {
+        clear();
+        if(potholes.isEmpty()){
+            Handler.handleException(new PotholesNotFoundException(), getActivity());
+            return;
+        }
+        mHomePagePresenter.setAddresses(potholes);
         uploadMap(potholes);
         uploadRecyclerView(potholes);
         userMarker(location);
+    }
+
+    private void clear(){
+        mapView.getOverlays().clear();
+        PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
+        adapter.clearList();
     }
 
     public void initMap() {
@@ -196,6 +214,8 @@ public class HomePageFragment extends Fragment {
             Marker pothole = new Marker(mapView);
             GeoPoint potholeGeoPoint = new GeoPoint(p.getLatitudine(), p.getLongitudine());
             pothole.setPosition(potholeGeoPoint);
+            pothole.setTitle("Pothole");
+            pothole.setSnippet(p.getIndirizzo());
             pothole.setIcon(getResources().getDrawable(R.mipmap.cone));
             pothole.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
             mapView.getOverlays().add(pothole);
@@ -215,7 +235,6 @@ public class HomePageFragment extends Fragment {
 
     private void uploadRecyclerView(List<Pothole> list) {
         PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
-        adapter.clearList();
         adapter.setListCompilation(list);
         adapter.notifyDataSetChanged();
     }
@@ -265,6 +284,7 @@ public class HomePageFragment extends Fragment {
         startMarker.setIcon(getResources().getDrawable(R.mipmap.user));
         startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
         mapView.getOverlays().add(startMarker);
+        startMarker.setOnMarkerClickListener((marker, mapView) -> false);
         mapView.invalidate();
     }
 

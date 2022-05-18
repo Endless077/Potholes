@@ -7,12 +7,15 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.LocationManager;
 import android.util.Log;
 
 import androidx.core.app.ActivityCompat;
 
 import com.example.potholes.Exception.LocationNotFoundException;
+import com.example.potholes.Exception.NoGpsConnectionException;
 import com.example.potholes.Model.Pothole;
 import com.example.potholes.R;
 import com.example.potholes.Service.CheckService;
@@ -26,9 +29,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 
 import org.osmdroid.util.GeoPoint;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
@@ -48,18 +53,20 @@ public class HomePagePresenter {
 
     public HomePagePresenter(HomePageFragment homePageFragment) {
         this.mContext = homePageFragment;
-        gpsManager();
     }
 
     /*********************************************************************************************/
 
-    private void gpsManager() {
+    private boolean gpsManager() {
         Log.i(LOG,"GPS service loading...");
         if(CheckService.isGpsOnline(mContext.getContext())) {
             this.lManager = (LocationManager) mContext.getContext().getSystemService(Context.LOCATION_SERVICE);
             this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext.getContext());
+            return true;
         }else{
             CheckService.checkGpsEnabled(mContext.getActivity(),333);
+            Handler.handleException(new NoGpsConnectionException(), mContext.getActivity());
+            return false;
         }
     }
 
@@ -121,6 +128,9 @@ public class HomePagePresenter {
 
     public void getLocation(Map<String, Double> loc) {
         Log.i(LOG,"Getting GPS Position");
+        if(!gpsManager())
+            return;
+
         if (ActivityCompat.checkSelfPermission(mContext.getActivity(),
                 Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 &&
@@ -218,6 +228,30 @@ public class HomePagePresenter {
 
     public void viewUpload(List<Pothole> potholes, Map<String,Double> location) {
         mContext.upload(potholes, location);
+    }
+
+    public void setAddresses(List<Pothole> potholes) {
+
+        Geocoder geocoder;
+        List<Address> addresses;
+        geocoder = new Geocoder(mContext.getContext(), Locale.getDefault());
+        String address, city, postalCode;
+
+        for(Pothole p : potholes) {
+            try {
+                addresses = geocoder.getFromLocation(p.getLatitudine(), p.getLongitudine(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
+                if(addresses.isEmpty())
+                    p.setIndirizzo("Not found.");
+                else{
+                    address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
+                    city = addresses.get(0).getLocality();
+                    postalCode = addresses.get(0).getPostalCode();
+                    p.setIndirizzo(city + ", " + address + ", " + postalCode);
+                }
+            } catch (IOException e) {
+                Handler.handleException(e, mContext.getActivity());
+            }
+        }
     }
 
     /*********************************************************************************************/
