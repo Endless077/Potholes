@@ -29,7 +29,7 @@
 
 #define MAX_MSG_SIZE 250
 #define MAX_BUFFER_SIZE 100
-#define PORT 5678
+#define PORT 3390
 
 static int sockfd;
 
@@ -83,21 +83,21 @@ int main(void) {
 
   /*Accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
   while((connfd = accept(sockfd, (struct sockaddr *) &clientaddr, (socklen_t*)&len)) != -1) {
-
-    /*Initi attribute*/
+    
+    /*Init attribute*/
     err = pthread_attr_init(&attr);
-
+    
     if(err!=0)
       logging(tag, "Attribute init error", false);
-
+  
     /*Set detach state*/
     err = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
-
+  
     if(err!=0)
       logging(tag, "Setting detach state error", false);
 
     logging(tag, "Accept success", true);
-
+    
     personal_socket = malloc(sizeof(int));
     *(personal_socket) = connfd;
 
@@ -117,7 +117,7 @@ int main(void) {
       logging(tag, "Pthread creation error", false);
 
     pthread_attr_destroy(&attr);
-
+  
 
   }
 
@@ -221,7 +221,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
   double lat, lon, distanza;
 
  /*Init conversation*/
-  send(socket, "Start\r", 6, 0);
+  send(socket, "Start", 7, 0);
   recv(socket, buffer, sizeof(buffer), 0);
 
   char *actualParam = strtok(buffer, ":");
@@ -257,7 +257,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
   }
 
   /*Operation logging*/
-  sprintf(utils,"Data from %s at %f - %f with max range %f", username, lat, lon, distanza);
+  sprintf(utils,"Data from %s at (%f,%f) with max range %f", username, lat, lon, distanza);
   logging(tag, utils, true);
   bzero((char*) &utils, sizeof(utils));
 

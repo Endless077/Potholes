@@ -29,6 +29,14 @@ public class Handler {
                         "Location not found.",
                         Toasty.LENGTH_SHORT,true).show();
             });
+        }else if(e instanceof PotholesNotFoundException) {
+            Log.e(Handler, "PotholesNotFoundException " + e.getMessage());
+            e.printStackTrace();
+            a.runOnUiThread(() -> {
+                Toasty.error(a,
+                        "Pothole not found.",
+                        Toasty.LENGTH_SHORT,true).show();
+            });
         }else if(e instanceof NoInternetConnectionException) {
             Log.e(Handler, "NoInternetConnectionException: " + e.getMessage());
             e.printStackTrace();
@@ -61,15 +69,7 @@ public class Handler {
                         "Server Not Available.",
                         Toasty.LENGTH_SHORT, true).show();
             });
-        }else if(e instanceof PotholesNotFoundException) {
-                Log.e(Handler, "PotholesNotFoundException " + e.getMessage());
-                e.printStackTrace();
-                a.runOnUiThread(() -> {
-                    Toasty.error(a,
-                            "Pothole not found.",
-                            Toasty.LENGTH_SHORT,true).show();
-                });
-            }else{
+        }else{
             Log.e(Handler, e.getClass() + ": " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {

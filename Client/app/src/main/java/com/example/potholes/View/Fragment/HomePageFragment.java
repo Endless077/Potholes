@@ -1,7 +1,5 @@
 package com.example.potholes.View.Fragment;
 
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -37,12 +35,10 @@ import org.osmdroid.config.Configuration;
 import org.osmdroid.util.GeoPoint;
 import org.osmdroid.views.MapView;
 import org.osmdroid.views.overlay.Marker;
-import org.osmdroid.views.overlay.Overlay;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 public class HomePageFragment extends Fragment {
@@ -108,62 +104,55 @@ public class HomePageFragment extends Fragment {
         adapterDifficulty.setDropDownViewResource(R.layout.dropdown_menu);
         spinner.setAdapter(adapterDifficulty);
 
-        changeViewButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(isViewingMap){
-                    isViewingMap = false;
-                    mapView.setVisibility(View.INVISIBLE);
-                    recyclerView.setVisibility(View.VISIBLE);
-                }else{
-                    isViewingMap = true;
-                    recyclerView.setVisibility(View.INVISIBLE);
-                    mapView.setVisibility(View.VISIBLE);
-                }
+        changeViewButton.setOnClickListener(v -> {
+            if(isViewingMap){
+                isViewingMap = false;
+                mapView.setVisibility(View.INVISIBLE);
+                recyclerView.setVisibility(View.VISIBLE);
+            }else{
+                isViewingMap = true;
+                recyclerView.setVisibility(View.INVISIBLE);
+                mapView.setVisibility(View.VISIBLE);
             }
         });
 
-        iniziaRegistrazioneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(!isRecording){
-                    isRecording = true;
-                    iniziaRegistrazioneButton.setText(R.string.endRecord);
-                    mHomePagePresenter.startSpotting();
-                }else{
-                    isRecording = false;
-                    iniziaRegistrazioneButton.setText(R.string.startRecord);
-                    mHomePagePresenter.stopSpotting();
-                }
+        iniziaRegistrazioneButton.setOnClickListener(v -> {
+            if(!isRecording){
+                isRecording = true;
+                iniziaRegistrazioneButton.setText(R.string.endRecord);
+                mHomePagePresenter.startSpotting();
+            }else{
+                isRecording = false;
+                iniziaRegistrazioneButton.setText(R.string.startRecord);
+                mHomePagePresenter.stopSpotting();
             }
         });
 
-        exitButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        exitButton.setOnClickListener(v ->
                 new MaterialAlertDialogBuilder(getContext(), R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
-                        .setTitle("Esci")
-                        .setMessage("Sei sicuro di voler uscire?")
-                        .setPositiveButton("Esci", (dialogInterface, i) -> {
-                            ((MainActivity) getActivity()).changeFragment(((MainActivity) getActivity()).loginFragment);
-                        })
-                        .setNegativeButton("Annulla", (dialogInterface, i) -> {
-                        })
-                        .show();
-            }
-        });
+                .setTitle("Esci")
+                .setMessage("Sei sicuro di voler uscire?")
+                .setPositiveButton("Esci", (dialogInterface, i) -> {
+                    ((MainActivity) getActivity()).changeFragment(((MainActivity) getActivity()).loginFragment);
+                })
+                .setNegativeButton("Annulla", (dialogInterface, i) -> {
+                })
+                .show());
 
-        visualizzaBucheButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Map<String,Double> loc = new HashMap<>();
-                mHomePagePresenter.getLocation(loc);
-            }
+        visualizzaBucheButton.setOnClickListener(v -> {
+            Map<String,Double> loc = new HashMap<>();
+            String range = spinner.getSelectedItem().toString();
+
+            mHomePagePresenter.getLocation(loc);
+
+            ThreadPotholes thread = new ThreadPotholes(loc, mHomePagePresenter, range);
+            thread.start();
         });
 
     }
 
     public void upload(List<Pothole> potholes, Map<String, Double> location) {
+        Log.i(LOG,"Upload GUI...");
         clear();
         if(potholes.isEmpty()){
             Handler.handleException(new PotholesNotFoundException(), getActivity());
@@ -175,38 +164,14 @@ public class HomePageFragment extends Fragment {
         userMarker(location);
     }
 
-    private void clear(){
-        mapView.getOverlays().clear();
-        PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
-        adapter.clearList();
-    }
-
     public void initMap() {
-        recyclerView.setVisibility(View.INVISIBLE);
-
         //Map configuration
+        recyclerView.setVisibility(View.INVISIBLE);
         mapView.setMultiTouchControls(true);
         GeoPoint startPoint = new GeoPoint(40.863, 14.2767);
         IMapController mapController = mapView.getController();
         mapController.setZoom(9);
         mapController.setCenter(startPoint);
-
-//        //Hole Marker Example
-//        Marker pothole = new Marker(mapView);
-//        GeoPoint potholeGeoPoint = new GeoPoint(40.1235, 14.6758);
-//        pothole.setPosition(potholeGeoPoint);
-//        pothole.setIcon(getResources().getDrawable(R.mipmap.cone));
-//        pothole.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-//        mapView.getOverlays().add(pothole);
-//        mapView.invalidate();
-//
-//        //User Marker Example
-//        Marker startMarker = new Marker(mapView);
-//        startMarker.setPosition(startPoint);
-//        startMarker.setIcon(getResources().getDrawable(R.mipmap.user));
-//        startMarker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM);
-//        mapView.getOverlays().add(startMarker);
-//        mapView.invalidate();
     }
 
     private void uploadMap(List<Pothole> list) {
@@ -223,10 +188,8 @@ public class HomePageFragment extends Fragment {
         }
     }
 
-    public void initRecyclerView(){
-        //List<Pothole> tmpLst = new ArrayList<>();
-        //tmpLst.add(new Pothole("Valentino", 40.2222, 14.5446, "Via Fuorigrotta 1"));
-        //tmpLst.add(new Pothole("Antonio", 40.2222, 14.5446, "Via Fuorigrotta 2"));
+    public void initRecyclerView() {
+        //RecyclerView Configuration
         potholesAdapter = new PotholesAdapter(getActivity(), new ArrayList<>(), mHomePagePresenter);
         recyclerView.setAdapter(potholesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
@@ -274,6 +237,12 @@ public class HomePageFragment extends Fragment {
         return "HomaPageFragment";
     }
 
+    private void clear(){
+        mapView.getOverlays().clear();
+        PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
+        adapter.clearList();
+    }
+
     private void userMarker(Map<String, Double> location) {
         if(location==null)
             return;
@@ -286,12 +255,6 @@ public class HomePageFragment extends Fragment {
         mapView.getOverlays().add(startMarker);
         startMarker.setOnMarkerClickListener((marker, mapView) -> false);
         mapView.invalidate();
-    }
-
-    public void getPothole(Map<String,Double> location) {
-        String range = spinner.getSelectedItem().toString();
-        ThreadPotholes thread = new ThreadPotholes(location, mHomePagePresenter, range);
-        thread.start();
     }
 
 }

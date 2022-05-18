@@ -57,11 +57,14 @@ public class HomePagePresenter {
 
     /*********************************************************************************************/
 
+    /*Manager*/
     private boolean gpsManager() {
         Log.i(LOG,"GPS service loading...");
         if(CheckService.isGpsOnline(mContext.getContext())) {
-            this.lManager = (LocationManager) mContext.getContext().getSystemService(Context.LOCATION_SERVICE);
-            this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext.getContext());
+            if(lManager==null && fusedLocationClient==null) {
+                this.lManager = (LocationManager) mContext.getContext().getSystemService(Context.LOCATION_SERVICE);
+                this.fusedLocationClient = LocationServices.getFusedLocationProviderClient(mContext.getContext());
+            }
             return true;
         }else{
             CheckService.checkGpsEnabled(mContext.getActivity(),333);
@@ -126,6 +129,7 @@ public class HomePagePresenter {
 
     /*********************************************************************************************/
 
+    /*Tasks*/
     public void getLocation(Map<String, Double> loc) {
         Log.i(LOG,"Getting GPS Position");
         if(!gpsManager())
@@ -144,7 +148,7 @@ public class HomePagePresenter {
                     Log.i(LOG, "Longitudine: " + location.getLongitude());
                     loc.put("Latitude",location.getLatitude());
                     loc.put("Longitude",location.getLongitude());
-                    mContext.getPothole(loc);
+                    //TODO: Sincronizzare altrimenti non funziona.
                 } else {
                     Log.i("GPS", "Nessuna location.");
                     new MaterialAlertDialogBuilder(mContext.getActivity(), R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
@@ -153,7 +157,8 @@ public class HomePagePresenter {
                             .setPositiveButton("Riprova", (dialogInterface, i) -> {
                                 getLocation(loc);
                             })
-                            .setNegativeButton("Chiudi", (dialog, i) -> {})
+                            .setNegativeButton("Chiudi", (dialog, i) -> {
+                            })
                             .show();
                 }
             });
@@ -166,7 +171,7 @@ public class HomePagePresenter {
 
         if(range.equals("Tutti"))
             return network.getAllPotoles();
-        else{
+        else {
             double latitude, longitude, raggio, degree;
             latitude = location.get("Latitude");
             longitude = location.get("Longitude");
@@ -183,24 +188,13 @@ public class HomePagePresenter {
         network.insertNewPothole(loc.get("Latitude"), loc.get("Longitude"));
     }
 
-    private double convertMetersToDegree(double raggio) {
-        double degreeBase = 0.0002777778;
-        double convertedDegree = 0;
-
-        if((raggio/30)>=0)
-            convertedDegree = (raggio/30)*degreeBase;
-        else
-            Handler.handleException(new IllegalArgumentException(), mContext.getActivity());
-
-        return convertedDegree;
-    }
-
     private void unregisterListener() {
         sMan.unregisterListener(spotterEvent, accellerometer);
     }
 
     /*********************************************************************************************/
 
+    /*Spotting*/
     public void startSpotting() {
         Log.i(LOG,"Starting recording...");
         mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),"Starting recording...",
@@ -222,36 +216,50 @@ public class HomePagePresenter {
 
     /*********************************************************************************************/
 
-    public HomePageFragment getmContext() {
-        return mContext;
+    /*Utils*/
+    public void setAddresses(List<Pothole> potholes) {
+        List<Address> addresses;
+        String address, city, postalCode;
+        Geocoder geocoder;
+
+        geocoder = new Geocoder(mContext.getContext(), Locale.getDefault());
+
+        for(Pothole p : potholes) {
+            try {
+                addresses = geocoder.getFromLocation(p.getLatitudine(), p.getLongitudine(), 1);
+                if(addresses.isEmpty())
+                    p.setIndirizzo("Not found.");
+                else{
+                    address = addresses.get(0).getAddressLine(0);
+                    city = addresses.get(0).getLocality();
+                    postalCode = addresses.get(0).getPostalCode();
+                    p.setIndirizzo(city + ", " + address + ", " + postalCode);
+                }
+            } catch (IOException e) {
+                Log.i(LOG,"Set Address Error");
+                Handler.handleException(e, mContext.getActivity());
+            }
+        }
+    }
+
+    private double convertMetersToDegree(double raggio) {
+        double degreeBase = 0.0002777778;
+        double convertedDegree = 0;
+
+        if((raggio/30)>=0)
+            convertedDegree = (raggio/30)*degreeBase;
+        else
+            Handler.handleException(new IllegalArgumentException(), mContext.getActivity());
+
+        return convertedDegree;
     }
 
     public void viewUpload(List<Pothole> potholes, Map<String,Double> location) {
         mContext.upload(potholes, location);
     }
 
-    public void setAddresses(List<Pothole> potholes) {
-
-        Geocoder geocoder;
-        List<Address> addresses;
-        geocoder = new Geocoder(mContext.getContext(), Locale.getDefault());
-        String address, city, postalCode;
-
-        for(Pothole p : potholes) {
-            try {
-                addresses = geocoder.getFromLocation(p.getLatitudine(), p.getLongitudine(), 1); // Here 1 represent max location result to returned, by documents it recommended 1 to 5
-                if(addresses.isEmpty())
-                    p.setIndirizzo("Not found.");
-                else{
-                    address = addresses.get(0).getAddressLine(0); // If any additional address line present than only, check with max available address lines by getMaxAddressLineIndex()
-                    city = addresses.get(0).getLocality();
-                    postalCode = addresses.get(0).getPostalCode();
-                    p.setIndirizzo(city + ", " + address + ", " + postalCode);
-                }
-            } catch (IOException e) {
-                Handler.handleException(e, mContext.getActivity());
-            }
-        }
+    public HomePageFragment getmContext() {
+        return mContext;
     }
 
     /*********************************************************************************************/

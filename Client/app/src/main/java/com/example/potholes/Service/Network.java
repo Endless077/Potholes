@@ -20,8 +20,8 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "192.168.1.10";
-    static final int PORT = 5678;
+    static final String ADDRESS = "<insert ip>";
+    static final int PORT = 3390;
 
     private Activity guiRef;
 

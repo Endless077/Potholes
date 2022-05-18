@@ -3,13 +3,6 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-<<<<<<< Updated upstream
-        <entry key="..\:/Sandbox/Personal file/Progetti/Sistemi Operativi/Potholes/Client/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Sandbox/Personal file/Progetti/Sistemi Operativi/Potholes/Client/app/src/main/res/layout/activity_splash_screen.xml" value="0.16802536231884058" />
-=======
-        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.3135" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.35625" />
->>>>>>> Stashed changes
       </map>
     </option>
   </component>

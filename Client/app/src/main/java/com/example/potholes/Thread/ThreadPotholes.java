@@ -1,8 +1,6 @@
 package com.example.potholes.Thread;
 
-import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -46,12 +44,12 @@ public class ThreadPotholes extends Thread {
             homePagePresenter.getmContext().getActivity().runOnUiThread(() -> homePagePresenter.viewUpload(potholeList, location));
         }
         else if(loginPresenter!=null) {
-            Network network = new Network(loginPresenter.getmContex().getActivity());
+            Network network = new Network(loginPresenter.getContext().getActivity());
             network.getThreshold();
             if(Network.THRESHOLD!=1) {
-                loginPresenter.getmContex().getActivity().runOnUiThread(() -> {
-                    loginPresenter.getmContex().reset();
-                    loginPresenter.getmContex().goHomePage();
+                loginPresenter.getContext().getActivity().runOnUiThread(() -> {
+                    loginPresenter.getContext().reset();
+                    loginPresenter.getContext().goHomePage();
                 });
             }
         }
