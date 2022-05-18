@@ -1,12 +1,6 @@
 package com.example.potholes.View.Fragment;
 
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +9,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toolbar;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import com.example.potholes.Presenter.LoginPresenter;
 import com.example.potholes.R;
-import com.example.potholes.Service.Network;
 import com.example.potholes.View.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 

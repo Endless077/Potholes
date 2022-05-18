@@ -221,7 +221,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
   double lat, lon, distanza;
 
  /*Init conversation*/
-  send(socket, "Start", 7, 0);
+  send(socket, "START\r", 6, 0);
   recv(socket, buffer, sizeof(buffer), 0);
 
   char *actualParam = strtok(buffer, ":");
@@ -282,7 +282,7 @@ void postRequest(int socket, sqlite3 *database){
   double lat, lon;
 
   /*Init conversation*/
-  send(socket, "Start", 7, 0);
+  send(socket, "START\r", 6, 0);
   recv(socket, buffer, MAX_BUFFER_SIZE, 0);
 
   char *actualParam = strtok(buffer, ":");

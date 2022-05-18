@@ -21,13 +21,10 @@ import com.example.potholes.R;
 import com.example.potholes.Service.CheckService;
 import com.example.potholes.Service.Handler;
 import com.example.potholes.Service.Network;
-import com.example.potholes.Thread.ThreadPotholes;
 import com.example.potholes.View.Fragment.HomePageFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
-import org.osmdroid.util.GeoPoint;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -142,13 +139,13 @@ public class HomePagePresenter {
                         Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             CheckService.checkGpsEnabled(mContext.getActivity(), 333);
         }else {
+            Log.i(LOG,"Getting Location");
             fusedLocationClient.getLastLocation().addOnSuccessListener(mContext.getActivity(), location -> {
                 if (location != null) {
                     Log.i(LOG, "Latitudine: " + location.getLatitude());
                     Log.i(LOG, "Longitudine: " + location.getLongitude());
                     loc.put("Latitude",location.getLatitude());
                     loc.put("Longitude",location.getLongitude());
-                    //TODO: Sincronizzare altrimenti non funziona.
                 } else {
                     Log.i("GPS", "Nessuna location.");
                     new MaterialAlertDialogBuilder(mContext.getActivity(), R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
@@ -162,6 +159,9 @@ public class HomePagePresenter {
                             .show();
                 }
             });
+
+            //Wait getting coordinates
+            try { Thread.sleep(1000); } catch (InterruptedException ignored) {}
         }
     }
 
@@ -172,13 +172,18 @@ public class HomePagePresenter {
         if(range.equals("Tutti"))
             return network.getAllPotoles();
         else {
+            List<Pothole> potholes = new ArrayList<>();
             double latitude, longitude, raggio, degree;
-            latitude = location.get("Latitude");
-            longitude = location.get("Longitude");
+            if(!location.isEmpty()) {
+                latitude = location.get("Latitude");
+                longitude = location.get("Longitude");
+                raggio = Double.parseDouble(range.substring(0,range.indexOf(" ")));
+                degree = convertMetersToDegree(raggio);
+                potholes = network.getNearPotholes(latitude,longitude,degree);
+            }else
+                Handler.handleException(new LocationNotFoundException(),mContext.getActivity());
 
-            raggio = Double.parseDouble(range.substring(0,range.indexOf(" ")));
-            degree = convertMetersToDegree(raggio);
-            return network.getNearPotholes(latitude,longitude,degree);
+            return potholes;
         }
     }
 

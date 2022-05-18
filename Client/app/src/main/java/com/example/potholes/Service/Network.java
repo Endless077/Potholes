@@ -72,8 +72,9 @@ public class Network implements ICommunication {
             String responseBuffer;
             while(reader.ready()){
                 responseBuffer = reader.readLine();
+                Log.i(LOG,"Reading: " + responseBuffer);
                 responseBuffer = responseBuffer.replace("\u0000", "");
-                if(responseBuffer.equals("Start"))
+                if(responseBuffer.equals("START"))
                     continue;
                 if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
                     break;
@@ -128,6 +129,7 @@ public class Network implements ICommunication {
             String responseBuffer;
             while(reader.ready()){
                 responseBuffer = reader.readLine();
+                Log.i(LOG,"Reading: " + responseBuffer);
                 responseBuffer = responseBuffer.replace("\u0000", "");
                 if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
                     break;
@@ -181,6 +183,7 @@ public class Network implements ICommunication {
             Log.i(LOG,"Reading information...");
             if(reader.ready()){
                 result = reader.readLine();
+                Log.i(LOG,"Reading: " + result);
                 result = result.replace("\u0000", "");
                 result = result.replace(":", "");
             }

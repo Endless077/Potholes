@@ -66,7 +66,7 @@ void func(int sockfd){
 	// read(sockfd, buffRead, 6);
 	// printf("BuffRead: %s\n", buffRead);
 	//
-	// if(strcmp(buffRead, "Start") == 0)
+	// if(strcmp(buffRead, "START") == 0)
 	// 	write(sockfd, "vale:40.835884:14.248767:0", 27);
 	//
 	// bzero(buffRead, sizeof(buffRead));
@@ -115,7 +115,7 @@ void func(int sockfd){
 	// read(sockfd, buffRead, 6);
 	// printf("BuffRead: %s\n", buffRead);
 	//
-	// if(strcmp(buffRead, "Start") == 0)
+	// if(strcmp(buffRead, "START") == 0)
 	// 	write(sockfd, "User:41.134679:14.172839:", 33);
 	//
 	// bzero(buffRead, sizeof(buffRead));

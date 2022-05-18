@@ -142,10 +142,12 @@ public class HomePageFragment extends Fragment {
         visualizzaBucheButton.setOnClickListener(v -> {
             Map<String,Double> loc = new HashMap<>();
             String range = spinner.getSelectedItem().toString();
-
-            mHomePagePresenter.getLocation(loc);
-
-            ThreadPotholes thread = new ThreadPotholes(loc, mHomePagePresenter, range);
+            Thread getLocation = new Thread(() -> {
+                Log.i(LOG, "Thread getLocation started.");
+                mHomePagePresenter.getLocation(loc);
+            });
+            ThreadPotholes thread = new ThreadPotholes(loc, range, getLocation ,mHomePagePresenter);
+            getLocation.start();
             thread.start();
         });
 
@@ -153,11 +155,14 @@ public class HomePageFragment extends Fragment {
 
     public void upload(List<Pothole> potholes, Map<String, Double> location) {
         Log.i(LOG,"Upload GUI...");
-        clear();
-        if(potholes.isEmpty()){
+        if(location.isEmpty())
+            return;
+        else if(potholes.isEmpty()){
             Handler.handleException(new PotholesNotFoundException(), getActivity());
             return;
         }
+
+        clear();
         mHomePagePresenter.setAddresses(potholes);
         uploadMap(potholes);
         uploadRecyclerView(potholes);
