@@ -34,22 +34,22 @@ void func(int sockfd){
 	/*********************************************************************************/
 
 	/*getAll*/
-	printf("Testing getAll\n");
-	sprintf(buffWrite, "getAll");
-	sleep(3);
+	// printf("Testing getAll\n");
+	// sprintf(buffWrite, "getAll");
+	// sleep(3);
 
-	write(sockfd, buffWrite, sizeof(buffWrite));
-	bzero(buffWrite, sizeof(buffWrite));
+	// write(sockfd, buffWrite, sizeof(buffWrite));
+	// bzero(buffWrite, sizeof(buffWrite));
 
-	do{
-		bzero(buffRead, sizeof(buffRead));
-	 	read(sockfd, buffRead, sizeof(buffRead));
-	 	printf("From Server : %s\n", buffRead);
-	}while(strcmp(buffRead, "END")!=0);
+	// do{
+	// 	bzero(buffRead, sizeof(buffRead));
+	//  	read(sockfd, buffRead, sizeof(buffRead));
+	//  	printf("From Server : %s\n", buffRead);
+	// }while(strcmp(buffRead, "END")!=0);
 
-	/*Resetting*/
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
+	// /*Resetting*/
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
 
 	/*********************************************************************************/
 
@@ -84,21 +84,21 @@ void func(int sockfd){
 	/*********************************************************************************/
 
 	/*threshold*/
-	// printf("Testing threshold\n");
-	// sprintf(buffWrite, "threshold");
-	// sleep(3);
-	//
-	// write(sockfd, buffWrite, sizeof(buffWrite));
-	//
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
-	//
-	// read(sockfd, buffRead, sizeof(buffRead));
-	// printf("From Server : %s\n", buffRead);
-	//
-	// /*Resetting*/
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
+	printf("Testing threshold\n");
+	sprintf(buffWrite, "threshold");
+	sleep(3);
+	
+	write(sockfd, buffWrite, sizeof(buffWrite));
+	
+	bzero(buffWrite, sizeof(buffWrite));
+	bzero(buffRead, sizeof(buffRead));
+	
+	read(sockfd, buffRead, sizeof(buffRead));
+	printf("From Server : %s\n", buffRead);
+	
+	/*Resetting*/
+	bzero(buffWrite, sizeof(buffWrite));
+	bzero(buffRead, sizeof(buffRead));
 
 	/*********************************************************************************/
 

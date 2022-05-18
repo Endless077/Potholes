@@ -8,7 +8,7 @@ TARGET = server_pothole
 SRC = server.c Other/utils.c
 
 all: $(TARGET)
-	@printf "\e[32m%b\e[0m" "\n\tCreazione del file completata\n"
+	@printf "\e[32m%b\e[0m" "\n\tFile Creation...\n"
 
 $(TARGET): $(OBJECTFILES)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTFILES) $(LDLIBS) $(SRC) $(PTHREAD_FLAG) $(SQL_FLAG)
@@ -16,5 +16,14 @@ $(TARGET): $(OBJECTFILES)
 .PHONY: depend clean
 
 clean: 
+	@printf "\e[32m%b\e[0m" "\n\tClean...\n"
 	rm -f $(OBJECTFILES) $(TARGET)
-	@printf "\e[32m%b\e[0m" "\n\tEliminazione file completata\n"
+
+valgrind:
+	@printf "\e[32m%b\e[0m" "\n\Valgrind MemCheck...\n"
+	valgrind --leak-check=full \
+		--show-leak-kinds=all \
+        --track-origins=yes \
+        --verbose \
+        --log-file=valgrind-out.txt \
+        ./server_pothole

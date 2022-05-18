@@ -45,6 +45,7 @@ int main(void) {
   /*Handler declare for SIGUSR1 and SIGUSR2*/
   signal(SIGUSR1, signalHandler);
   signal(SIGUSR2, signalHandler);
+  signal(SIGINT, signalHandler);
 
   /*Create socket*/
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -72,16 +73,33 @@ int main(void) {
 
   len = sizeof(clientaddr);
 
+  /*Attribute Thread*/
+  int err;
+  pthread_attr_t attr;
+
+  /*Status*/
+  int status_create_thread;
+  pthread_t thread;
+
+  /*Accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
   while((connfd = accept(sockfd, (struct sockaddr *) &clientaddr, (socklen_t*)&len)) != -1) {
+    
+    /*Initi attribute*/
+    err = pthread_attr_init(&attr);
+    
+    if(err!=0)
+      logging(tag, "Attribute init error", false);
+  
+    /*Set detach state*/
+    err = pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);
+  
+    if(err!=0)
+      logging(tag, "Setting detach state error", false);
 
-    /*Accepting requests from the clients on the sockfd and return the new socket descriptor to connfd*/
     logging(tag, "Accept success", true);
-
+    
     personal_socket = malloc(sizeof(int));
     *(personal_socket) = connfd;
-    pthread_t thread;
-
-    int status_create_thread;
 
     /*IP logging*/
     char ip[25];
@@ -93,18 +111,19 @@ int main(void) {
       logging(tag, "Invalid Client IP", false);
 
     /*Start a new manage request*/
-    status_create_thread = pthread_create(&thread, NULL, manageRequest, (void *) personal_socket);
+    status_create_thread = pthread_create(&thread, &attr, manageRequest, (void *) personal_socket);
 
     if(status_create_thread < 0)
       logging(tag, "Pthread creation error", false);
 
+    pthread_attr_destroy(&attr);
+  
+
   }
 
-  free(personal_socket);
   logging(tag, "Accept error", false);
   close(sockfd);
   return 0;
-
 }
 
 /*Handler of signal usr*/
@@ -114,7 +133,7 @@ void signalHandler(int signal) {
   sprintf(sig,"%d",signal);
 
   char msg[MAX_MSG_SIZE];
-  sprintf(msg,"Ricevuto il segnale SIGUSR (codice: %s", sig);
+  sprintf(msg,"Ricevuto il segnale (codice: %s)", sig);
   logging(tag, msg, true);
 
   close(sockfd);
@@ -161,7 +180,7 @@ void *manageRequest(void *clientSocket) {
     else if(strcmp(buffer, "put") == 0)
       postRequest(socket_descriptor, database);
     else if(strcmp(buffer, "threshold") == 0)
-      send(socket_descriptor, "0.000003:", 10, 0);
+      send(socket_descriptor, "0.000003\r", 10, 0);
     else {
       logging(tag, "Invalid service", false);
       send(socket_descriptor, "Invalid service:", 17, 0);
