@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Colors -->
     <color name="green">#00ff00</color>
     <color name="red">#ff0000</color>
-    <color name="lughtGrey">#D3D3D3</color>
+    <color name="background">#D3D3D3</color>
 
     <!-- App Color -->
     <color name="primaryColor">#ff9800</color>

@@ -26,6 +26,7 @@ import com.example.potholes.R;
 import com.example.potholes.Service.Handler;
 import com.example.potholes.Service.Network;
 import com.example.potholes.Thread.ThreadPotholes;
+import com.example.potholes.Thread.ThreadSpotter;
 import com.example.potholes.View.MainActivity;
 import com.example.potholes.View.PotholesAdapter;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
@@ -48,13 +49,12 @@ public class HomePageFragment extends Fragment {
     private HomePagePresenter mHomePagePresenter;
 
     private MapView mapView;
+    private ThreadSpotter threadSpotter;
 
     private TextView benvenutoTextView;
 
-    private Button iniziaRegistrazioneButton;
-    private Button changeViewButton;
     private ImageButton exitButton;
-    private Button visualizzaBucheButton;
+    private Button visualizzaBucheButton, changeViewButton, recordingButton;
 
     private Spinner spinner;
 
@@ -62,7 +62,6 @@ public class HomePageFragment extends Fragment {
     private boolean isViewingMap = true;
 
     private RecyclerView recyclerView;
-    private PotholesAdapter potholesAdapter;
 
     public HomePageFragment() {}
 
@@ -88,7 +87,7 @@ public class HomePageFragment extends Fragment {
         benvenutoTextView = getView().findViewById(R.id.ciaoUtenteTW);
         mapView = getView().findViewById(R.id.mapView);
         visualizzaBucheButton = getView().findViewById(R.id.visualizzaBucheButton);
-        iniziaRegistrazioneButton = getView().findViewById(R.id.recordButton);
+        recordingButton = getView().findViewById(R.id.recordButton);
         changeViewButton = getView().findViewById(R.id.CambiaVisualizzazioneButton);
         spinner = getView().findViewById(R.id.distanzeSpinner);
         recyclerView = getView().findViewById(R.id.recyclerViewPotholes);
@@ -116,15 +115,17 @@ public class HomePageFragment extends Fragment {
             }
         });
 
-        iniziaRegistrazioneButton.setOnClickListener(v -> {
+        recordingButton.setOnClickListener(v -> {
             if(!isRecording){
                 isRecording = true;
-                iniziaRegistrazioneButton.setText(R.string.endRecord);
-                mHomePagePresenter.startSpotting();
+                recordingButton.setText(R.string.endRecord);
+                threadSpotter = new ThreadSpotter(mHomePagePresenter);
+                threadSpotter.start();
             }else{
                 isRecording = false;
-                iniziaRegistrazioneButton.setText(R.string.startRecord);
+                recordingButton.setText(R.string.startRecord);
                 mHomePagePresenter.stopSpotting();
+                threadSpotter.interrupt();
             }
         });
 
@@ -195,7 +196,7 @@ public class HomePageFragment extends Fragment {
 
     public void initRecyclerView() {
         //RecyclerView Configuration
-        potholesAdapter = new PotholesAdapter(getActivity(), new ArrayList<>(), mHomePagePresenter);
+        PotholesAdapter potholesAdapter = new PotholesAdapter(getActivity(), new ArrayList<>(), mHomePagePresenter);
         recyclerView.setAdapter(potholesAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
         recyclerView.addItemDecoration(new DividerItemDecoration(recyclerView.getContext(), DividerItemDecoration.VERTICAL));

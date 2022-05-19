@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/lughtGrey"
+    android:background="@color/background"
     tools:context=".View.Fragment.HomePageFragment">
-
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbarHomePage"
@@ -55,7 +54,6 @@
             android:layout_height="260sp"/>
 
     </androidx.cardview.widget.CardView>
-
 
     <Button
         android:id="@+id/visualizzaBucheButton"

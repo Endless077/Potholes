@@ -12,9 +12,6 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.potholes.R;
-import com.google.android.material.dialog.MaterialAlertDialogBuilder;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -125,23 +122,13 @@ public class CheckService {
 
     private static void requestNetwork(Activity context, int requestCode) {
         Log.i(LOG, "requestNetwork: started.");
-        new MaterialAlertDialogBuilder(context, R.style.MyThemeOverlay_MaterialComponents_MaterialAlertDialog)
-                .setTitle("Utilizzo network necessario.")
-                .setMessage("Impostazioni->App->NaTour21->Permessi e Autorizzazioni.")
-                .setPositiveButton("Va bene", (dialog, which) -> {
-//                        ActivityCompat.requestPermissions((Activity) context,
-//                                new String[] {Manifest.permission.CHANGE_NETWORK_STATE}, requestCode);
-//                        ActivityCompat.requestPermissions((Activity) context,
-//                                    new String[] {Manifest.permission.ACCESS_NETWORK_STATE}, requestCode);
-                    ActivityCompat.requestPermissions((Activity) context,
-                            new String[] {Manifest.permission.INTERNET}, requestCode);
-                })
-//                    .setNegativeButton("Annulla", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialog, int which) {
-//                            dialog.dismiss();
-//                        }
-//                    })
-                .create().show();
+        context.runOnUiThread(() -> {
+//            ActivityCompat.requestPermissions((Activity) context,
+//                    new String[] {Manifest.permission.CHANGE_NETWORK_STATE}, requestCode);
+//            ActivityCompat.requestPermissions((Activity) context,
+//                    new String[] {Manifest.permission.ACCESS_NETWORK_STATE}, requestCode);
+            ActivityCompat.requestPermissions((Activity) context,
+                    new String[] {Manifest.permission.INTERNET}, requestCode);
+        });
     }
 }

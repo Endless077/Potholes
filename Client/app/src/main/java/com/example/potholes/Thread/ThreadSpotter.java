@@ -16,8 +16,7 @@ public class ThreadSpotter extends Thread {
     private final String LOG = "ThreadSpotter";
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    public ThreadSpotter(Context context, HomePagePresenter homePagePresenter) {
-        this.mContext = context;
+    public ThreadSpotter(HomePagePresenter homePagePresenter) {
         this.homePagePresenter = homePagePresenter;
     }
 

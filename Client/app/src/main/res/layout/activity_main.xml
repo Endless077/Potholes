@@ -6,7 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".View.MainActivity">
 
-
     <FrameLayout
         android:id="@+id/frameLayoutActivityMain"
         android:layout_width="match_parent"

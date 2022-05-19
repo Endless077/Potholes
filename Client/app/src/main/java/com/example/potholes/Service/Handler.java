@@ -9,8 +9,6 @@ import com.example.potholes.Exception.NoInternetConnectionException;
 import com.example.potholes.Exception.PotholesNotFoundException;
 
 import java.io.IOException;
-import java.net.Socket;
-import java.net.SocketTimeoutException;
 
 import es.dmoral.toasty.Toasty;
 

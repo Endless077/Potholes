@@ -98,10 +98,20 @@ public class HomePagePresenter {
                 if (Math.abs(linear_acceleration[1]) > Network.THRESHOLD) {
                     Log.i(LOG,"Spotting hole...");
                     Map<String,Double> loc = new HashMap<>();
-                    getLocation(loc);
+
+                    Thread getLocation = new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.i(LOG,"Thread getLocation started.");
+                            getLocation(loc);
+                        }
+                    });
+                    getLocation.start();
+
                     mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
                             "Hole Spotted.",
                             Toasty.LENGTH_SHORT).show());
+
                     if(!loc.isEmpty()) {
                         Log.i(LOG,"Spotted here: " + loc.get("Longitude") + " - " + loc.get("Latitude"));
                         sendData(loc);
@@ -209,13 +219,8 @@ public class HomePagePresenter {
 
     public void stopSpotting() {
         Log.i(LOG,"Stopping recording...");
-        mContext.getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toasty.info(mContext.getContext(),"Stopping recording...",
-                        Toasty.LENGTH_SHORT,true).show();
-            }
-        });
+        mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),"Stopping recording...",
+                Toasty.LENGTH_SHORT,true).show());
         unregisterListener();
     }
 

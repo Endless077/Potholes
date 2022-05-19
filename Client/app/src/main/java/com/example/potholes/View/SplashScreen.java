@@ -28,11 +28,6 @@ public class SplashScreen extends AppCompatActivity {
                 //.setRTL(boolean isRTL)
                 .apply();
 
-//        ImageView logo = findViewById(R.id.logoSA);
-//        ImageView title = findViewById(R.id.titoloSA);
-//        TextView slogan = findViewById(R.id.slogan);
-//        ConstraintLayout layout = findViewById(R.id.layoutSA);
-
         new Handler().postDelayed(() -> {
             Intent intent = new Intent(SplashScreen.this, MainActivity.class);
             startActivity(intent);
