@@ -1,8 +1,3 @@
-## Potholes 🚗
-
-Client-Server che consenta la racconta e l’interrogazione di informazioni riguardanti la presenza di irregolarità (buche) su di una superficie.
-
-
 ## 💾 License
 
 [![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
@@ -12,8 +7,12 @@ Client-Server che consenta la racconta e l’interrogazione di informazioni rigu
 
 ![Logo](https://dev-to-uploads.s3.amazonaws.com/uploads/articles/th5xamgrr6se0x5ro4g6.png)
 
+## 🚗 Pothoes
 
-## Features
+Client-Server che consenta la racconta e l’interrogazione di informazioni riguardanti la presenza di irregolarità (buche) su di una superficie.
+
+
+## 🚀 Features
 
 - Mostrare all’utente la lista di tutti gli eventi registrati dal server in un certo raggio dalla propria posizione.
 - Permettere all’utente di avviare una sessione di registrazione eventi durante la quale il client si connette al server, riceve i parametri di soglia e comunica al server la posizione e il valore del cambiamento ogni volta che registra un nuovo evento.
