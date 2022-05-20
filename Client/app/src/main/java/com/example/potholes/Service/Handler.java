@@ -9,6 +9,7 @@ import com.example.potholes.Exception.NoInternetConnectionException;
 import com.example.potholes.Exception.PotholesNotFoundException;
 
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 
 import es.dmoral.toasty.Toasty;
 
@@ -52,12 +53,20 @@ public class Handler {
                         Toasty.LENGTH_SHORT, true).show();
             });
         }else if(e instanceof InterruptedException) {
-            Log.e(Handler,"InterruptedException: " + e.getMessage());
+            Log.e(Handler, "InterruptedException: " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {
                 Toasty.error(a,
                         "Thread Exception.",
-                        Toasty.LENGTH_SHORT,true).show();
+                        Toasty.LENGTH_SHORT, true).show();
+            });
+        }else if(e instanceof SocketTimeoutException){
+            Log.e(Handler, "SocketTimeoutException: " + e.getMessage());
+            e.printStackTrace();
+            a.runOnUiThread(() -> {
+                Toasty.error(a,
+                        "Server Not Available.",
+                        Toasty.LENGTH_SHORT, true).show();
             });
         }else if(e instanceof IOException) {
             Log.e(Handler, "IOException: " + e.getMessage());

@@ -49,7 +49,6 @@ public class HomePageFragment extends Fragment {
     private HomePagePresenter mHomePagePresenter;
 
     private MapView mapView;
-    private ThreadSpotter threadSpotter;
 
     private TextView benvenutoTextView;
 
@@ -119,13 +118,11 @@ public class HomePageFragment extends Fragment {
             if(!isRecording){
                 isRecording = true;
                 recordingButton.setText(R.string.endRecord);
-                threadSpotter = new ThreadSpotter(mHomePagePresenter);
-                threadSpotter.start();
+                mHomePagePresenter.startSpotting();
             }else{
                 isRecording = false;
                 recordingButton.setText(R.string.startRecord);
                 mHomePagePresenter.stopSpotting();
-                threadSpotter.interrupt();
             }
         });
 
@@ -156,6 +153,8 @@ public class HomePageFragment extends Fragment {
 
     public void upload(List<Pothole> potholes, Map<String, Double> location) {
         Log.i(LOG,"Upload GUI...");
+        clear();
+
         if(location.isEmpty())
             return;
         else if(potholes.isEmpty()){
@@ -163,7 +162,6 @@ public class HomePageFragment extends Fragment {
             return;
         }
 
-        clear();
         mHomePagePresenter.setAddresses(potholes);
         uploadMap(potholes);
         uploadRecyclerView(potholes);
@@ -204,6 +202,7 @@ public class HomePageFragment extends Fragment {
 
     private void uploadRecyclerView(List<Pothole> list) {
         PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
+        adapter.clearList();
         adapter.setListCompilation(list);
         adapter.notifyDataSetChanged();
     }
@@ -247,6 +246,7 @@ public class HomePageFragment extends Fragment {
         mapView.getOverlays().clear();
         PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
         adapter.clearList();
+        adapter.notifyDataSetChanged();
     }
 
     private void userMarker(Map<String, Double> location) {

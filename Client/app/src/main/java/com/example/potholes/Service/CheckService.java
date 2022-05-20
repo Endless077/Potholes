@@ -77,11 +77,11 @@ public class CheckService {
     }
 
 
-    public static boolean pingServer() {
+    public static boolean pingServer(Activity a) {
         Log.i(LOG, "isServerOnline: started.");
 
         String hostName = "localhost";
-        int port = 8080;
+        int port = 3390;
         int timeout = 3000;
 
         SocketAddress socketAddress = new InetSocketAddress(hostName, port);
@@ -94,9 +94,11 @@ public class CheckService {
             return true;
         } catch (SocketTimeoutException exception) {
             Log.e(LOG, "SocketTimeoutException " + hostName + ":" + port + ". " + exception.getMessage());
+            Handler.handleException(exception, a);
             return false;
         } catch (IOException exception) {
             Log.e(LOG, "IOException - Unable to connect to " + hostName + ":" + port + ". " + exception.getMessage());
+            Handler.handleException(exception, a);
             return false;
         }
     }

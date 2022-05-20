@@ -34,7 +34,6 @@ public class ThreadPotholes extends Thread {
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     public ThreadPotholes(Map<String, Double> location, String range, Thread getLocation, HomePagePresenter homePagePresenter) {
-        Log.i(LOG,"Thread Started.");
         this.location = location;
         this.loginPresenter = null;
         this.homePagePresenter = homePagePresenter;
@@ -44,6 +43,7 @@ public class ThreadPotholes extends Thread {
 
     @Override
     public void run() {
+        Log.i(LOG,"Thread Start: " + Thread.currentThread().getName());
         if(homePagePresenter!=null) {
             try { otherThread.join(); } catch (InterruptedException ignored) {}
             List<Pothole> potholeList = homePagePresenter.getPotHoles(location, range);

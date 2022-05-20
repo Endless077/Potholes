@@ -20,7 +20,7 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "<insert ip>";
+    static final String ADDRESS = "192.168.50.179";
     static final int PORT = 3390;
 
     private Activity guiRef;
@@ -72,7 +72,6 @@ public class Network implements ICommunication {
             String responseBuffer;
             while(reader.ready()){
                 responseBuffer = reader.readLine();
-                Log.i(LOG,"Reading: " + responseBuffer);
                 responseBuffer = responseBuffer.replace("\u0000", "");
                 if(responseBuffer.equals("START"))
                     continue;
@@ -129,13 +128,13 @@ public class Network implements ICommunication {
             String responseBuffer;
             while(reader.ready()){
                 responseBuffer = reader.readLine();
-                Log.i(LOG,"Reading: " + responseBuffer);
                 responseBuffer = responseBuffer.replace("\u0000", "");
                 if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
                     break;
                 }
                 String[] fields = responseBuffer.split(":");
                 String nickname = fields[0];
+                Log.i("AAA",nickname);
                 double latitude = Double.parseDouble(fields[1]);
                 double longitude = Double.parseDouble(fields[2]);
                 potholes.add(new Pothole(nickname, latitude, longitude));

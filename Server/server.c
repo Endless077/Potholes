@@ -177,10 +177,10 @@ void *manageRequest(void *clientSocket) {
       getAllPotholesRequest(socket_descriptor, database);
     else if(strcmp(buffer, "getNear") == 0)
       getNearPotholesRequest(socket_descriptor, database);
-    else if(strcmp(buffer, "put") == 0)
+    else if(strcmp(buffer, "post") == 0)
       postRequest(socket_descriptor, database);
     else if(strcmp(buffer, "threshold") == 0)
-      send(socket_descriptor, "0.000003\r", 10, 0);
+      send(socket_descriptor, "17\r", 2, 0);
     else {
       logging(tag, "Invalid service", false);
       send(socket_descriptor, "Invalid service:", 17, 0);

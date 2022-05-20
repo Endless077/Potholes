@@ -21,6 +21,7 @@ import com.example.potholes.R;
 import com.example.potholes.Service.CheckService;
 import com.example.potholes.Service.Handler;
 import com.example.potholes.Service.Network;
+import com.example.potholes.Thread.ThreadSpotter;
 import com.example.potholes.View.Fragment.HomePageFragment;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -99,26 +100,18 @@ public class HomePagePresenter {
                     Log.i(LOG,"Spotting hole...");
                     Map<String,Double> loc = new HashMap<>();
 
-                    Thread getLocation = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.i(LOG,"Thread getLocation started.");
-                            getLocation(loc);
-                        }
+                    Thread getLocation = new Thread(() -> {
+                        Log.i(LOG,"Thread getLocation started.");
+                        getLocation(loc);
                     });
+
+                    ThreadSpotter thread = new ThreadSpotter(loc, getLocation,HomePagePresenter.this);
                     getLocation.start();
+                    thread.start();
 
                     mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
                             "Hole Spotted.",
                             Toasty.LENGTH_SHORT).show());
-
-                    if(!loc.isEmpty()) {
-                        Log.i(LOG,"Spotted here: " + loc.get("Longitude") + " - " + loc.get("Latitude"));
-                        sendData(loc);
-                    }else{
-                        Log.e(LOG,"Location not found.");
-                        Handler.handleException(new LocationNotFoundException(), mContext.getActivity());
-                    }
                 }
 
             }
@@ -197,10 +190,18 @@ public class HomePagePresenter {
         }
     }
 
-    private void sendData(Map<String,Double> loc) {
+    public void sendData(Map<String, Double> loc) {
         Log.i(LOG,"Sending data...");
+
         Network network = new Network();
-        network.insertNewPothole(loc.get("Latitude"), loc.get("Longitude"));
+
+        if(!loc.isEmpty()) {
+            Log.i(LOG,"Spotted here: " + loc.get("Latitude") + " - " + loc.get("Longitude"));
+            network.insertNewPothole(loc.get("Latitude"), loc.get("Longitude"));
+        }else{
+            Log.e(LOG,"Location not found.");
+            Handler.handleException(new LocationNotFoundException(), mContext.getActivity());
+        }
     }
 
     private void unregisterListener() {
