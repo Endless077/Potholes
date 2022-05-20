@@ -16,6 +16,7 @@
     <color name="secondaryDarkColor">#bcbcbc</color>
     <color name="primaryTextColor">#000000</color>
     <color name="secondaryTextColor">#000000</color>
+    <color name="white">#FFFFFF</color>
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#ff9800</color>
 
