@@ -27,4 +27,7 @@
         <item>1000 metri</item>
     </string-array>
 
+    //Popup loading
+    <string name="caricamento">Caricamento…</string>
+
 </resources>

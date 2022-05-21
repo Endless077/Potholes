@@ -13,6 +13,7 @@
         <entry key="app/src/main/res/layout/dropdown_menu.xml" value="0.2694746376811594" />
         <entry key="app/src/main/res/layout/fragment_home_page.xml" value="0.2694746376811594" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2694746376811594" />
+        <entry key="app/src/main/res/layout/popup_loading.xml" value="0.35625" />
       </map>
     </option>
   </component>
