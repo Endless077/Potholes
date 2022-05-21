@@ -19,10 +19,12 @@ import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.potholes.Exception.LocationNotFoundException;
 import com.example.potholes.Exception.PotholesNotFoundException;
 import com.example.potholes.Model.Pothole;
 import com.example.potholes.Presenter.HomePagePresenter;
 import com.example.potholes.R;
+import com.example.potholes.Service.CheckService;
 import com.example.potholes.Service.Handler;
 import com.example.potholes.Service.Network;
 import com.example.potholes.Thread.ThreadPotholes;
@@ -155,9 +157,10 @@ public class HomePageFragment extends Fragment {
         Log.i(LOG,"Upload GUI...");
         clear();
 
-        if(location.isEmpty())
+        if(location.isEmpty()) {
+            Handler.handleException(new LocationNotFoundException(), getActivity());
             return;
-        else if(potholes.isEmpty()){
+        }else if(potholes.isEmpty()){
             Handler.handleException(new PotholesNotFoundException(), getActivity());
             return;
         }

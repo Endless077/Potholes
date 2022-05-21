@@ -3,6 +3,8 @@ package com.example.potholes.Service;
 import android.app.Activity;
 import android.util.Log;
 
+import com.example.potholes.Exception.NoGpsConnectionException;
+import com.example.potholes.Exception.NoInternetConnectionException;
 import com.example.potholes.Model.Pothole;
 import com.example.potholes.Service.Interface.ICommunication;
 
@@ -10,6 +12,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,7 +23,7 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "192.168.50.179";
+    static final String ADDRESS = "192.168.1.53";
     static final int PORT = 3390;
 
     private Activity guiRef;
@@ -44,9 +47,11 @@ public class Network implements ICommunication {
         ArrayList<Pothole> potholes = new ArrayList<>();
 
         try {
+
             //Connessione aperta
             Log.i(LOG,"Open connection...");
             Socket socket = openConnection();
+            socket.setSoTimeout(5*1000);
 
             //Richiede operazione getNear
             Log.i(LOG,"Request output stream...");
@@ -70,7 +75,7 @@ public class Network implements ICommunication {
             //Recupero informazioni
             Log.i(LOG,"Reading information...");
             String responseBuffer;
-            while(reader.ready()){
+            while(reader.ready()) {
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
                 if(responseBuffer.equals("START"))
@@ -105,9 +110,11 @@ public class Network implements ICommunication {
         ArrayList<Pothole> potholes = new ArrayList<>();
 
         try {
+
             //Connessione aperta
             Log.i(LOG,"Opening connection...");
             Socket socket = openConnection();
+            socket.setSoTimeout(5*1000);
 
             //Richiede operazione getAll
             Log.i(LOG,"Request output stream...");
@@ -126,7 +133,8 @@ public class Network implements ICommunication {
             //Recupero informazioni
             Log.i(LOG,"Reading information...");
             String responseBuffer;
-            while(reader.ready()){
+
+            while(reader.ready()) {
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
                 if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
@@ -163,6 +171,7 @@ public class Network implements ICommunication {
             //Connessione aperta
             Log.i(LOG,"Open connection...");
             Socket socket = openConnection();
+            socket.setSoTimeout(5*1000);
 
             //Apro un buffer reader
             Log.i(LOG,"Request input stream...");
@@ -180,7 +189,7 @@ public class Network implements ICommunication {
 
             //Recupero informazioni
             Log.i(LOG,"Reading information...");
-            if(reader.ready()){
+            if(reader.ready()) {
                 result = reader.readLine();
                 Log.i(LOG,"Reading: " + result);
                 result = result.replace("\u0000", "");
@@ -216,6 +225,7 @@ public class Network implements ICommunication {
             //Connessione aperta
             Log.i(LOG,"Opening connection...");
             Socket socket = openConnection();
+            socket.setSoTimeout(5*1000);
 
             //Richiede operazione thrashold
             Log.i(LOG,"Request output stream...");
@@ -247,4 +257,5 @@ public class Network implements ICommunication {
     public void closeConnection(Socket socket) throws IOException {
         socket.close();
     }
+
 }

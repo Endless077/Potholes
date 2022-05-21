@@ -108,10 +108,6 @@ public class HomePagePresenter {
                     ThreadSpotter thread = new ThreadSpotter(loc, getLocation,HomePagePresenter.this);
                     getLocation.start();
                     thread.start();
-
-                    mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
-                            "Hole Spotted.",
-                            Toasty.LENGTH_SHORT).show());
                 }
 
             }
@@ -183,8 +179,7 @@ public class HomePagePresenter {
                 raggio = Double.parseDouble(range.substring(0,range.indexOf(" ")));
                 degree = convertMetersToDegree(raggio);
                 potholes = network.getNearPotholes(latitude,longitude,degree);
-            }else
-                Handler.handleException(new LocationNotFoundException(),mContext.getActivity());
+            }
 
             return potholes;
         }
@@ -197,6 +192,9 @@ public class HomePagePresenter {
 
         if(!loc.isEmpty()) {
             Log.i(LOG,"Spotted here: " + loc.get("Latitude") + " - " + loc.get("Longitude"));
+            mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
+                    "Hole Spotted.",
+                    Toasty.LENGTH_SHORT).show());
             network.insertNewPothole(loc.get("Latitude"), loc.get("Longitude"));
         }else{
             Log.e(LOG,"Location not found.");
@@ -269,7 +267,7 @@ public class HomePagePresenter {
         mContext.upload(potholes, location);
     }
 
-    public HomePageFragment getmContext() {
+    public HomePageFragment getContext() {
         return mContext;
     }
 

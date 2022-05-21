@@ -24,7 +24,7 @@ public class Handler {
             Log.e(Handler, "LocationNotFoundException: " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {
-                Toasty.error(a,
+                Toasty.warning(a,
                         "Location not found.",
                         Toasty.LENGTH_SHORT,true).show();
             });
@@ -32,7 +32,7 @@ public class Handler {
             Log.e(Handler, "PotholesNotFoundException " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {
-                Toasty.error(a,
+                Toasty.warning(a,
                         "Pothole not found.",
                         Toasty.LENGTH_SHORT,true).show();
             });
@@ -40,7 +40,7 @@ public class Handler {
             Log.e(Handler, "NoInternetConnectionException: " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {
-                Toasty.error(a,
+                Toasty.warning(a,
                         "Internet Connection Not Found.",
                         Toasty.LENGTH_SHORT,true).show();
             });
@@ -48,7 +48,7 @@ public class Handler {
             Log.e(Handler, "NoGpsConnectionException: " + e.getMessage());
             e.printStackTrace();
             a.runOnUiThread(() -> {
-                Toasty.error(a,
+                Toasty.warning(a,
                         "GPS Connection Not Found.",
                         Toasty.LENGTH_SHORT, true).show();
             });
@@ -57,7 +57,7 @@ public class Handler {
             e.printStackTrace();
             a.runOnUiThread(() -> {
                 Toasty.error(a,
-                        "Thread Exception.",
+                        "Service Interrupted.",
                         Toasty.LENGTH_SHORT, true).show();
             });
         }else if(e instanceof SocketTimeoutException){

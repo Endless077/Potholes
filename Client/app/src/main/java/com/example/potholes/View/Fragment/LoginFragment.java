@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.example.potholes.Presenter.LoginPresenter;
 import com.example.potholes.R;
+import com.example.potholes.Service.CheckService;
 import com.example.potholes.View.MainActivity;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -52,7 +53,7 @@ public class LoginFragment extends Fragment {
         loginButton = getView().findViewById(R.id.accediButton);
         layoutNickname = getView().findViewById(R.id.editTextNicknameLayout);
 
-        loginButton.setOnClickListener(view1 -> {
+        loginButton.setOnClickListener(v -> {
             String nickname = nicknameEditText.getText().toString();
             if(!nickname.matches("^[A-Za-z0-9_-]{3,10}$")) {
                 Toasty.error(LoginFragment.this.getActivity(),"Nickname non conforme.",
@@ -100,6 +101,9 @@ public class LoginFragment extends Fragment {
     }
 
     public void goHomePage() {
+        Toasty.success(getActivity(),"Login effettuato",
+                Toasty.LENGTH_SHORT, true).show();
+
         ((MainActivity)getActivity()).changeFragment(((MainActivity)getActivity()).homePageFragment);
     }
 

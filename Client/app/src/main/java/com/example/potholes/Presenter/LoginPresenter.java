@@ -19,6 +19,7 @@ public class LoginPresenter {
         Log.i(LOG,"Login started.");
         ThreadPotholes thread = new ThreadPotholes(this);
         thread.start();
+
         Network.NICKNAME = nickname;
     }
 

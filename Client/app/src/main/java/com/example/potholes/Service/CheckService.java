@@ -12,6 +12,9 @@ import android.util.Log;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.potholes.Exception.NoGpsConnectionException;
+import com.example.potholes.Exception.NoInternetConnectionException;
+
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
@@ -70,24 +73,29 @@ public class CheckService {
     }
 
     //Check if activated
-    public static boolean isGpsOnline(Context context) {
-        Log.i(LOG, "isGpsOnline: started.");
-        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
-        return (locationManager != null) && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    public static boolean checkConnection(Activity a) {
+        if(!CheckService.isOnline(a.getApplicationContext())) {
+            Handler.handleException(new NoInternetConnectionException(), a);
+            return false;
+        }
+        if(!CheckService.isGpsOnline(a.getApplicationContext())) {
+            Handler.handleException(new NoGpsConnectionException(), a);
+            return false;
+        }
+        return true;
     }
-
 
     public static boolean pingServer(Activity a) {
         Log.i(LOG, "isServerOnline: started.");
 
         String hostName = "localhost";
-        int port = 3390;
-        int timeout = 3000;
+        int port = 8080;
+        int timeout = 3*1000;
 
         SocketAddress socketAddress = new InetSocketAddress(hostName, port);
-        Socket socket = new Socket();
 
         try {
+            Socket socket = new Socket(hostName, port);
             socket.connect(socketAddress, timeout);
             socket.close();
             Log.i(LOG, "isServerOnline: online.");
@@ -110,10 +118,15 @@ public class CheckService {
         return (ni != null && ni.isConnected());
     }
 
+    public static boolean isGpsOnline(Context context) {
+        Log.i(LOG, "isGpsOnline: started.");
+        LocationManager locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+        return (locationManager != null) && locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+    }
+
     //Request permissions
     private static void requestGPS(Activity context, int requestCode) {
         Log.i(LOG, "requestGPS: started.");
-        Log.i(LOG, "requestStorage: started.");
         context.runOnUiThread(() -> {
             ActivityCompat.requestPermissions(context,
                     new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, requestCode);
