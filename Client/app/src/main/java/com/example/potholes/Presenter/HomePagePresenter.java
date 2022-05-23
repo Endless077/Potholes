@@ -181,7 +181,6 @@ public class HomePagePresenter {
                 degree = convertMetersToDegree(raggio);
                 potholes = network.getNearPotholes(latitude,longitude,degree);
             }
-
             return potholes;
         }
     }

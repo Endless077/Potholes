@@ -24,7 +24,7 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "192.168.154.89";
+    static final String ADDRESS = "<insert ip>";
     static final int PORT = 3390;
 
     private Activity guiRef;
@@ -99,6 +99,7 @@ public class Network implements ICommunication {
         }catch (Exception e) {
             Log.e(LOG,"Errore in getNearPotholes");
             Handler.handleException(e,guiRef);
+            return null;
         }
         return potholes;
     }
@@ -138,7 +139,6 @@ public class Network implements ICommunication {
             while(reader.ready()) {
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
-                Log.i("AAAA", responseBuffer);
                 if(responseBuffer.isEmpty() || responseBuffer.equals("END"))
                     break;
                 String[] fields = responseBuffer.split(":");
@@ -155,6 +155,7 @@ public class Network implements ICommunication {
         }catch (Exception e) {
             Log.e(LOG,"Errore in getAllPotholes");
             Handler.handleException(e,guiRef);
+            return null;
         }
         return potholes;
     }

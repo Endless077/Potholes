@@ -166,6 +166,9 @@ public class HomePageFragment extends Fragment {
             Handler.handleException(new LocationNotFoundException(), getActivity());
             closePopupLoading();
             return;
+        }else if(potholes == null) {
+            closePopupLoading();
+            return;
         }else if(potholes.isEmpty()){
             Handler.handleException(new PotholesNotFoundException(), getActivity());
             userMarker(location);
