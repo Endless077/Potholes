@@ -19,6 +19,10 @@ clean:
 	@printf "\e[32m%b\e[0m" "\n\tClean...\n"
 	rm -f $(OBJECTFILES) $(TARGET)
 
+start:
+	@printf "\e[32m%b\e[0m" "\n\Starting Server...\n"
+	./server_pothole
+
 valgrind:
 	@printf "\e[32m%b\e[0m" "\n\Valgrind MemCheck...\n"
 	valgrind --leak-check=full \

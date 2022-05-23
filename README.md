@@ -55,12 +55,12 @@ With gcc:
 
 With makefile:
 ```bash
-  makefile Makefile clean all [valgrind]
+  makefile Makefile clean all [valgrind || start]
 ```
 
 (you should have "Valgrind" because it run a script that check memoryleaks)
 
-if you don't have valgring ignore the last word.
+if you don't have "Valgrind" ignore the last word and use "start".
 
 Run the server:
 ```bash

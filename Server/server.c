@@ -166,7 +166,8 @@ void *manageRequest(void *clientSocket) {
     bzero(buffer, sizeof(buffer));
 
     /*Reading request*/
-    read(socket_descriptor, buffer, sizeof(buffer));
+    if(read(socket_descriptor, buffer, sizeof(buffer))==-1)
+      logging(tag, "Read Request Error", false);
 
     sprintf(msg, "Request from client: %s", buffer);
     logging(tag, msg, true);
@@ -218,7 +219,7 @@ void getNearPotholesRequest(int socket, sqlite3 *database) {
   char buffer[MAX_BUFFER_SIZE];
 
   char username[50];
-  double lat, lon, distanza;
+  double lat = 0, lon = 0, distanza = 0;
 
  /*Init conversation*/
   send(socket, "START\r", 6, 0);
@@ -279,7 +280,7 @@ void postRequest(int socket, sqlite3 *database){
   char buffer[MAX_BUFFER_SIZE];
 
   char username[50];
-  double lat, lon;
+  double lat = 0, lon = 0;
 
   /*Init conversation*/
   send(socket, "START\r", 6, 0);
