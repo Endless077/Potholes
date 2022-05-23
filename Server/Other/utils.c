@@ -21,6 +21,7 @@ _____  _____  _________  _____  _____      ______
 #include "./utils.h"
 
 #define MAX_DATA_RETRIEVED 100
+#define MAX_QUERY 250
 
 /*Insert new Potholes*/
 int insertNewPothole(sqlite3* database, char *username, double latitudine, double longitudine) {
@@ -40,6 +41,7 @@ int insertNewPothole(sqlite3* database, char *username, double latitudine, doubl
     if(status_query != SQLITE_OK)
       logging(tag, "Errore durante la query", false);
 
+    sqlite3_free(put_query);
     return status_query;
 }
 
@@ -90,6 +92,7 @@ int getNearPotholes(sqlite3 *database, int socket, double latitudine, double lon
 
   /*End char* flagging*/
   send(socket, "END", 3, 0);
+  sqlite3_free(get_query);
   sqlite3_finalize(res);
 
   return 0;
@@ -136,7 +139,7 @@ int getAllPotholes(sqlite3 *database, int socket) {
 
   /*End char* flagging*/
   send(socket, "END", 3, 0);
-  sqlite3_close(database);
+  sqlite3_finalize(res);
 
   return 0;
 }

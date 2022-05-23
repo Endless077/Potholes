@@ -11,6 +11,7 @@ import com.example.potholes.Service.Interface.ICommunication;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ public class Network implements ICommunication {
     public static String NICKNAME = "";
     public static double THRESHOLD = 1;
 
-    static final String ADDRESS = "192.168.1.53";
+    static final String ADDRESS = "192.168.154.89";
     static final int PORT = 3390;
 
     private Activity guiRef;
@@ -137,12 +138,11 @@ public class Network implements ICommunication {
             while(reader.ready()) {
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
-                if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
+                Log.i("AAAA", responseBuffer);
+                if(responseBuffer.isEmpty() || responseBuffer.equals("END"))
                     break;
-                }
                 String[] fields = responseBuffer.split(":");
                 String nickname = fields[0];
-                Log.i("AAA",nickname);
                 double latitude = Double.parseDouble(fields[1]);
                 double longitude = Double.parseDouble(fields[2]);
                 potholes.add(new Pothole(nickname, latitude, longitude));
@@ -230,6 +230,10 @@ public class Network implements ICommunication {
             //Richiede operazione thrashold
             Log.i(LOG,"Request output stream...");
             socket.getOutputStream().write(operation.getBytes());
+
+            //Attesa informazioni
+            Log.i(LOG,"Waiting information...");
+            Thread.sleep(1000);
 
             //Invio nuovi dati
             Log.i(LOG,"Sending data...");

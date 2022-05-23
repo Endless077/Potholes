@@ -20,7 +20,7 @@
 
 #define MAX_BUFFER_READ 100
 
-#define PORT 5678
+#define PORT 3390
 #define SA struct sockaddr
 
 static int client();
@@ -37,16 +37,16 @@ void func(int sockfd){
 	// printf("Testing getAll\n");
 	// sprintf(buffWrite, "getAll");
 	// sleep(3);
-
+	//
 	// write(sockfd, buffWrite, sizeof(buffWrite));
 	// bzero(buffWrite, sizeof(buffWrite));
-
+	//
 	// do{
 	// 	bzero(buffRead, sizeof(buffRead));
 	//  	read(sockfd, buffRead, sizeof(buffRead));
 	//  	printf("From Server : %s\n", buffRead);
 	// }while(strcmp(buffRead, "END")!=0);
-
+	//
 	// /*Resetting*/
 	// bzero(buffWrite, sizeof(buffWrite));
 	// bzero(buffRead, sizeof(buffRead));
@@ -66,7 +66,7 @@ void func(int sockfd){
 	// read(sockfd, buffRead, 6);
 	// printf("BuffRead: %s\n", buffRead);
 	//
-	// if(strcmp(buffRead, "START") == 0)
+	// if(strcmp(buffRead, "START\r") == 0)
 	// 	write(sockfd, "vale:40.835884:14.248767:0", 27);
 	//
 	// bzero(buffRead, sizeof(buffRead));
@@ -84,27 +84,27 @@ void func(int sockfd){
 	/*********************************************************************************/
 
 	/*threshold*/
-	printf("Testing threshold\n");
-	sprintf(buffWrite, "threshold");
-	sleep(3);
-	
-	write(sockfd, buffWrite, sizeof(buffWrite));
-	
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
-	
-	read(sockfd, buffRead, sizeof(buffRead));
-	printf("From Server : %s\n", buffRead);
-	
-	/*Resetting*/
-	bzero(buffWrite, sizeof(buffWrite));
-	bzero(buffRead, sizeof(buffRead));
+	// printf("Testing threshold\n");
+	// sprintf(buffWrite, "threshold");
+	// sleep(3);
+	//
+	// write(sockfd, buffWrite, sizeof(buffWrite));
+	//
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
+	//
+	// read(sockfd, buffRead, sizeof(buffRead));
+	// printf("From Server : %s\n", buffRead);
+	//
+	// /*Resetting*/
+	// bzero(buffWrite, sizeof(buffWrite));
+	// bzero(buffRead, sizeof(buffRead));
 
 	/*********************************************************************************/
 
-	/*put*/
-	// printf("Testing put\n");
-	// sprintf(buffWrite, "put");
+	/*post*/
+	// printf("Testing post\n");
+	// sprintf(buffWrite, "post");
 	// sleep(3);
 	//
 	// write(sockfd, buffWrite, sizeof(buffWrite));
@@ -115,8 +115,8 @@ void func(int sockfd){
 	// read(sockfd, buffRead, 6);
 	// printf("BuffRead: %s\n", buffRead);
 	//
-	// if(strcmp(buffRead, "START") == 0)
-	// 	write(sockfd, "User:41.134679:14.172839:", 33);
+	// if(strcmp(buffRead, "START\r") == 0)
+	// 	write(sockfd, "User:41.134679:14.172839:", 26);
 	//
 	// bzero(buffRead, sizeof(buffRead));
 	// read(sockfd, buffRead, sizeof(buffRead));

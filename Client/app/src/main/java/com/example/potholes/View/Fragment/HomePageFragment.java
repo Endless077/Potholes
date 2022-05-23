@@ -1,5 +1,6 @@
 package com.example.potholes.View.Fragment;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -63,6 +64,9 @@ public class HomePageFragment extends Fragment {
     private boolean isViewingMap = true;
 
     private RecyclerView recyclerView;
+
+    private AlertDialog dialog;
+    private AlertDialog.Builder dialogBuilder;
 
     public HomePageFragment() {}
 
@@ -142,6 +146,7 @@ public class HomePageFragment extends Fragment {
         visualizzaBucheButton.setOnClickListener(v -> {
             Map<String,Double> loc = new HashMap<>();
             String range = spinner.getSelectedItem().toString();
+            openPopupLoading();
             Thread getLocation = new Thread(() -> {
                 Log.i(LOG, "Thread getLocation started.");
                 mHomePagePresenter.getLocation(loc);
@@ -159,9 +164,12 @@ public class HomePageFragment extends Fragment {
 
         if(location.isEmpty()) {
             Handler.handleException(new LocationNotFoundException(), getActivity());
+            closePopupLoading();
             return;
         }else if(potholes.isEmpty()){
             Handler.handleException(new PotholesNotFoundException(), getActivity());
+            userMarker(location);
+            closePopupLoading();
             return;
         }
 
@@ -169,6 +177,7 @@ public class HomePageFragment extends Fragment {
         uploadMap(potholes);
         uploadRecyclerView(potholes);
         userMarker(location);
+        closePopupLoading();
     }
 
     public void initMap() {
@@ -247,9 +256,24 @@ public class HomePageFragment extends Fragment {
 
     private void clear(){
         mapView.getOverlays().clear();
+        mapView.invalidate();
         PotholesAdapter adapter = (PotholesAdapter) recyclerView.getAdapter();
         adapter.clearList();
         adapter.notifyDataSetChanged();
+    }
+
+    public void openPopupLoading(){
+        Log.i(LOG,"Opening Login Loading Popup.");
+        dialogBuilder = new AlertDialog.Builder(getActivity());
+        final View contactPopupView = getLayoutInflater().inflate(R.layout.popup_loading, null);
+        dialogBuilder.setView(contactPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+    }
+
+    public void closePopupLoading(){
+        Log.i(LOG,"Closing Login Popup.");
+        dialog.dismiss();
     }
 
     private void userMarker(Map<String, Double> location) {

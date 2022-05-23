@@ -164,7 +164,8 @@ public class HomePagePresenter {
         }
     }
 
-    public List<Pothole> getPotHoles(Map<String,Double> location, String range) {
+    public List<Pothole>
+    getPotHoles(Map<String,Double> location, String range) {
 
         Network network = new Network(mContext.getActivity());
 
