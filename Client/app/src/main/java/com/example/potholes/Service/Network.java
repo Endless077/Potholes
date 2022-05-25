@@ -79,11 +79,11 @@ public class Network implements ICommunication {
             while(reader.ready()) {
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
+                Log.i(LOG,"Reading: " + responseBuffer);
                 if(responseBuffer.equals("START"))
                     continue;
-                if(responseBuffer.isEmpty() || responseBuffer.equals("END")){
+                if(responseBuffer.isEmpty() || responseBuffer.equals("END"))
                     break;
-                }
                 String[] fields = responseBuffer.split(":");
                 String nickname = fields[0];
                 double latitude = Double.parseDouble(fields[1]);
@@ -139,12 +139,14 @@ public class Network implements ICommunication {
             while(reader.ready()) {
                 responseBuffer = reader.readLine();
                 responseBuffer = responseBuffer.replace("\u0000", "");
+                Log.i(LOG,"Reading: " + responseBuffer);
                 if(responseBuffer.isEmpty() || responseBuffer.equals("END"))
                     break;
                 String[] fields = responseBuffer.split(":");
                 String nickname = fields[0];
                 double latitude = Double.parseDouble(fields[1]);
                 double longitude = Double.parseDouble(fields[2]);
+
                 potholes.add(new Pothole(nickname, latitude, longitude));
             }
 
@@ -162,7 +164,7 @@ public class Network implements ICommunication {
 
     @Override
     public double getThreshold() {
-        Log.i(LOG, "Get Thrashold by " + NICKNAME);
+        Log.i(LOG, "Get Threshold by " + NICKNAME);
 
         String operation = "threshold";
         String result = "1";
@@ -192,9 +194,9 @@ public class Network implements ICommunication {
             Log.i(LOG,"Reading information...");
             if(reader.ready()) {
                 result = reader.readLine();
-                Log.i(LOG,"Reading: " + result);
                 result = result.replace("\u0000", "");
                 result = result.replace(":", "");
+                Log.i(LOG,"Reading: " + result);
             }
 
             //Connessione chiusa
@@ -204,7 +206,7 @@ public class Network implements ICommunication {
             THRESHOLD = Double.parseDouble(result);
 
         }catch (Exception e) {
-            Log.e(LOG,"Errore in getThrashold");
+            Log.e(LOG,"Errore in getThreshold");
             Handler.handleException(e,guiRef);
         }
 
