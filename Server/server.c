@@ -47,6 +47,13 @@ int main(void) {
   signal(SIGUSR2, signalHandler);
   signal(SIGINT, signalHandler);
 
+printf(" _______          _   __             __                     \n");   
+printf("|_   __ \\        / |_[  |           [  |                   \n"); 
+printf("  | |__) | .--. `| |-'| |--.   .--.  | | .---.  .--.        \n"); 
+printf("  |  ___// .'`\\ \\| |  | .-. |/ .'`\\ \\| |/ /__\\( (`\\]  \n"); 
+printf(" _| |_   | \\__. || |, | | | || \\__. || || \\__., `'.'.    \n"); 
+printf("|_____|   '.__.' \\__/[___]|__]'.__.'[___]'.__.'[\\__) )    \n");
+
   /*Create socket*/
   sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
