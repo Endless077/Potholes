@@ -75,11 +75,5 @@ void insertInitialValues() {
   if(status_query != SQLITE_OK)
     logging(tag, "Insert error", false);
 
-  insertQuery = "INSERT INTO Potholes VALUES('Mariano', '40.123456', '14.123456')";
-  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
-
-  if(status_query != SQLITE_OK)
-    logging(tag, "Insert error", false);
-
   logging(tag, "Insert success", true);
 }
