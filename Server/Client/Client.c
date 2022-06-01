@@ -14,6 +14,8 @@
 #include <sys/types.h>
 #include<sys/un.h>
 #include <arpa/inet.h>
+#include <pthread.h>
+#include <time.h>
 #include<string.h>
 
 #define SOCKET_NAME "my_server"
@@ -23,124 +25,148 @@
 #define PORT 3390
 #define SA struct sockaddr
 
-static int client();
+static void client();
 
-void func(int sockfd){
+//Change setup to send whetever you want
+void func(int sockfd, int action){
+	
+	//Action:
+	//- 0 for threshold;
+	//- 1 for getAll;
+	//- 2 for getNear;
+	//- 3 for post;
 
-	//Change setup to send whetever you want
 	char buffWrite[100];
 	char buffRead[100];
 
-	/*********************************************************************************/
+	switch (action) {
+	
+	case 0:
+		printf("Testing threshold\n");
+		sprintf(buffWrite, "threshold");
+		sleep(3);
+	
+		write(sockfd, buffWrite, sizeof(buffWrite));
+	
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+	
+		read(sockfd, buffRead, sizeof(buffRead));
+		printf("From Server : %s\n", buffRead);
+	
+		/*Resetting*/
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+		break;
 
-	/*getAll*/
-	// printf("Testing getAll\n");
-	// sprintf(buffWrite, "getAll");
-	// sleep(3);
-	//
-	// write(sockfd, buffWrite, sizeof(buffWrite));
-	// bzero(buffWrite, sizeof(buffWrite));
-	//
-	// do{
-	// 	bzero(buffRead, sizeof(buffRead));
-	//  	read(sockfd, buffRead, sizeof(buffRead));
-	//  	printf("From Server : %s\n", buffRead);
-	// }while(strcmp(buffRead, "END")!=0);
-	//
-	// /*Resetting*/
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
+	case 1:
+		printf("Testing getAll\n");
+		sprintf(buffWrite, "getAll");
+		sleep(3);
 
-	/*********************************************************************************/
+		write(sockfd, buffWrite, sizeof(buffWrite));
+		bzero(buffWrite, sizeof(buffWrite));
+		
+		do{
+			bzero(buffRead, sizeof(buffRead));
+		  	read(sockfd, buffRead, sizeof(buffRead));
+		  	printf("From Server : %s\n", buffRead);
+		}while(strcmp(buffRead, "END")!=0);
+	
+		/*Resetting*/
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+		break;
 
-	/*getNear*/
-	// printf("Testing getNear\n");
-	// sprintf(buffWrite, "getNear");
-	// sleep(3);
-	//
-	// write(sockfd, buffWrite, sizeof(buffWrite));
-	//
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
-	//
-	// read(sockfd, buffRead, 6);
-	// printf("BuffRead: %s\n", buffRead);
-	//
-	// if(strcmp(buffRead, "START\r") == 0)
-	// 	write(sockfd, "vale:40.835884:14.248767:0", 27);
-	//
-	// bzero(buffRead, sizeof(buffRead));
-	//
-	// do{
-	// 	bzero(buffRead, sizeof(buffRead));
-	// 	read(sockfd, buffRead, sizeof(buffRead));
-	// 	printf("From Server : %s\n", buffRead);
-	// }while(strcmp(buffRead, "END")!=0);
-	//
-	// /*Resetting*/
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
+	case 2:
+		printf("Testing getNear\n");
+		sprintf(buffWrite, "getNear");
+		sleep(3);
+	
+		write(sockfd, buffWrite, sizeof(buffWrite));
+	
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+	
+		read(sockfd, buffRead, 6);
+		printf("BuffRead: %s\n", buffRead);
+	
+		if(strcmp(buffRead, "START\r") == 0)
+			write(sockfd, "User:40.835884:14.248767:0", 27);
+	
+		bzero(buffRead, sizeof(buffRead));
+	
+		do{
+			bzero(buffRead, sizeof(buffRead));
+			read(sockfd, buffRead, sizeof(buffRead));
+			printf("From Server : %s\n", buffRead);
+		}while(strcmp(buffRead, "END")!=0);
+	
+		/*Resetting*/
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+		break;
 
-	/*********************************************************************************/
+	case 3:
+		printf("Testing post\n");
+		sprintf(buffWrite, "post");
+		sleep(3);
+	
+		write(sockfd, buffWrite, sizeof(buffWrite));
+	
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+	
+		read(sockfd, buffRead, 6);
+		printf("BuffRead: %s\n", buffRead);
+	
+		if(strcmp(buffRead, "START\r") == 0)
+			write(sockfd, "User:41.134679:14.172839:", 26);
+	
+		bzero(buffRead, sizeof(buffRead));
+		read(sockfd, buffRead, sizeof(buffRead));
+		printf("BuffRead: %s\n", buffRead);
+		bzero(buffRead, sizeof(buffRead));
+	
+		/*Resetting*/
+		bzero(buffWrite, sizeof(buffWrite));
+		bzero(buffRead, sizeof(buffRead));
+		break;
 
-	/*threshold*/
-	// printf("Testing threshold\n");
-	// sprintf(buffWrite, "threshold");
-	// sleep(3);
-	//
-	// write(sockfd, buffWrite, sizeof(buffWrite));
-	//
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
-	//
-	// read(sockfd, buffRead, sizeof(buffRead));
-	// printf("From Server : %s\n", buffRead);
-	//
-	// /*Resetting*/
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
-
-	/*********************************************************************************/
-
-	/*post*/
-	// printf("Testing post\n");
-	// sprintf(buffWrite, "post");
-	// sleep(3);
-	//
-	// write(sockfd, buffWrite, sizeof(buffWrite));
-	//
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
-	//
-	// read(sockfd, buffRead, 6);
-	// printf("BuffRead: %s\n", buffRead);
-	//
-	// if(strcmp(buffRead, "START\r") == 0)
-	// 	write(sockfd, "User:41.134679:14.172839:", 26);
-	//
-	// bzero(buffRead, sizeof(buffRead));
-	// read(sockfd, buffRead, sizeof(buffRead));
-	// printf("buffRead %s\n", buffRead);
-	// bzero(buffRead, sizeof(buffRead));
-	//
-	// /*Resetting*/
-	// bzero(buffWrite, sizeof(buffWrite));
-	// bzero(buffRead, sizeof(buffRead));
-
-	/*********************************************************************************/
-
+	default:
+		break;
+	}
 }
 
-int main(void) {
-	return client();
+int main(int argc, char *argv[]) {
+
+	int lower = 0, upper = 3, count;
+
+	if(argc != 2) {
+		printf("Only one args [number of clients]");
+    	exit(EXIT_FAILURE);
+	}
+
+	count = strtol(argv[1], NULL, 10);
+	srand(time(0));
+
+	int action;
+
+	for(int i = 0; i<count; i++) {
+		action = (rand() % (upper - lower + 1)) + lower;
+		client(action);
+	}
+	
+	return 0;
 }
 
-int client(){
+void client(int action) {
 	int sockfd;
 	struct sockaddr_in servaddr;
 
 	// socket create and verification
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
+	
 	if (sockfd == -1) {
 		perror("socket creation failed...\n");
 		exit(EXIT_FAILURE);
@@ -161,9 +187,8 @@ int client(){
 	}else
 		printf("connected to the server.. socket %d\n", sockfd);
 
-	func(sockfd);
+	func(sockfd, action);
 
 	// close the socket
 	close(sockfd);
-	return 0;
 }
