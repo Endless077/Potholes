@@ -125,7 +125,6 @@ printf("|_____|   '.__.' \\__/[___]|__]'.__.'[___]'.__.'[\\__) )    \n");
 
     pthread_attr_destroy(&attr);
 
-
   }
 
   logging(tag, "Accept error", false);
@@ -333,6 +332,6 @@ void postRequest(int socket, sqlite3 *database){
     send(socket, "error", 5, 0);
   }else{
     logging(tag, "Query complete", true);
-    send(socket, "success", 7, 0);
+    send(socket, "Success", 7, 0);
   }
 }

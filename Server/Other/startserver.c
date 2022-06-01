@@ -75,5 +75,53 @@ void insertInitialValues() {
   if(status_query != SQLITE_OK)
     logging(tag, "Insert error", false);
 
+  insertQuery = "INSERT INTO Potholes VALUES('Mario', '40.897242', '14.256271')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Mariano', '40.922529', '14.297636')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Antonio', '40.891019', '14.249263')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Antonio', '40.845483', '14.237978')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Luca', '40.826523', '14.220133')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Luca', '40.931286', '14.097931')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Mogavero', '41.056646', '14.274286')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
+  insertQuery = "INSERT INTO Potholes VALUES('Benerecetti', '40.894741', '14.239694')";
+  status_query = sqlite3_exec(database, insertQuery, NULL, NULL, NULL);
+
+  if(status_query != SQLITE_OK)
+    logging(tag, "Insert error", false);
+
   logging(tag, "Insert success", true);
 }
