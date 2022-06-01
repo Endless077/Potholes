@@ -1,0 +1,1718 @@
+%!PS-Adobe-3.0 EPSF-3.0
+%%Creator: (Apache XML Graphics Commons: EPS Generator for Java2D)
+%%CreationDate: 2022-06-02T00:21:54
+%%Pages: (atend)
+%%BoundingBox: 0 0 580 498
+%%LanguageLevel: 3
+%%EndComments
+%%BeginProlog
+%%BeginResource: procset (Apache XML Graphics Std ProcSet) 1.2 0
+%%Version: 1.2 0
+%%Copyright: (Copyright 2001-2003,2010 The Apache Software Foundation. License terms: http://www.apache.org/licenses/LICENSE-2.0)
+%%Title: (Basic set of procedures used by the XML Graphics project \(Batik and FOP\))
+/bd{bind def}bind def
+/ld{load def}bd
+/GR/grestore ld
+/GS/gsave ld
+/RM/rmoveto ld
+/C/curveto ld
+/t/show ld
+/L/lineto ld
+/ML/setmiterlimit ld
+/CT/concat ld
+/f/fill ld
+/N/newpath ld
+/S/stroke ld
+/CC/setcmykcolor ld
+/A/ashow ld
+/cp/closepath ld
+/RC/setrgbcolor ld
+/LJ/setlinejoin ld
+/GC/setgray ld
+/LW/setlinewidth ld
+/M/moveto ld
+/re {4 2 roll M
+1 index 0 rlineto
+0 exch rlineto
+neg 0 rlineto
+cp } bd
+/_ctm matrix def
+/_tm matrix def
+/BT { _ctm currentmatrix pop matrix _tm copy pop 0 0 moveto } bd
+/ET { _ctm setmatrix } bd
+/iTm { _ctm setmatrix _tm concat } bd
+/Tm { _tm astore pop iTm 0 0 moveto } bd
+/ux 0.0 def
+/uy 0.0 def
+/F {
+  /Tp exch def
+  /Tf exch def
+  Tf findfont Tp scalefont setfont
+  /cf Tf def  /cs Tp def
+} bd
+/ULS {currentpoint /uy exch def /ux exch def} bd
+/ULE {
+  /Tcx currentpoint pop def
+  gsave
+  newpath
+  cf findfont cs scalefont dup
+  /FontMatrix get 0 get /Ts exch def /FontInfo get dup
+  /UnderlinePosition get Ts mul /To exch def
+  /UnderlineThickness get Ts mul /Tt exch def
+  ux uy To add moveto  Tcx uy To add lineto
+  Tt setlinewidth stroke
+  grestore
+} bd
+/OLE {
+  /Tcx currentpoint pop def
+  gsave
+  newpath
+  cf findfont cs scalefont dup
+  /FontMatrix get 0 get /Ts exch def /FontInfo get dup
+  /UnderlinePosition get Ts mul /To exch def
+  /UnderlineThickness get Ts mul /Tt exch def
+  ux uy To add cs add moveto Tcx uy To add cs add lineto
+  Tt setlinewidth stroke
+  grestore
+} bd
+/SOE {
+  /Tcx currentpoint pop def
+  gsave
+  newpath
+  cf findfont cs scalefont dup
+  /FontMatrix get 0 get /Ts exch def /FontInfo get dup
+  /UnderlinePosition get Ts mul /To exch def
+  /UnderlineThickness get Ts mul /Tt exch def
+  ux uy To add cs 10 mul 26 idiv add moveto Tcx uy To add cs 10 mul 26 idiv add lineto
+  Tt setlinewidth stroke
+  grestore
+} bd
+/QT {
+/Y22 exch store
+/X22 exch store
+/Y21 exch store
+/X21 exch store
+currentpoint
+/Y21 load 2 mul add 3 div exch
+/X21 load 2 mul add 3 div exch
+/X21 load 2 mul /X22 load add 3 div
+/Y21 load 2 mul /Y22 load add 3 div
+/X22 load /Y22 load curveto
+} bd
+/SSPD {
+dup length /d exch dict def
+{
+/v exch def
+/k exch def
+currentpagedevice k known {
+/cpdv currentpagedevice k get def
+v cpdv ne {
+/upd false def
+/nullv v type /nulltype eq def
+/nullcpdv cpdv type /nulltype eq def
+nullv nullcpdv or
+{
+/upd true def
+} {
+/sametype v type cpdv type eq def
+sametype {
+v type /arraytype eq {
+/vlen v length def
+/cpdvlen cpdv length def
+vlen cpdvlen eq {
+0 1 vlen 1 sub {
+/i exch def
+/obj v i get def
+/cpdobj cpdv i get def
+obj cpdobj ne {
+/upd true def
+exit
+} if
+} for
+} {
+/upd true def
+} ifelse
+} {
+v type /dicttype eq {
+v {
+/dv exch def
+/dk exch def
+/cpddv cpdv dk get def
+dv cpddv ne {
+/upd true def
+exit
+} if
+} forall
+} {
+/upd true def
+} ifelse
+} ifelse
+} if
+} ifelse
+upd true eq {
+d k v put
+} if
+} if
+} if
+} forall
+d length 0 gt {
+d setpagedevice
+} if
+} bd
+/RE { % /NewFontName [NewEncodingArray] /FontName RE -
+  findfont dup length dict begin
+  {
+    1 index /FID ne
+    {def} {pop pop} ifelse
+  } forall
+  /Encoding exch def
+  /FontName 1 index def
+  currentdict definefont pop
+  end
+} bind def
+%%EndResource
+%%BeginResource: procset (Apache XML Graphics EPS ProcSet) 1.0 0
+%%Version: 1.0 0
+%%Copyright: (Copyright 2002-2003 The Apache Software Foundation. License terms: http://www.apache.org/licenses/LICENSE-2.0)
+%%Title: (EPS procedures used by the Apache XML Graphics project \(Batik and FOP\))
+/BeginEPSF { %def
+/b4_Inc_state save def         % Save state for cleanup
+/dict_count countdictstack def % Count objects on dict stack
+/op_count count 1 sub def      % Count objects on operand stack
+userdict begin                 % Push userdict on dict stack
+/showpage { } def              % Redefine showpage, { } = null proc
+0 setgray 0 setlinecap         % Prepare graphics state
+1 setlinewidth 0 setlinejoin
+10 setmiterlimit [ ] 0 setdash newpath
+/languagelevel where           % If level not equal to 1 then
+{pop languagelevel             % set strokeadjust and
+1 ne                           % overprint to their defaults.
+{false setstrokeadjust false setoverprint
+} if
+} if
+} bd
+/EndEPSF { %def
+count op_count sub {pop} repeat            % Clean up stacks
+countdictstack dict_count sub {end} repeat
+b4_Inc_state restore
+} bd
+%%EndResource
+%FOPBeginFontDict
+%%IncludeResource: font Courier-Oblique
+%%IncludeResource: font Courier-BoldOblique
+%%IncludeResource: font Courier-Bold
+%%IncludeResource: font ZapfDingbats
+%%IncludeResource: font Symbol
+%%IncludeResource: font Helvetica
+%%IncludeResource: font Helvetica-Oblique
+%%IncludeResource: font Helvetica-Bold
+%%IncludeResource: font Helvetica-BoldOblique
+%%IncludeResource: font Times-Roman
+%%IncludeResource: font Times-Italic
+%%IncludeResource: font Times-Bold
+%%IncludeResource: font Times-BoldItalic
+%%IncludeResource: font Courier
+%FOPEndFontDict
+%%BeginResource: encoding WinAnsiEncoding
+/WinAnsiEncoding [
+/.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /.notdef /.notdef /.notdef
+/.notdef /.notdef /space /exclam /quotedbl
+/numbersign /dollar /percent /ampersand /quotesingle
+/parenleft /parenright /asterisk /plus /comma
+/hyphen /period /slash /zero /one
+/two /three /four /five /six
+/seven /eight /nine /colon /semicolon
+/less /equal /greater /question /at
+/A /B /C /D /E
+/F /G /H /I /J
+/K /L /M /N /O
+/P /Q /R /S /T
+/U /V /W /X /Y
+/Z /bracketleft /backslash /bracketright /asciicircum
+/underscore /quoteleft /a /b /c
+/d /e /f /g /h
+/i /j /k /l /m
+/n /o /p /q /r
+/s /t /u /v /w
+/x /y /z /braceleft /bar
+/braceright /asciitilde /bullet /Euro /bullet
+/quotesinglbase /florin /quotedblbase /ellipsis /dagger
+/daggerdbl /circumflex /perthousand /Scaron /guilsinglleft
+/OE /bullet /Zcaron /bullet /bullet
+/quoteleft /quoteright /quotedblleft /quotedblright /bullet
+/endash /emdash /asciitilde /trademark /scaron
+/guilsinglright /oe /bullet /zcaron /Ydieresis
+/space /exclamdown /cent /sterling /currency
+/yen /brokenbar /section /dieresis /copyright
+/ordfeminine /guillemotleft /logicalnot /sfthyphen /registered
+/macron /degree /plusminus /twosuperior /threesuperior
+/acute /mu /paragraph /middot /cedilla
+/onesuperior /ordmasculine /guillemotright /onequarter /onehalf
+/threequarters /questiondown /Agrave /Aacute /Acircumflex
+/Atilde /Adieresis /Aring /AE /Ccedilla
+/Egrave /Eacute /Ecircumflex /Edieresis /Igrave
+/Iacute /Icircumflex /Idieresis /Eth /Ntilde
+/Ograve /Oacute /Ocircumflex /Otilde /Odieresis
+/multiply /Oslash /Ugrave /Uacute /Ucircumflex
+/Udieresis /Yacute /Thorn /germandbls /agrave
+/aacute /acircumflex /atilde /adieresis /aring
+/ae /ccedilla /egrave /eacute /ecircumflex
+/edieresis /igrave /iacute /icircumflex /idieresis
+/eth /ntilde /ograve /oacute /ocircumflex
+/otilde /odieresis /divide /oslash /ugrave
+/uacute /ucircumflex /udieresis /yacute /thorn
+/ydieresis
+] def
+%%EndResource
+%FOPBeginFontReencode
+/Courier-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-Oblique exch definefont pop
+/Courier-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-BoldOblique exch definefont pop
+/Courier-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier-Bold exch definefont pop
+/Helvetica findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Helvetica exch definefont pop
+/Helvetica-Oblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Helvetica-Oblique exch definefont pop
+/Helvetica-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Helvetica-Bold exch definefont pop
+/Helvetica-BoldOblique findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Helvetica-BoldOblique exch definefont pop
+/Times-Roman findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-Roman exch definefont pop
+/Times-Italic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-Italic exch definefont pop
+/Times-Bold findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-Bold exch definefont pop
+/Times-BoldItalic findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Times-BoldItalic exch definefont pop
+/Courier findfont
+dup length dict begin
+  {1 index /FID ne {def} {pop pop} ifelse} forall
+  /Encoding WinAnsiEncoding def
+  currentdict
+end
+/Courier exch definefont pop
+%FOPEndFontReencode
+%%EndProlog
+%%Page: 1 1
+%%PageBoundingBox: 0 0 580 498
+%%BeginPageSetup
+[0.75032 0 0 -0.75 0 498] CT
+%%EndPageSetup
+GS
+1 GC
+N
+0 0 773 664 re
+f
+GR
+GS
+[1 0 0 1 2 56] CT
+0.753 0.753 1 RC
+N
+1 16 M
+1 588 L
+1 596.284 7.716 603 16 603 C
+688 603 L
+696.284 603 703 596.284 703 588 C
+703 16 L
+703 7.716 696.284 1 688 1 C
+16 1 L
+7.716 1 1 7.716 1 16 C
+cp
+f
+GR
+GS
+[1 0 0 1 2 56] CT
+1 LJ
+N
+1 16 M
+1 588 L
+1 596.284 7.716 603 16 603 C
+688 603 L
+696.284 603 703 596.284 703 588 C
+703 16 L
+703 7.716 696.284 1 688 1 C
+16 1 L
+7.716 1 1 7.716 1 16 C
+cp
+S
+GR
+GS
+[1 0 0 1 2 56] CT
+newpath
+0 0 M
+0 21 L
+45 21 L
+45 0 L
+cp
+clip
+BT
+1 0 0 -1 10 18 Tm
+/Helvetica-Bold 11 F
+(Insert)
+[3.058 6.721 6.116 6.116 4.279 0] xshow
+ET
+GR
+GS
+[1 0 0 1 137 84] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 46 L
+0 54.284 6.716 61 15 61 C
+158 61 L
+166.284 61 173 54.284 173 46 C
+173 15 L
+173 6.716 166.284 0 158 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 137 84] CT
+1 LJ
+N
+0 15 M
+0 46 L
+0 54.284 6.716 61 15 61 C
+158 61 L
+166.284 61 173 54.284 173 46 C
+173 15 L
+173 6.716 166.284 0 158 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 137 84] CT
+newpath
+0 0 M
+0 61 L
+173 61 L
+173 0 L
+cp
+clip
+BT
+1 0 0 -1 30 26 Tm
+/Helvetica 16 F
+(Clicca su "Inizia)
+[11.552 3.552 3.552 8 8 8.896 4.448 8
+8.896 4.448 5.68 4.448 8.896 3.552 8 3.552
+0] xshow
+ET
+GR
+GS
+[1 0 0 1 137 84] CT
+newpath
+0 0 M
+0 61 L
+173 61 L
+173 0 L
+cp
+clip
+BT
+1 0 0 -1 37 47 Tm
+/Helvetica 16 F
+(registrazione")
+[5.328 8.896 8.896 3.552 8 4.448 5.328 8.896
+8 3.552 8.896 8.896 8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 156 208] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 48 L
+0 56.284 6.716 63 15 63 C
+122 63 L
+130.284 63 137 56.284 137 48 C
+137 15 L
+137 6.716 130.284 0 122 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 156 208] CT
+1 LJ
+N
+0 15 M
+0 48 L
+0 56.284 6.716 63 15 63 C
+122 63 L
+130.284 63 137 56.284 137 48 C
+137 15 L
+137 6.716 130.284 0 122 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 156 208] CT
+newpath
+0 0 M
+0 63 L
+137 63 L
+137 0 L
+cp
+clip
+BT
+1 0 0 -1 32 17 Tm
+/Helvetica 16 F
+(Attesa del)
+[10.672 4.448 4.448 8.896 8 8.896 4.448 8.896
+8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 156 208] CT
+newpath
+0 0 M
+0 63 L
+137 63 L
+137 0 L
+cp
+clip
+BT
+1 0 0 -1 8 38 Tm
+/Helvetica 16 F
+(superamento del)
+[8 8.896 8.896 8.896 5.328 8.896 13.328 8.896
+8.896 4.448 8.896 4.448 8.896 8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 156 208] CT
+newpath
+0 0 M
+0 63 L
+137 63 L
+137 0 L
+cp
+clip
+BT
+1 0 0 -1 35 59 Tm
+/Helvetica 16 F
+(threshold)
+[4.448 8.896 5.328 8.896 8 8.896 8.896 3.552
+0] xshow
+ET
+GR
+GS
+[1 0 0 1 343 339] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 46 L
+0 54.284 6.716 61 15 61 C
+123 61 L
+131.284 61 138 54.284 138 46 C
+138 15 L
+138 6.716 131.284 0 123 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 343 339] CT
+1 LJ
+N
+0 15 M
+0 46 L
+0 54.284 6.716 61 15 61 C
+123 61 L
+131.284 61 138 54.284 138 46 C
+138 15 L
+138 6.716 131.284 0 123 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 343 339] CT
+newpath
+0 0 M
+0 61 L
+138 61 L
+138 0 L
+cp
+clip
+BT
+1 0 0 -1 24 26 Tm
+/Helvetica 16 F
+(Rileva buca,)
+[11.552 3.552 3.552 8.896 8 8.896 4.44801 8.896
+8.896 8 8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 343 339] CT
+newpath
+0 0 M
+0 61 L
+138 61 L
+138 0 L
+cp
+clip
+BT
+1 0 0 -1 5 47 Tm
+/Helvetica 16 F
+(salva la posizione)
+[8 8.896 3.552 8 8.896 4.448 3.552 8.896
+4.448 8.896 8.896 8 3.552 8 3.552 8.896
+8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 350 439] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 61 L
+0 69.284 6.716 76 15 76 C
+109 76 L
+117.284 76 124 69.284 124 61 C
+124 15 L
+124 6.716 117.284 0 109 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 350 439] CT
+1 LJ
+N
+0 15 M
+0 61 L
+0 69.284 6.716 76 15 76 C
+109 76 L
+117.284 76 124 69.284 124 61 C
+124 15 L
+124 6.716 117.284 0 109 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 350 439] CT
+newpath
+0 0 M
+0 76 L
+124 76 L
+124 0 L
+cp
+clip
+BT
+1 0 0 -1 24 23 Tm
+/Helvetica 16 F
+(Formatta il)
+[9.776 8.896 5.328 13.328 8.896 4.448 4.448 8.896
+4.448 3.552 0] xshow
+ET
+GR
+GS
+[1 0 0 1 350 439] CT
+newpath
+0 0 M
+0 76 L
+124 76 L
+124 0 L
+cp
+clip
+BT
+1 0 0 -1 8 44 Tm
+/Helvetica 16 F
+(messaggio e lo)
+[13.328 8.896 8 8 8.896 8.896 8.896 3.552
+8.896 4.448 8.896 4.448 3.552 0] xshow
+ET
+GR
+GS
+[1 0 0 1 350 439] CT
+newpath
+0 0 M
+0 76 L
+124 76 L
+124 0 L
+cp
+clip
+BT
+1 0 0 -1 11 65 Tm
+/Helvetica 16 F
+(invia al Server)
+[3.552 8.896 8 3.552 8.896 4.448 8.896 3.552
+4.448 10.672 8.896 5.328 8 8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 525 337] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 50 L
+0 58.284 6.716 65 15 65 C
+130 65 L
+138.284 65 145 58.284 145 50 C
+145 15 L
+145 6.716 138.284 0 130 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 525 337] CT
+1 LJ
+N
+0 15 M
+0 50 L
+0 58.284 6.716 65 15 65 C
+130 65 L
+138.284 65 145 58.284 145 50 C
+145 15 L
+145 6.716 138.284 0 130 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 525 337] CT
+newpath
+0 0 M
+0 65 L
+145 65 L
+145 0 L
+cp
+clip
+BT
+1 0 0 -1 19 18 Tm
+/Helvetica 16 F
+(Server riceve il)
+[10.672 8.896 5.328 8 8.896 5.328 4.44801 5.328
+3.552 8 8.896 8 8.896 4.448 3.552 0] xshow
+ET
+GR
+GS
+[1 0 0 1 525 337] CT
+newpath
+0 0 M
+0 65 L
+145 65 L
+145 0 L
+cp
+clip
+BT
+1 0 0 -1 8 39 Tm
+/Helvetica 16 F
+(messaggio e apre)
+[13.328 8.896 8 8 8.896 8.896 8.896 3.552
+8.896 4.448 8.896 4.448 8.896 8.896 5.328 0] xshow
+ET
+GR
+GS
+[1 0 0 1 525 337] CT
+newpath
+0 0 M
+0 65 L
+145 65 L
+145 0 L
+cp
+clip
+BT
+1 0 0 -1 33 60 Tm
+/Helvetica 16 F
+(il database)
+[3.552 3.552 4.448 8.896 8.896 4.448 8.896 8.896
+8.896 8 0] xshow
+ET
+GR
+GS
+[1 0 0 1 525 447] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 42 L
+0 50.284 6.716 57 15 57 C
+116 57 L
+124.284 57 131 50.284 131 42 C
+131 15 L
+131 6.716 124.284 0 116 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 525 447] CT
+1 LJ
+N
+0 15 M
+0 42 L
+0 50.284 6.716 57 15 57 C
+116 57 L
+124.284 57 131 50.284 131 42 C
+131 15 L
+131 6.716 124.284 0 116 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 525 447] CT
+newpath
+0 0 M
+0 57 L
+131 57 L
+131 0 L
+cp
+clip
+BT
+1 0 0 -1 12 24 Tm
+/Helvetica 16 F
+(Estrae i dati da)
+[10.672 8 4.448 5.328 8.896 8.896 4.448 3.552
+4.448 8.896 8.896 4.448 3.552 4.448 8.896 0] xshow
+ET
+GR
+GS
+[1 0 0 1 525 447] CT
+newpath
+0 0 M
+0 57 L
+131 57 L
+131 0 L
+cp
+clip
+BT
+1 0 0 -1 26 45 Tm
+/Helvetica 16 F
+(messaggio)
+[13.328 8.896 8 8 8.896 8.896 8.896 3.552
+0] xshow
+ET
+GR
+GS
+[1 0 0 1 522 545] CT
+0.478 0.812 0.961 RC
+N
+0 15 M
+0 43 L
+0 51.284 6.716 58 15 58 C
+119 58 L
+127.284 58 134 51.284 134 43 C
+134 15 L
+134 6.716 127.284 0 119 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+f
+GR
+GS
+[1 0 0 1 522 545] CT
+1 LJ
+N
+0 15 M
+0 43 L
+0 51.284 6.716 58 15 58 C
+119 58 L
+127.284 58 134 51.284 134 43 C
+134 15 L
+134 6.716 127.284 0 119 0 C
+15 0 L
+6.716 0 0 6.716 0 15 C
+cp
+S
+GR
+GS
+[1 0 0 1 522 545] CT
+newpath
+0 0 M
+0 58 L
+134 58 L
+134 0 L
+cp
+clip
+BT
+1 0 0 -1 8 25 Tm
+/Helvetica 16 F
+(Effettua la Insert)
+[10.672 4.448 4.448 8.896 4.448 4.448 8.896 8.896
+4.448 3.552 8.896 4.448 4.448 8.896 8 8.896
+5.328 0] xshow
+ET
+GR
+GS
+[1 0 0 1 522 545] CT
+newpath
+0 0 M
+0 58 L
+134 58 L
+134 0 L
+cp
+clip
+BT
+1 0 0 -1 20 46 Tm
+/Helvetica 16 F
+(nel database)
+[8.896 8.896 3.552 4.448 8.896 8.896 4.448 8.896
+8.896 8.896 8 0] xshow
+ET
+GR
+GS
+[1 0 0 1 189 334] CT
+1 0 0 RC
+N
+35.5 7.5 M
+68 35.5 L
+35.5 63.5 L
+3 35.5 L
+cp
+f
+GR
+GS
+[1 0 0 1 189 334] CT
+1 LJ
+N
+35.5 7.5 M
+68 35.5 L
+35.5 63.5 L
+3 35.5 L
+cp
+S
+GR
+GS
+[1 0 0 1 205 0] CT
+N
+30 10 M
+30 15.523 25.523 20 20 20 C
+14.477 20 10 15.523 10 10 C
+10 4.477 14.477 0 20 0 C
+25.523 0 30 4.477 30 10 C
+cp
+f
+GR
+GS
+[1 0 0 1 749 563] CT
+N
+16.667 10 M
+16.667 13.682 13.682 16.667 10 16.667 C
+6.318 16.667 3.333 13.682 3.333 10 C
+3.333 6.318 6.318 3.333 10 3.333 C
+13.682 3.333 16.667 6.318 16.667 10 C
+cp
+f
+GR
+GS
+[1 0 0 1 749 563] CT
+1 LJ
+N
+20 10 M
+20 15.523 15.523 20 10 20 C
+4.477 20 0 15.523 0 10 C
+0 4.477 4.477 0 10 0 C
+15.523 0 20 4.477 20 10 C
+cp
+S
+GR
+GS
+[1 0 0 1 139 405] CT
+newpath
+-139 -15 M
+-139 30 L
+338 30 L
+338 -15 L
+cp
+clip
+BT
+1 0 0 -1 10 12 Tm
+/Helvetica 11 F
+(AcceleroemeterY > threshold?)
+[7.337 5.5 5.5 6.116 2.442 6.116 3.663 6.116
+6.116 9.163 6.116 3.058 6.116 3.663 7.337 3.058
+6.424 3.058 3.058 6.116 3.663 6.116 5.50001 6.116
+6.116 2.442 6.116 0] xshow
+ET
+GR
+GS
+[1 0 0 1 179 20] CT
+newpath
+-89 -16 M
+-89 32 L
+178 32 L
+178 -16 L
+cp
+clip
+BT
+1 0 0 -1 10 12 Tm
+/Helvetica 11 F
+(Utente Online)
+[7.942 3.058 6.116 6.116 3.058 6.116 3.058 8.558
+6.116 2.442 2.442 6.116 0] xshow
+ET
+GR
+GS
+[1 0 0 1 174 95] CT
+N
+0 0 M
+0 165 L
+104 165 L
+104 0 L
+cp
+clip
+1 LJ
+N
+50 50 M
+50 112 L
+S
+GR
+GS
+[1 0 0 1 174 95] CT
+N
+0 0 M
+0 165 L
+104 165 L
+104 0 L
+cp
+clip
+1 LJ
+N
+50 112 M
+56 100 L
+S
+GR
+GS
+[1 0 0 1 174 95] CT
+N
+0 0 M
+0 165 L
+104 165 L
+104 0 L
+cp
+clip
+1 LJ
+N
+50 112 M
+44 100 L
+S
+GR
+GS
+[1 0 0 1 341 329] CT
+N
+0 0 M
+0 185 L
+146 185 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 71 M
+71 110 L
+S
+GR
+GS
+[1 0 0 1 341 329] CT
+N
+0 0 M
+0 185 L
+146 185 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 110 M
+77 98 L
+S
+GR
+GS
+[1 0 0 1 341 329] CT
+N
+0 0 M
+0 185 L
+146 185 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 110 M
+65 98 L
+S
+GR
+GS
+[1 0 0 1 402 299] CT
+N
+0 0 M
+0 252 L
+198 252 L
+198 0 L
+cp
+clip
+1 LJ
+N
+71 177 M
+96 177 L
+S
+GR
+GS
+[1 0 0 1 402 299] CT
+N
+0 0 M
+0 252 L
+198 252 L
+198 0 L
+cp
+clip
+1 LJ
+N
+96 177 M
+96 71 L
+S
+GR
+GS
+[1 0 0 1 402 299] CT
+N
+0 0 M
+0 252 L
+198 252 L
+198 0 L
+cp
+clip
+1 LJ
+N
+96 71 M
+123 71 L
+S
+GR
+GS
+[1 0 0 1 402 299] CT
+N
+0 0 M
+0 252 L
+198 252 L
+198 0 L
+cp
+clip
+1 LJ
+N
+123 71 M
+111 65 L
+S
+GR
+GS
+[1 0 0 1 402 299] CT
+N
+0 0 M
+0 252 L
+198 252 L
+198 0 L
+cp
+clip
+1 LJ
+N
+123 71 M
+111 77 L
+S
+GR
+GS
+[1 0 0 1 526 332] CT
+N
+0 0 M
+0 191 L
+146 191 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 71 M
+71 116 L
+S
+GR
+GS
+[1 0 0 1 526 332] CT
+N
+0 0 M
+0 191 L
+146 191 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 116 M
+77 104 L
+S
+GR
+GS
+[1 0 0 1 526 332] CT
+N
+0 0 M
+0 191 L
+146 191 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 116 M
+65 104 L
+S
+GR
+GS
+[1 0 0 1 526 433] CT
+N
+0 0 M
+0 186 L
+146 186 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 71 M
+71 111 L
+S
+GR
+GS
+[1 0 0 1 526 433] CT
+N
+0 0 M
+0 186 L
+146 186 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 111 M
+77 99 L
+S
+GR
+GS
+[1 0 0 1 526 433] CT
+N
+0 0 M
+0 186 L
+146 186 L
+146 0 L
+cp
+clip
+1 LJ
+N
+71 111 M
+65 99 L
+S
+GR
+GS
+[1 0 0 1 175 221] CT
+N
+0 0 M
+0 175 L
+104 175 L
+104 0 L
+cp
+clip
+1 LJ
+N
+50 50 M
+50 121 L
+S
+GR
+GS
+[1 0 0 1 175 221] CT
+N
+0 0 M
+0 175 L
+104 175 L
+104 0 L
+cp
+clip
+1 LJ
+N
+50 121 M
+56 109 L
+S
+GR
+GS
+[1 0 0 1 175 221] CT
+N
+0 0 M
+0 175 L
+104 175 L
+104 0 L
+cp
+clip
+1 LJ
+N
+50 121 M
+44 109 L
+S
+GR
+GS
+[1 0 0 1 186 298] CT
+N
+131 50 M
+131 66 L
+93 66 L
+93 50 L
+cp
+0 0 M
+0 107 L
+122 107 L
+122 122 L
+0 122 L
+0 146 L
+232 146 L
+232 0 L
+cp
+clip
+1 LJ
+N
+71 71 M
+157 71 L
+S
+GR
+GS
+[1 0 0 1 186 298] CT
+N
+131 50 M
+131 66 L
+93 66 L
+93 50 L
+cp
+0 0 M
+0 107 L
+122 107 L
+122 122 L
+0 122 L
+0 146 L
+232 146 L
+232 0 L
+cp
+clip
+1 LJ
+N
+157 71 M
+145 65 L
+S
+GR
+GS
+[1 0 0 1 186 298] CT
+N
+131 50 M
+131 66 L
+93 66 L
+93 50 L
+cp
+0 0 M
+0 107 L
+122 107 L
+122 122 L
+0 122 L
+0 146 L
+232 146 L
+232 0 L
+cp
+clip
+1 LJ
+N
+157 71 M
+145 77 L
+S
+GR
+GS
+[1 0 0 1 82 189] CT
+N
+47 108 M
+47 123 L
+4 123 L
+4 108 L
+cp
+0 0 M
+0 234 L
+165 234 L
+165 231 L
+57 231 L
+57 216 L
+165 216 L
+165 0 L
+cp
+clip
+1 LJ
+N
+111 180 M
+50 180 L
+S
+GR
+GS
+[1 0 0 1 82 189] CT
+N
+47 108 M
+47 123 L
+4 123 L
+4 108 L
+cp
+0 0 M
+0 234 L
+165 234 L
+165 231 L
+57 231 L
+57 216 L
+165 216 L
+165 0 L
+cp
+clip
+1 LJ
+N
+50 180 M
+50 50 L
+S
+GR
+GS
+[1 0 0 1 82 189] CT
+N
+47 108 M
+47 123 L
+4 123 L
+4 108 L
+cp
+0 0 M
+0 234 L
+165 234 L
+165 231 L
+57 231 L
+57 216 L
+165 216 L
+165 0 L
+cp
+clip
+1 LJ
+N
+50 50 M
+73 50 L
+S
+GR
+GS
+[1 0 0 1 82 189] CT
+N
+47 108 M
+47 123 L
+4 123 L
+4 108 L
+cp
+0 0 M
+0 234 L
+165 234 L
+165 231 L
+57 231 L
+57 216 L
+165 216 L
+165 0 L
+cp
+clip
+1 LJ
+N
+73 50 M
+61 44 L
+S
+GR
+GS
+[1 0 0 1 82 189] CT
+N
+47 108 M
+47 123 L
+4 123 L
+4 108 L
+cp
+0 0 M
+0 234 L
+165 234 L
+165 231 L
+57 231 L
+57 216 L
+165 216 L
+165 0 L
+cp
+clip
+1 LJ
+N
+73 50 M
+61 56 L
+S
+GR
+GS
+[1 0 0 1 175 -30] CT
+N
+93 50 M
+93 66 L
+4 66 L
+4 50 L
+cp
+0 30 M
+0 166 L
+104 166 L
+104 30 L
+cp
+clip
+1 LJ
+N
+50 50 M
+48 114 L
+S
+GR
+GS
+[1 0 0 1 175 -30] CT
+N
+93 50 M
+93 66 L
+4 66 L
+4 50 L
+cp
+0 30 M
+0 166 L
+104 166 L
+104 30 L
+cp
+clip
+1 LJ
+N
+48 114 M
+54 102 L
+S
+GR
+GS
+[1 0 0 1 175 -30] CT
+N
+93 50 M
+93 66 L
+4 66 L
+4 50 L
+cp
+0 30 M
+0 166 L
+104 166 L
+104 30 L
+cp
+clip
+1 LJ
+N
+48 114 M
+42 102 L
+S
+GR
+GS
+[1 0 0 1 585 502] CT
+N
+0 0 M
+0 146 L
+188 146 L
+188 0 L
+cp
+clip
+1 LJ
+N
+71 71 M
+164 71 L
+S
+GR
+GS
+[1 0 0 1 585 502] CT
+N
+0 0 M
+0 146 L
+188 146 L
+188 0 L
+cp
+clip
+1 LJ
+N
+164 71 M
+152 65 L
+S
+GR
+GS
+[1 0 0 1 585 502] CT
+N
+0 0 M
+0 146 L
+188 146 L
+188 0 L
+cp
+clip
+1 LJ
+N
+164 71 M
+152 77 L
+S
+GR
+GS
+[1 0 0 1 86 297] CT
+newpath
+-43 -15 M
+-43 30 L
+86 30 L
+86 -15 L
+cp
+clip
+BT
+1 0 0 -1 10 12 Tm
+/Helvetica 11 F
+([NO])
+[3.058 7.942 8.558 0] xshow
+ET
+GR
+GS
+[1 0 0 1 279 348] CT
+newpath
+-38 -16 M
+-38 32 L
+76 32 L
+76 -16 L
+cp
+clip
+BT
+1 0 0 -1 10 12 Tm
+/Helvetica 11 F
+([SI])
+[3.058 7.337 3.058 0] xshow
+ET
+GR
+GS
+[1 0 0 1 0 0] CT
+newpath
+0 0 M
+773 0 L
+773 664 L
+0 664 L
+0 0 L
+cp
+clip
+BT
+1 0 0 -1 529 651 Tm
+/Times-Roman 10 F
+0.471 GC
+(Powered ByVisual Paradigm Community Edition)
+[5.56 5 7.22003 4.43994 3.33002 4.44 5 2.5
+6.66998 5 7.22003 2.77997 3.89001 5 4.44 2.78003
+2.5 5.56 4.44 3.32996 4.44 5 2.78003 5
+7.77997 2.5 6.67004 5 7.77997 7.77997 5 5
+2.78003 2.78003 5 2.5 6.10999 5 2.77997 2.78003
+2.77997 5 0] xshow
+ET
+GR
+GS
+[1 0 0 1 753 639] CT
+N
+0 0 M
+0 16 L
+16 16 L
+16 0 L
+cp
+clip
+GS
+0 0 translate
+16 16 scale
+%AXGBeginBitmap: java.awt.image.BufferedImage
+{{
+/RawData currentfile /ASCII85Decode filter def
+/Data RawData /FlateDecode filter def
+/DeviceRGB setcolorspace
+<<
+  /ImageType 1
+  /Decode [0 1 0 1 0 1]
+  /DataSource Data
+  /Height 16
+  /ImageMatrix [16 0 0 16 0 0]
+  /Width 16
+  /BitsPerComponent 8
+>> image
+} stopped {handleerror} if
+  RawData flushfile
+} exec
+GasbUhi>N<'ZM5P>7$I!8A'J/5D_onJ4OniU#SoSiD.#lU=lhD[p)mOWl1I6CI?S8*Z6t/L356f1Z/"V
+1LEp`QW%M0DMTL?_l6YJ/U9I__"Ba9Z.*Nl^j;]YaQK21K('tNUUEmXa00=QOTf/FSTZ$/M:?P'GR[+k
+dl74h#+gQ9enE"o]e$pR_q8.:]1i7TFYsq%?2"/>j0?;R_?NFT&in0JQtId<C-7O48K_CM#4#$>*C$8q
+CH+`W0V;,E_'kYX9]g'r"sM<mebVt9QD->NKPs;iI+RTc'*)W9aK=RKkPNZ69s4eK\.'d.2kjpUCoLC\
+U*c'nZ,f?$0//fJ&BLLk&hl\pl[8on=fPK.d5]$s4FqF'1"X/o.j0gLM;.k/jS_o6~>
+
+%AXGEndBitmap
+GR
+GR
+%%Trailer
+%%Pages: 1
+%%EOF
