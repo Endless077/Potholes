@@ -26,7 +26,7 @@ public class CheckService {
 
     private static final String LOG = "CHECK_SERVICE";
 
-    public static int GPS_PERMISSION_CODE = 333;
+    public static final int GPS_PERMISSION_CODE = 333;
     public static final int NETWORK_PERMISSION_CODE = 444;
 
     //Constructor private
