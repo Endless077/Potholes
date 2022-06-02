@@ -55,7 +55,7 @@ With gcc:
 
 With makefile:
 ```bash
-  makefile Makefile clean all [valgrind || start]
+  make makefile clean all [valgrind || start]
 ```
 
 (you should have "Valgrind" because it run a script that check memoryleaks)
