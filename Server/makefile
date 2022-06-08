@@ -9,8 +9,7 @@ SRC = server.c Other/utils.c
 
 all: $(TARGET)
 	@printf "\e[32m%b\e[0m" "\n\tFile Creation...\n"
-
-$(TARGET): $(OBJECTFILES)
+	$(TARGET): $(OBJECTFILES)
 	$(CC) $(CFLAGS) -o $(TARGET) $(OBJECTFILES) $(LDLIBS) $(SRC) $(PTHREAD_FLAG) $(SQL_FLAG)
 
 .PHONY: depend clean

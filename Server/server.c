@@ -189,7 +189,7 @@ void *manageRequest(void *clientSocket) {
     else if(strcmp(buffer, "threshold") == 0)
       send(socket_descriptor, "17\r", 2, 0);
     else {
-      logging(tag, "Invalid service", false);
+      logging(tag, "Invalid service", true);
       send(socket_descriptor, "Invalid service:", 17, 0);
     }
 
