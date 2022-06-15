@@ -86,8 +86,13 @@ in the "Network.java", a little substitution.
 For support, email antonio.garofalo12@studenti.unina.it or luca.bianco4@studenti.unina.it.
 
 
-## ✔️ Used By
+## 💼 Used By
 
 This project is used by the following companies:
 
-- No Company using thsi software...PepeLaugh.
+- No Company using this software...PepeLaugh.
+
+
+## ✔️ Vote
+
+This project was rated: 27/30
