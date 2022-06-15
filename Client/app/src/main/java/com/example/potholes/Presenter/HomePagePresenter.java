@@ -67,6 +67,7 @@ public class HomePagePresenter {
         }else{
             CheckService.checkGpsEnabled(mContext.getActivity(),333);
             Handler.handleException(new NoGpsConnectionException(), mContext.getActivity());
+            mContext.closePopupLoading();
             return false;
         }
     }
@@ -98,6 +99,11 @@ public class HomePagePresenter {
                 //Hole Spotter
                 if (Math.abs(linear_acceleration[1]) > Network.THRESHOLD) {
                     Log.i(LOG,"Spotting hole...");
+
+                    //Speed Control
+                    //if(Math.abs(linear_acceleration[0])<500)
+                    //    return;
+
                     Map<String,Double> loc = new HashMap<>();
 
                     Thread getLocation = new Thread(() -> {
@@ -192,8 +198,8 @@ public class HomePagePresenter {
 
         if(!loc.isEmpty()) {
             Log.i(LOG,"Spotted here: " + loc.get("Latitude") + " - " + loc.get("Longitude"));
-            mContext.getActivity().runOnUiThread(() -> Toasty.info(mContext.getContext(),
-                    "Hole Spotted.",
+            mContext.getActivity().runOnUiThread(() ->
+                    Toasty.info(mContext.getContext(),"Hole Spotted.",
                     Toasty.LENGTH_SHORT).show());
             network.insertNewPothole(loc.get("Latitude"), loc.get("Longitude"));
         }else{

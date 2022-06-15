@@ -80,9 +80,9 @@ public class PotholesAdapter extends RecyclerView.Adapter<PotholesAdapter.Pothol
 
         public PotholesViewHolder(@NonNull View itemView) {
             super(itemView);
-            indirizzoPothole = itemView.findViewById(R.id.textViewIndirizzoPotholeCard);
             username = itemView.findViewById(R.id.textViewUsernameCard);
             coordinate = itemView.findViewById(R.id.textViewCoordinateCard);
+            indirizzoPothole = itemView.findViewById(R.id.textViewIndirizzoPotholeCard);
             mainLayout = itemView.findViewById(R.id.mainLayoutPotholesRow);
         }
     }

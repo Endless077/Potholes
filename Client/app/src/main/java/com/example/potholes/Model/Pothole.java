@@ -67,6 +67,6 @@ public class Pothole {
         this.indirizzo = indirizzo;
     }
 
-    public String getLatLong(){ return latitudine + ";" + longitudine;}
+    public String getLatLong(){ return latitudine + " - " + longitudine;}
 
 }
