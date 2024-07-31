@@ -1,36 +1,26 @@
-## 💾 License
+![Logo](https://github.com/Endless077/Potholes/blob/main/client/app/src/main/res/drawable/pothole_centoventotto.png)
 
-[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
-
-- [GPL](https://www.gnu.org/licenses/gpl-3.0.en.html)
- 
-<p align="center">
- <img src="https://github.com/Endless077/Potholes/blob/main/Client/app/src/main/res/drawable/pothole_centoventotto.png" />
-</p>
 
 ## 🚗 Pothoes
 
-Client-Server che consenta la racconta e l’interrogazione di informazioni riguardanti la presenza di irregolarità (buche) su di una superficie.
+Client-Server application for reporting and querying information about surface irregularities (potholes).
 
 
 ## 🚀 Features
 
-- Mostrare all’utente la lista di tutti gli eventi registrati dal server in un certo raggio dalla propria posizione.
-- Permettere all’utente di avviare una sessione di registrazione eventi durante la quale il client si connette al server, riceve i parametri di soglia e comunica al server la posizione e il valore del cambiamento ogni volta che registra un nuovo evento.
-- Permettere all’utente di visualizzare gli eventi vicini su mappa.
-- Il server è di tipo concorrente, ed in grado di gestire un numero arbitrario di client contemporaneamente.
-- Il server effettua il log delle principali operazioni (nuove connessioni, sconnessioni, richieste da parte dei client) su standard output.
-- Documentazione dettagliata di client e server.
+- Display a list of all events recorded by the server within a certain radius of the user's location.
+- Allow the user to start an event recording session where the client connects to the server, receives threshold parameters, and reports the position and value of each new event to the server.
+- Enable the user to view nearby events on a map.
+- The server is concurrent and can handle an arbitrary number of clients simultaneously.
+- The server logs key operations (new connections, disconnections, client requests) to standard output.
+- Detailed documentation for both the client and server.
 
-inoltre ecco come è stato realizzato:
+### Implementation Details
 
-Il server è realizzato in linguaggio C su piattaforma UNIX/Linuxe ed è ospitato online su Microsoft Azure (closed).
-
-Il client è in linguaggio Java su piattaforma Android e fa utilizzo dei sensori di accelerazione.
-
-Client e server comunicano tramite socket TCP o UDP.
-
-Oltre alle system call UNIX, il server utilizza solo la libreria standard del C.
+- The server is implemented in C on a UNIX/Linux platform and is hosted online on Microsoft Azure (access restricted).
+- The client is developed in Java for the Android platform and utilizes acceleration sensors.
+- Communication between the client and server is handled via TCP or UDP sockets.
+- Apart from UNIX system calls, the server uses only the standard C library.
 
 
 ## 📲 Installation
@@ -70,9 +60,16 @@ Run the server:
 
 The client installation require an upload server ip and port
 in the "Network.java", a little substitution.
+
+## 💾 License
+
+[![GPLv3 License](https://img.shields.io/badge/License-GPL%20v3-yellow.svg)](https://opensource.org/licenses/)
+
+©️ GNU General Public License (GPL), more details [here](https://www.gnu.org/licenses/gpl-3.0.en.html).
+
 ## 📃 Documentation
 
-[Documentation](https://no-link) - here the documentation.
+[Documentation](http://www.example.com/) - here the documentation.
 
 
 ## 🖐 Authors
@@ -83,16 +80,5 @@ in the "Network.java", a little substitution.
 
 ## 📧 Support
 
-For support, email antonio.garofalo12@studenti.unina.it or luca.bianco4@studenti.unina.it.
+Support e feedback contattando uno dei collaboratori.
 
-
-## 💼 Used By
-
-This project is used by the following companies:
-
-- No Company using this software...PepeLaugh.
-
-
-## ✔️ Vote
-
-This project was rated: 27/30
