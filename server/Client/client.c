@@ -4,7 +4,7 @@
 | |         | |   _   | |    |  _| _   | |\ \| |      | |
 \ `.___.'\ _| |__/ | _| |_  _| |__/ | _| |_\   |_    _| |_
  `.____ .'|________||_____||________||_____|\____|  |_____|
- */
+*/
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,11 +12,11 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <sys/types.h>
-#include<sys/un.h>
+#include <sys/un.h>
 #include <arpa/inet.h>
 #include <pthread.h>
 #include <time.h>
-#include<string.h>
+#include <string.h>
 
 #define SOCKET_NAME "my_server"
 

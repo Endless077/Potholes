@@ -24,7 +24,7 @@
 #include <netinet/in.h>
 #include <unistd.h>
 
-#include "./Other/utils.h"
+#include "./other/utils.h"
 #include "./server.h"
 
 #define MAX_MSG_SIZE 250
